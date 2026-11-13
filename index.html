@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SketchUp Plugins</title>
+<style>
+  :root{
+    --paper:#f6f3ee; --ink:#1e1d1b; --muted:#6f6a62; --line:#d9d3c8;
+    --card:#fffdf9; --accent:#b4532a; --accent-soft:#f3e3d9; --ok:#2f6b4f;
+    --serif: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; color:var(--ink); font-family:var(--sans); line-height:1.55;
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(rgba(30,29,27,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,29,27,.045) 1px, transparent 1px);
+    background-size:24px 24px;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+  header{padding:56px 0 28px; border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+  h1{font-family:var(--serif); font-weight:500; font-size:clamp(34px,5vw,56px); line-height:1.05; margin:10px 0 12px; letter-spacing:-.01em}
+  .tagline{color:var(--muted); font-size:18px; max-width:640px; margin:0}
+  .stats{display:flex; gap:32px; margin-top:28px; flex-wrap:wrap}
+  .stat b{display:block; font-family:var(--serif); font-size:28px; font-weight:500}
+  .stat span{font-size:12px; color:var(--muted); font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em}
+
+  .toolbar{display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:22px 0}
+  .search{flex:1 1 260px; padding:11px 14px; border:1px solid var(--line); background:var(--card); border-radius:8px; font:inherit; color:inherit}
+  .search:focus{outline:2px solid var(--accent); outline-offset:1px}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{border:1px solid var(--line); background:var(--card); padding:7px 14px; border-radius:999px; font:inherit; font-size:14px; cursor:pointer; color:var(--ink)}
+  .chip[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+
+  .notice{background:var(--accent-soft); border:1px solid #e6c7b4; color:#6b2f14; padding:10px 14px; border-radius:8px; font-size:14px; margin-bottom:16px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; padding-bottom:64px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:12px; position:relative}
+  .card::before{content:""; position:absolute; top:-1px; left:20px; width:36px; height:3px; background:var(--accent); border-radius:0 0 2px 2px}
+  .head{display:flex; gap:14px; align-items:center}
+  .icon{width:52px; height:52px; border-radius:10px; flex:none; display:grid; place-items:center; background:var(--ink); color:var(--paper); font-family:var(--serif); font-size:20px; overflow:hidden}
+  .icon img{width:100%; height:100%; object-fit:cover}
+  .name{font-family:var(--serif); font-size:21px; font-weight:500; margin:0; line-height:1.2}
+  .meta{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:3px}
+  .cat{display:inline-block; font-size:11px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em; color:var(--accent)}
+  .desc{margin:0; color:#3b3833; font-size:15px}
+  .actions{display:flex; gap:10px; align-items:center; margin-top:auto; flex-wrap:wrap}
+  .btn{display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; text-decoration:none; padding:10px 16px; border-radius:8px; font-weight:600; font-size:14px; border:0; cursor:pointer}
+  .btn:hover{filter:brightness(1.07)}
+  .btn[aria-disabled="true"]{background:#bdb6ab; pointer-events:none}
+  .ghost{background:none; border:1px solid var(--line); color:var(--ink); font-weight:500}
+  .new{font-family:var(--mono); font-size:11px; background:var(--ok); color:#fff; padding:2px 7px; border-radius:4px; margin-left:6px; vertical-align:middle}
+
+  details{border-top:1px dashed var(--line); padding-top:10px}
+  summary{cursor:pointer; font-size:14px; color:var(--muted); list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+ "; font-family:var(--mono)}
+  details[open] summary::before{content:"− "}
+  .rel{padding:12px 0; border-bottom:1px solid #eee8de}
+  .rel:last-child{border-bottom:0}
+  .rel-top{display:flex; justify-content:space-between; gap:10px; font-family:var(--mono); font-size:13px}
+  .rel-top a{color:var(--accent)}
+  .notes{font-size:14px; color:#3b3833; margin-top:6px}
+  .notes ul{margin:4px 0; padding-left:20px}
+  .notes h4{margin:8px 0 2px; font-size:14px}
+  .empty{padding:40px; text-align:center; color:var(--muted); grid-column:1/-1}
+
+  footer{border-top:1px solid var(--line); padding:24px 0 40px; color:var(--muted); font-size:13px}
+  footer code{font-family:var(--mono); background:var(--card); padding:1px 5px; border-radius:4px; border:1px solid var(--line)}
+  .howto{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:20px}
+  .howto div{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px}
+  .howto b{font-family:var(--mono); color:var(--accent); font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">SketchUp Extensions</div>
+    <h1 id="title">SketchUp Plugins</h1>
+    <p class="tagline" id="tagline"></p>
+    <div class="stats">
+      <div class="stat"><b id="s-plugins">–</b><span>Plugin</span></div>
+      <div class="stat"><b id="s-releases">–</b><span>Phiên bản</span></div>
+      <div class="stat"><b id="s-downloads">–</b><span>Lượt tải</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="toolbar">
+    <input class="search" id="q" type="search" placeholder="Tìm plugin…" aria-label="Tìm plugin">
+    <div class="chips" id="chips"></div>
+  </div>
+  <div id="notice"></div>
+  <div class="grid" id="grid"><div class="empty">Đang tải…</div></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="howto">
+      <div><b>01 · TẢI</b><br>Bấm “Tải” để lấy file <code>.rbz</code> mới nhất.</div>
+      <div><b>02 · CÀI</b><br>SketchUp → Extensions → Extension Manager → Install Extension → chọn file.</div>
+      <div><b>03 · TỰ CẬP NHẬT</b><br>Plugin tự kiểm tra phiên bản mới mỗi ngày và hỏi bạn có muốn cập nhật.</div>
+    </div>
+    <div id="foot"></div>
+  </div>
+</footer>
+
+<script>
+/* ===== CẤU HÌNH =====
+   Khi chạy trên GitHub Pages (ten.github.io/ten-repo), trang tự nhận owner/repo.
+   Nếu dùng tên miền riêng, điền 2 dòng dưới. */
+const CONFIG = { owner: "", repo: "" };
+const NEW_DAYS = 14; // gắn nhãn "MỚI" nếu phát hành trong N ngày
+
+(function detectRepo(){
+  if (CONFIG.owner) return;
+  const h = location.hostname;
+  if (h.endsWith(".github.io")) {
+    CONFIG.owner = h.split(".")[0];
+    const seg = location.pathname.split("/").filter(Boolean)[0];
+    CONFIG.repo = seg || h;
+  }
+})();
+
+const TAG_RE = /^(.+)-v(\d+(?:\.\d+)*)$/;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cmpVer = (a,b) => { const pa=a.split(".").map(Number), pb=b.split(".").map(Number);
+  for (let i=0;i<Math.max(pa.length,pb.length);i++){ const d=(pa[i]||0)-(pb[i]||0); if(d) return d; } return 0; };
+const fmtDate = d => new Date(d).toLocaleDateString("vi-VN",{day:"2-digit",month:"2-digit",year:"numeric"});
+const fmtNum = n => n.toLocaleString("vi-VN");
+
+function md(text){
+  const lines = esc(text).split(/\r?\n/); let out="", inList=false;
+  const inline = s => s.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/`(.+?)`/g,"<code>$1</code>");
+  for (const l of lines){
+    const li = l.match(/^\s*[-*]\s+(.*)/);
+    if (li){ if(!inList){out+="<ul>";inList=true;} out+=`<li>${inline(li[1])}</li>`; continue; }
+    if (inList){ out+="</ul>"; inList=false; }
+    const h = l.match(/^#{1,6}\s+(.*)/);
+    if (h) out += `<h4>${inline(h[1])}</h4>`;
+    else if (l.trim()) out += `<div>${inline(l)}</div>`;
+  }
+  return out + (inList?"</ul>":"");
+}
+
+const DEMO_RELEASES = [
+  {tag_name:"tuong_nhanh-v1.2.0", published_at:"2026-11-08T09:00:00Z", html_url:"#", body:"### Mới\n- Tự cắt giao tường chữ T\n- Nhớ độ dày tường lần trước\n### Sửa lỗi\n- Lỗi tường bị lật mặt", assets:[{name:"tuong_nhanh-1.2.0.rbz", browser_download_url:"#", download_count:184}]},
+  {tag_name:"tuong_nhanh-v1.1.0", published_at:"2026-09-20T09:00:00Z", html_url:"#", body:"- Thêm chọn chiều cao tường", assets:[{name:"tuong_nhanh-1.1.0.rbz", browser_download_url:"#", download_count:96}]},
+  {tag_name:"tu_bep-v0.9.1", published_at:"2026-10-30T09:00:00Z", html_url:"#", body:"- Thêm tay nắm âm\n- Sửa lỗi chia cánh lẻ", assets:[{name:"tu_bep-0.9.1.rbz", browser_download_url:"#", download_count:73}]},
+  {tag_name:"boc_tach-v2.0.0", published_at:"2026-08-12T09:00:00Z", html_url:"#", body:"- Xuất Excel (.xlsx)\n- Gom theo tag/layer", assets:[{name:"boc_tach-2.0.0.rbz", browser_download_url:"#", download_count:251}]}
+];
+
+let state = { plugins: [], cat: "Tất cả", q: "" };
+
+async function load(){
+  let manifest = { site:{}, plugins:[] }, releases = [], demo = false, err = "";
+  try { manifest = await (await fetch("plugins.json", {cache:"no-cache"})).json(); }
+  catch(e){ err = "Không đọc được plugins.json."; }
+
+  if (CONFIG.owner && CONFIG.repo){
+    try {
+      const r = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/releases?per_page=100`);
+      if (!r.ok) throw new Error(r.status);
+      releases = await r.json();
+    } catch(e){ err = "Không kết nối được GitHub (" + e.message + "). Thử tải lại sau ít phút."; }
+  } else { demo = true; releases = DEMO_RELEASES; }
+
+  const site = manifest.site || {};
+  document.title = site.title || document.title;
+  $("#title").textContent = site.title || "SketchUp Plugins";
+  $("#tagline").textContent = site.tagline || "";
+  $("#foot").innerHTML = `© ${new Date().getFullYear()} ${esc(site.author||"")}` +
+    (site.contact ? ` · Liên hệ: ${esc(site.contact)}` : "") +
+    (CONFIG.owner ? ` · <a href="https://github.com/${CONFIG.owner}/${CONFIG.repo}/releases">Tất cả bản phát hành</a>` : "");
+
+  // gom release theo id plugin
+  const byId = {};
+  for (const r of releases){
+    if (r.draft || r.prerelease) continue;
+    const m = (r.tag_name||"").match(TAG_RE); if (!m) continue;
+    const rbz = (r.assets||[]).find(a => /\.rbz$/i.test(a.name));
+    (byId[m[1]] ||= []).push({ version:m[2], date:r.published_at, notes:r.body||"", url: rbz?.browser_download_url, page:r.html_url,
+      downloads:(r.assets||[]).reduce((s,a)=>s+(a.download_count||0),0) });
+  }
+  const known = new Set((manifest.plugins||[]).map(p=>p.id));
+  const extra = Object.keys(byId).filter(id=>!known.has(id)).map(id=>({id, name:id, category:"Khác", description:""}));
+  state.plugins = [...(manifest.plugins||[]), ...extra].map(p => {
+    const vers = (byId[p.id]||[]).sort((a,b)=>cmpVer(b.version,a.version));
+    return { ...p, versions: vers, latest: vers[0], downloads: vers.reduce((s,v)=>s+v.downloads,0) };
+  });
+
+  $("#s-plugins").textContent = state.plugins.length;
+  $("#s-releases").textContent = state.plugins.reduce((s,p)=>s+p.versions.length,0);
+  $("#s-downloads").textContent = fmtNum(state.plugins.reduce((s,p)=>s+p.downloads,0));
+  $("#notice").innerHTML = demo
+    ? `<div class="notice">Đang hiển thị <b>dữ liệu mẫu</b>. Khi đưa lên GitHub Pages, trang sẽ tự lấy phiên bản thật từ GitHub Releases.</div>`
+    : err ? `<div class="notice">${esc(err)}</div>` : "";
+
+  const cats = ["Tất cả", ...new Set(state.plugins.map(p=>p.category).filter(Boolean))];
+  $("#chips").innerHTML = cats.map(c=>`<button class="chip" aria-pressed="${c===state.cat}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+  render();
+}
+
+function render(){
+  const q = state.q.trim().toLowerCase();
+  const list = state.plugins.filter(p =>
+    (state.cat==="Tất cả" || p.category===state.cat) &&
+    (!q || `${p.name} ${p.description} ${p.id}`.toLowerCase().includes(q)));
+  if (!list.length){ $("#grid").innerHTML = `<div class="empty">Không tìm thấy plugin phù hợp.</div>`; return; }
+  $("#grid").innerHTML = list.map(p => {
+    const L = p.latest;
+    const isNew = L && (Date.now() - new Date(L.date)) < NEW_DAYS*864e5;
+    const initials = p.name.split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
+    const icon = p.icon ? `<img src="${esc(p.icon)}" alt="">` : esc(initials);
+    return `<article class="card">
+      <div class="head">
+        <div class="icon">${icon}</div>
+        <div>
+          <span class="cat">${esc(p.category||"")}</span>
+          <h2 class="name">${esc(p.name)}${isNew?'<span class="new">MỚI</span>':""}</h2>
+          <div class="meta">${L ? `v${esc(L.version)} · ${fmtDate(L.date)} · ${fmtNum(p.downloads)} lượt tải` : "Chưa phát hành"}</div>
+        </div>
+      </div>
+      <p class="desc">${esc(p.description)}</p>
+      <div class="actions">
+        <a class="btn" href="${esc(L?.url||"#")}" aria-disabled="${!L?.url}">↓ Tải v${esc(L?.version||"–")}</a>
+      </div>
+      ${p.versions.length ? `<details><summary>Lịch sử phiên bản (${p.versions.length})</summary>
+        ${p.versions.map(v=>`<div class="rel">
+          <div class="rel-top"><span><b>v${esc(v.version)}</b> · ${fmtDate(v.date)}</span>
+          ${v.url?`<a href="${esc(v.url)}">tải bản này</a>`:""}</div>
+          <div class="notes">${md(v.notes)||"<i>Không có ghi chú.</i>"}</div></div>`).join("")}
+      </details>` : ""}
+    </article>`;
+  }).join("");
+}
+
+$("#q").addEventListener("input", e => { state.q = e.target.value; render(); });
+$("#chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  state.cat = b.dataset.c;
+  document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed", x===b));
+  render();
+});
+load();
+</script>
+</body>
+</html>

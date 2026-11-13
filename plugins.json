@@ -1,0 +1,31 @@
+{
+  "site": {
+    "title": "KT Studio — SketchUp Plugins",
+    "tagline": "Công cụ SketchUp cho kiến trúc & nội thất — nhanh, gọn, tiện.",
+    "author": "KT Studio",
+    "contact": ""
+  },
+  "plugins": [
+    {
+      "id": "tuong_nhanh",
+      "name": "Tường Nhanh",
+      "category": "Kiến trúc",
+      "description": "Dựng tường từ đường line chỉ với một cú click: chọn độ dày, chiều cao, tự cắt giao tường.",
+      "icon": ""
+    },
+    {
+      "id": "tu_bep",
+      "name": "Tủ Bếp Tham Số",
+      "category": "Nội thất",
+      "description": "Tạo tủ bếp trên/dưới theo kích thước nhập vào, tự chia cánh, ngăn kéo và tay nắm.",
+      "icon": ""
+    },
+    {
+      "id": "boc_tach",
+      "name": "Bóc Tách Khối Lượng",
+      "category": "Tiện ích",
+      "description": "Thống kê diện tích sàn, tường, số lượng component và xuất ra Excel/CSV.",
+      "icon": ""
+    }
+  ]
+}
