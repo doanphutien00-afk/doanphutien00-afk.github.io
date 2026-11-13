@@ -469,7 +469,7 @@ const T=k=>I18N[state.lang][k];
 function applyI18n(){
   document.documentElement.lang=state.lang;
   document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=T(e.dataset.i18n));
-  document.querySelectorAll("[data-i18n-html]").forEach(e=>e.innerHTML=T(e.dataset.i18nHtml));
+  document.querySelectorAll("[data-i18n-html]").forEach(e=>{const h=T(e.dataset.i18nHtml); if(e.dataset.cur!==h){e.innerHTML=h; e.dataset.cur=h}});
   document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.placeholder=T(e.dataset.i18nPh));
   document.querySelectorAll("[data-lang]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===state.lang));
   renderChrome(); renderChips(); render();
