@@ -17,10 +17,11 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --serif:"Playfair Display",Georgia,serif;
+  --serif:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
   --sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
   --r:4px; --maxw:1200px;
@@ -82,8 +83,14 @@ button{font:inherit; color:inherit}
 .hero .wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center}
 .kicker{color:var(--accent); display:flex; align-items:center; gap:12px}
 .kicker::before{content:""; width:28px; height:1px; background:currentColor}
-h1{font-family:var(--serif); font-weight:400; font-size:clamp(42px,6vw,76px); line-height:1.02; letter-spacing:-.015em; margin:18px 0 22px}
-h1 em{font-style:italic; color:var(--accent)}
+h1{font-family:var(--serif); font-weight:600; font-size:clamp(40px,5.6vw,70px); line-height:1.04; letter-spacing:-.04em; margin:18px 0 22px}
+h1 em{font-style:normal; color:var(--accent); position:relative; white-space:nowrap}
+h1 em::after{content:""; position:absolute; left:0; right:0; bottom:.04em; height:.08em; background:currentColor; transform-origin:left; transform:scaleX(0); animation:underline .9s var(--ease) 1.1s forwards}
+@keyframes underline{to{transform:scaleX(1)}}
+h1 .line{display:block; overflow:hidden; padding-bottom:.06em}
+h1 .line > span{display:inline-block; transform:translateY(105%); animation:rise .9s var(--ease) forwards}
+h1 .line:nth-child(2) > span{animation-delay:.12s}
+@keyframes rise{to{transform:none}}
 .lead{font-size:17.5px; color:var(--ink-2); max-width:540px; margin:0 0 30px; font-weight:300}
 .cta{display:flex; gap:12px; flex-wrap:wrap}
 .btn{display:inline-flex; align-items:center; gap:9px; padding:12px 20px; border-radius:var(--r); text-decoration:none; font-weight:500; font-size:14.5px; border:1px solid transparent; cursor:pointer; transition:transform .15s, background .2s, border-color .2s}
@@ -100,14 +107,14 @@ h1 em{font-style:italic; color:var(--accent)}
 .dims{display:grid; grid-template-columns:repeat(3,1fr); margin-top:46px; border-top:1px solid var(--line)}
 .dim{padding:18px 0 0; position:relative}
 .dim + .dim{padding-left:22px; border-left:1px solid var(--line)}
-.dim b{display:block; font-family:var(--serif); font-weight:400; font-size:38px; line-height:1}
+.dim b{display:block; font-family:var(--serif); font-weight:300; font-size:40px; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums}
 .dim span{color:var(--muted)}
 
 /* ---------- SECTIONS ---------- */
 section{padding:72px 0}
 .sec-head{display:flex; align-items:end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:28px}
 .sec-no{color:var(--accent)}
-h2{font-family:var(--serif); font-weight:400; font-size:clamp(30px,3.6vw,42px); margin:6px 0 0; letter-spacing:-.01em}
+h2{font-family:var(--serif); font-weight:600; font-size:clamp(28px,3.4vw,40px); margin:6px 0 0; letter-spacing:-.035em}
 .toolbar{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
 .search{position:relative}
 .search svg{position:absolute; left:12px; top:50%; translate:0 -50%; width:15px; height:15px; color:var(--muted)}
@@ -131,7 +138,7 @@ h2{font-family:var(--serif); font-weight:400; font-size:clamp(30px,3.6vw,42px); 
 .card-head{display:flex; gap:16px; align-items:center}
 .icon{width:56px; height:56px; flex:none; border:1px solid var(--line-2); border-radius:var(--r); display:grid; place-items:center; background:var(--surface-2); font-family:var(--serif); font-size:20px}
 .icon img{width:30px; height:30px; object-fit:contain}
-h3{font-family:var(--serif); font-weight:500; font-size:23px; line-height:1.15; margin:0}
+h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.2; margin:0; letter-spacing:-.02em}
 .new{font-family:var(--mono); font-size:10px; letter-spacing:.1em; background:var(--accent); color:var(--on-accent); padding:2px 6px; border-radius:2px; margin-left:8px; vertical-align:4px}
 .desc{margin:0; color:var(--ink-2); font-size:14.5px}
 .specs{display:grid; grid-template-columns:repeat(4,1fr); margin:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
@@ -157,7 +164,9 @@ h3{font-family:var(--serif); font-weight:500; font-size:23px; line-height:1.15; 
 .steps{display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-radius:var(--r); background:var(--surface)}
 .step{padding:28px 26px}
 .step + .step{border-left:1px solid var(--line)}
-.step .n{font-family:var(--serif); font-size:44px; line-height:1; color:var(--accent)}
+.step .n{font-family:var(--mono); font-size:13px; letter-spacing:.12em; color:var(--accent); display:flex; align-items:center; gap:10px}
+.step .n::after{content:""; flex:1; height:1px; background:var(--line); transform-origin:left; transform:scaleX(0); transition:transform 1s var(--ease) .3s}
+.step.in .n::after{transform:scaleX(1)}
 .step h4{margin:14px 0 6px; font-size:16px; font-weight:600}
 .step p{margin:0; color:var(--ink-2); font-size:14.5px}
 .step code{font-family:var(--mono); font-size:12.5px; background:var(--surface-2); padding:1px 5px; border-radius:3px}
@@ -165,16 +174,20 @@ h3{font-family:var(--serif); font-weight:500; font-size:23px; line-height:1.15; 
 /* ---------- CONTACT ---------- */
 .contact{display:grid; grid-template-columns:1fr 1.1fr; gap:48px; align-items:start}
 .contact p.lead{margin-bottom:0}
-.cards-c{display:grid; gap:14px}
-.ccard{display:flex; align-items:center; gap:18px; padding:20px 22px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); text-decoration:none; transition:border-color .2s, transform .2s}
-.ccard:hover{border-color:var(--accent); transform:translateX(3px)}
-.ccard .ci{width:46px; height:46px; border-radius:50%; display:grid; place-items:center; border:1px solid var(--line-2); flex:none; color:var(--accent)}
-.ccard .ci svg{width:20px; height:20px}
-.ccard .cl{color:var(--muted)}
-.ccard .cv{font-size:18px; font-weight:500; margin-top:2px; word-break:break-all}
-.ccard .go{margin-left:auto; display:flex; gap:6px}
-.copy{border:1px solid var(--line-2); background:none; border-radius:var(--r); padding:6px 10px; cursor:pointer; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--muted)}
-.copy:hover{color:var(--ink); border-color:var(--ink)}
+.cards-c{display:flex; gap:28px; justify-content:flex-start; align-items:center; padding-top:8px}
+.social{position:relative; width:84px; height:84px; border-radius:50%; display:grid; place-items:center; text-decoration:none;
+  background:var(--surface); border:1px solid var(--line-2); transition:transform .35s var(--ease), border-color .3s, background .3s}
+.social svg,.social img{width:36px; height:36px; transition:transform .35s var(--ease)}
+.social img{border-radius:8px; object-fit:contain}
+.social::before{content:""; position:absolute; inset:-1px; border-radius:50%; border:1px solid currentColor; opacity:0; color:var(--brand)}
+.social:hover{transform:translateY(-4px); border-color:var(--brand); background:color-mix(in srgb,var(--brand) 10%,var(--surface))}
+.social:hover svg,.social:hover img{transform:scale(1.1) rotate(-6deg)}
+.social:hover::before{animation:ring 1.1s var(--ease) infinite}
+@keyframes ring{0%{opacity:.6; transform:scale(1)} 100%{opacity:0; transform:scale(1.45)}}
+.social .lbl{position:absolute; top:calc(100% + 10px); left:50%; translate:-50% -4px; opacity:0; transition:.25s; white-space:nowrap; color:var(--muted)}
+.social:hover .lbl,.social:focus-visible .lbl{opacity:1; translate:-50% 0}
+.s-zalo{--brand:#0068ff; color:#0068ff}
+.s-mail{--brand:var(--accent); color:var(--accent)}
 
 footer{border-top:1px solid var(--line); padding:26px 0 40px; color:var(--muted); font-size:13px}
 footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
@@ -182,6 +195,35 @@ footer a{color:var(--ink-2)}
 
 .toast{position:fixed; left:50%; bottom:24px; translate:-50% 20px; opacity:0; background:var(--ink); color:var(--bg); padding:10px 16px; border-radius:var(--r); font-size:13.5px; transition:.25s; pointer-events:none; z-index:50}
 .toast.show{opacity:1; translate:-50% 0}
+
+/* ---------- MOTION ---------- */
+.fx{opacity:0; transform:translateY(22px); transition:opacity .8s var(--ease), transform .8s var(--ease); transition-delay:var(--d,0s)}
+.fx.in{opacity:1; transform:none}
+.hero .fx{animation:fadeUp .9s var(--ease) forwards; animation-delay:var(--d,0s); transition:none}
+@keyframes fadeUp{to{opacity:1; transform:none}}
+.drawing .draw{stroke-dasharray:1; stroke-dashoffset:1; animation:draw 1.6s var(--ease) forwards; animation-delay:var(--d,0s)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.drawing text{opacity:0; animation:fadeIn .6s ease forwards 2.2s}
+.drawing .dot{transform-origin:210px 57px; animation:pulse 2.4s ease-in-out infinite 2.4s; opacity:0}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.5; transform:scale(1.8)}}
+.drawing-wrap{animation:float 7s ease-in-out infinite 2.5s}
+@keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}}
+.card{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease), border-color .2s; transition-delay:var(--d,0s)}
+.card.in{opacity:1; transform:none}
+.card.in:hover{transform:translateY(-4px); transition-delay:0s}
+.card .icon{transition:transform .4s var(--ease)}
+.card:hover .icon{transform:rotate(-6deg) scale(1.06)}
+.card::before,.card::after{transition:width .35s var(--ease), height .35s var(--ease)}
+.card:hover::before,.card:hover::after{width:22px; height:22px}
+.btn.primary{position:relative; overflow:hidden}
+.btn.primary::after{content:""; position:absolute; inset:0; background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%); transform:translateX(-120%); transition:transform .7s var(--ease)}
+.btn.primary:hover::after{transform:translateX(120%)}
+.btn.primary:hover svg{animation:nudge .6s var(--ease)}
+@keyframes nudge{50%{transform:translateY(2px)}}
+#themeBtn svg{transition:transform .5s var(--ease)}
+#themeBtn:hover svg{transform:rotate(40deg)}
+.progress{position:fixed; top:0; left:0; height:2px; background:var(--accent); width:100%; transform-origin:left; transform:scaleX(0); z-index:30}
 
 @media (max-width:900px){
   .hero .wrap,.contact{grid-template-columns:1fr}
@@ -202,10 +244,16 @@ footer a{color:var(--ink-2)}
   .dim b{font-size:30px}
   .brand small{display:none}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important; scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important; animation:none!important; scroll-behavior:auto!important}
+  .fx,.card,.drawing text,.drawing .dot{opacity:1!important; transform:none!important}
+  .drawing .draw{stroke-dashoffset:0!important}
+  h1 .line > span,h1 em::after{transform:none!important}
+}
 </style>
 </head>
 <body>
+<div class="progress" id="progress"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></symbol>
@@ -241,14 +289,14 @@ footer a{color:var(--ink-2)}
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <div class="kicker mono" data-i18n="kicker"></div>
+      <div class="kicker mono fx" style="--d:.05s" data-i18n="kicker"></div>
       <h1 data-i18n-html="hero_title"></h1>
-      <p class="lead" data-i18n="hero_sub"></p>
-      <div class="cta">
+      <p class="lead fx" style="--d:.35s" data-i18n="hero_sub"></p>
+      <div class="cta fx" style="--d:.5s">
         <a class="btn primary" href="#plugins"><span data-i18n="cta_browse"></span><svg><use href="#i-arrow"/></svg></a>
         <a class="btn ghost" href="#contact" data-i18n="cta_contact"></a>
       </div>
-      <div class="dims">
+      <div class="dims fx" style="--d:.65s">
         <div class="dim"><b id="s-plugins">–</b><span class="mono" data-i18n="stat_plugins"></span></div>
         <div class="dim"><b id="s-releases">–</b><span class="mono" data-i18n="stat_versions"></span></div>
         <div class="dim"><b id="s-downloads">–</b><span class="mono" data-i18n="stat_downloads"></span></div>
@@ -286,7 +334,7 @@ footer a{color:var(--ink-2)}
         <text x="112" y="330" transform="rotate(26.6 112 330)">6000</text>
         <text x="392" y="200">3200</text>
         <text x="20" y="372">AXO · 1:100</text>
-        <circle class="acc" cx="210" cy="57" r="3" fill="currentColor" stroke="none"/>
+        <circle class="acc dot" cx="210" cy="57" r="3" fill="currentColor" stroke="none"/>
       </svg>
     </div>
   </div>
@@ -294,7 +342,7 @@ footer a{color:var(--ink-2)}
 
 <section id="plugins">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head fx">
       <div><div class="sec-no mono">01 — <span data-i18n="sec_plugins_k"></span></div><h2 data-i18n="sec_plugins"></h2></div>
       <div class="toolbar">
         <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -309,23 +357,23 @@ footer a{color:var(--ink-2)}
 
 <section id="install" style="padding-top:24px">
   <div class="wrap">
-    <div class="sec-head"><div><div class="sec-no mono">02 — <span data-i18n="sec_install_k"></span></div><h2 data-i18n="sec_install"></h2></div></div>
+    <div class="sec-head fx"><div><div class="sec-no mono">02 — <span data-i18n="sec_install_k"></span></div><h2 data-i18n="sec_install"></h2></div></div>
     <div class="steps">
-      <div class="step"><div class="n">01</div><h4 data-i18n="s1_t"></h4><p data-i18n-html="s1_d"></p></div>
-      <div class="step"><div class="n">02</div><h4 data-i18n="s2_t"></h4><p data-i18n-html="s2_d"></p></div>
-      <div class="step"><div class="n">03</div><h4 data-i18n="s3_t"></h4><p data-i18n-html="s3_d"></p></div>
+      <div class="step fx" style="--d:0s"><div class="n">01</div><h4 data-i18n="s1_t"></h4><p data-i18n-html="s1_d"></p></div>
+      <div class="step fx" style="--d:.12s"><div class="n">02</div><h4 data-i18n="s2_t"></h4><p data-i18n-html="s2_d"></p></div>
+      <div class="step fx" style="--d:.24s"><div class="n">03</div><h4 data-i18n="s3_t"></h4><p data-i18n-html="s3_d"></p></div>
     </div>
   </div>
 </section>
 
 <section id="contact" style="padding-top:24px">
   <div class="wrap contact">
-    <div>
+    <div class="fx">
       <div class="sec-no mono">03 — <span data-i18n="sec_contact_k"></span></div>
       <h2 data-i18n="sec_contact"></h2>
       <p class="lead" style="margin-top:16px" data-i18n="contact_sub"></p>
     </div>
-    <div class="cards-c" id="contactCards"></div>
+    <div class="cards-c fx" style="--d:.15s" id="contactCards"></div>
   </div>
 </section>
 
@@ -349,7 +397,7 @@ const I18N = {
   vi:{
     nav_plugins:"Plugin", nav_install:"Cài đặt", nav_contact:"Liên hệ",
     kicker:"SketchUp Extensions · Kiến trúc & Nội thất",
-    hero_title:"Dựng nhanh hơn,<br><em>thiết kế</em> nhiều hơn.",
+    hero_title:'<span class="line"><span>Dựng nhanh hơn,</span></span><span class="line"><span><em>thiết kế</em> nhiều hơn.</span></span>',
     hero_sub:"Bộ công cụ SketchUp do kiến trúc sư viết cho kiến trúc sư — dựng mái, lát sàn, ốp vách chỉ trong vài cú click. Luôn được cập nhật tự động.",
     cta_browse:"Xem plugin", cta_contact:"Liên hệ",
     stat_plugins:"Plugin", stat_versions:"Phiên bản", stat_downloads:"Lượt tải",
@@ -372,7 +420,7 @@ const I18N = {
   en:{
     nav_plugins:"Plugins", nav_install:"Install", nav_contact:"Contact",
     kicker:"SketchUp Extensions · Architecture & Interiors",
-    hero_title:"Model faster,<br><em>design</em> more.",
+    hero_title:'<span class="line"><span>Model faster,</span></span><span class="line"><span><em>design</em> more.</span></span>',
     hero_sub:"SketchUp tools written by an architect for architects — roofs, floor patterns and wall panels in a few clicks. Always kept up to date automatically.",
     cta_browse:"Browse plugins", cta_contact:"Get in touch",
     stat_plugins:"Plugins", stat_versions:"Releases", stat_downloads:"Downloads",
@@ -426,19 +474,17 @@ function applyI18n(){
 
 function renderChrome(){
   const s=state.site, c=s.contact||{};
-  $("#s-plugins").textContent=state.plugins.length||"–";
-  $("#s-releases").textContent=state.plugins.length?state.plugins.reduce((a,p)=>a+p.versions.length,0):"–";
-  $("#s-downloads").textContent=state.plugins.length?fmtNum(state.plugins.reduce((a,p)=>a+p.downloads,0)):"–";
+  if(state.plugins.length){
+    countTo($("#s-plugins"),state.plugins.length);
+    countTo($("#s-releases"),state.plugins.reduce((a,p)=>a+p.versions.length,0));
+    countTo($("#s-downloads"),state.plugins.reduce((a,p)=>a+p.downloads,0));
+  }
   $("#notice").innerHTML=state.status?`<div class="notice">${esc(T(state.status))}</div>`:"";
   const items=[];
-  if(c.zalo) items.push({icon:"i-chat",label:T("zalo"),value:c.zalo.replace(/(\d{4})(\d{3})(\d+)/,"$1 $2 $3"),raw:c.zalo,href:`https://zalo.me/${c.zalo.replace(/\D/g,"")}`});
-  if(c.email) items.push({icon:"i-mail",label:T("email"),value:c.email,raw:c.email,href:`mailto:${c.email}`});
-  $("#contactCards").innerHTML=items.map(i=>`
-    <a class="ccard" href="${esc(i.href)}" target="_blank" rel="noopener">
-      <span class="ci"><svg><use href="#${i.icon}"/></svg></span>
-      <span><div class="cl mono">${esc(i.label)}</div><div class="cv">${esc(i.value)}</div></span>
-      <span class="go"><button class="copy" data-copy="${esc(i.raw)}">${T("copy")}</button></span>
-    </a>`).join("");
+  if(c.zalo) items.push({cls:"s-zalo",label:"Zalo",href:`https://zalo.me/${c.zalo.replace(/\D/g,"")}`,
+    icon:c.zalo_icon?`<img src="${esc(c.zalo_icon)}" alt="">`:`<svg><use href="#i-chat"/></svg>`});
+  if(c.email) items.push({cls:"s-mail",label:"Email",href:`mailto:${c.email}`,icon:`<svg><use href="#i-mail"/></svg>`});
+  $("#contactCards").innerHTML=items.map(i=>`<a class="social ${i.cls}" href="${esc(i.href)}" target="_blank" rel="noopener" aria-label="${esc(i.label)}" title="${esc(i.label)}">${i.icon}<span class="lbl mono">${esc(i.label)}</span></a>`).join("");
   $("#foot").innerHTML=`© ${new Date().getFullYear()} ${esc(s.author||"")}`;
   $("#foot2").innerHTML=CONFIG.owner?`<a href="https://github.com/${CONFIG.owner}/${CONFIG.repo}/releases">${T("all_releases")} ↗</a>`:"";
 }
@@ -459,7 +505,7 @@ function render(){
     const name=pick(p,"name");
     const ini=name.split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
     const open=state.open.has(p.id);
-    return `<article class="card">
+    return `<article class="card${state.revealed?" in":""}" style="--d:${(list.indexOf(p)%3)*0.1}s">
       <div class="card-top mono"><span>P.${String(i).padStart(2,"0")}</span><span class="tag">${esc(T("cats")[p.category]||p.category||"")}</span></div>
       <div class="card-body">
         <div class="card-head">
@@ -482,6 +528,7 @@ function render(){
           <div class="notes">${md(v.notes)||`<i>${T("no_notes")}</i>`}</div></div>`).join("")}</div>`:""}
       </div>
     </article>`}).join("");
+  if(!state.revealed){ document.querySelectorAll("#grid .card").forEach(c=>io.observe(c)); setTimeout(()=>state.revealed=true,50); }
 }
 
 const DEMO=[{tag_name:"demo-v1.0.0",published_at:new Date().toISOString(),body:"- Sample",assets:[{name:"demo.rbz",browser_download_url:"#",download_count:12,size:204800}]}];
@@ -512,8 +559,19 @@ $("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b
 $("#grid").addEventListener("click",e=>{const b=e.target.closest("[data-log]");if(!b)return;const id=b.dataset.log;state.open.has(id)?state.open.delete(id):state.open.add(id);render()});
 document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>{state.lang=b.dataset.lang;save("pt-lang",state.lang);applyI18n()}));
 $("#themeBtn").addEventListener("click",()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==="dark"?"light":"dark";save("pt-theme",r.dataset.theme)});
-$("#contactCards").addEventListener("click",async e=>{const b=e.target.closest("[data-copy]");if(!b)return;e.preventDefault();
-  try{await navigator.clipboard.writeText(b.dataset.copy);toast(T("copied")+": "+b.dataset.copy)}catch(_){toast(b.dataset.copy)}});
+
+/* ===== MOTION ===== */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+document.querySelectorAll("section .fx").forEach(el=>io.observe(el));
+document.querySelectorAll(".drawing path").forEach((p,i)=>{p.setAttribute("pathLength","1");p.classList.add("draw");p.style.setProperty("--d",(0.25+i*0.09).toFixed(2)+"s")});
+function countTo(el,target){
+  if(el.dataset.v==String(target)){el.textContent=fmtNum(target);return}
+  el.dataset.v=target; if(reduce||!target){el.textContent=fmtNum(target);return}
+  const t0=performance.now(), dur=1400;
+  (function step(t){const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); el.textContent=fmtNum(Math.round(target*e)); if(k<1)requestAnimationFrame(step)})(t0);
+}
+addEventListener("scroll",()=>{const h=document.documentElement; $("#progress").style.transform=`scaleX(${h.scrollTop/((h.scrollHeight-h.clientHeight)||1)})`},{passive:true});
 
 applyI18n(); load();
 </script>
