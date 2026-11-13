@@ -1,31 +1,31 @@
 {
   "site": {
-    "title": "KT Studio — SketchUp Plugins",
+    "title": "PT Plugins — SketchUp",
     "tagline": "Công cụ SketchUp cho kiến trúc & nội thất — nhanh, gọn, tiện.",
-    "author": "KT Studio",
+    "author": "Đoàn Phú Tiến",
     "contact": ""
   },
   "plugins": [
     {
-      "id": "tuong_nhanh",
-      "name": "Tường Nhanh",
+      "id": "mai_viet",
+      "name": "Mái Việt",
       "category": "Kiến trúc",
-      "description": "Dựng tường từ đường line chỉ với một cú click: chọn độ dày, chiều cao, tự cắt giao tường.",
-      "icon": ""
+      "description": "Dựng mái Nhật, mái Thái, Mansard từ mặt bằng; lợp ngói tự động theo mặt mái, ngói nóc/rìa, lớp vữa, kim thu lôi, đổi màu ngẫu nhiên và thống kê – dự toán vật tư.",
+      "icon": "icons/mai_viet.png"
     },
     {
-      "id": "tu_bep",
-      "name": "Tủ Bếp Tham Số",
+      "id": "smart_floor",
+      "name": "Smart Floor Generator",
       "category": "Nội thất",
-      "description": "Tạo tủ bếp trên/dưới theo kích thước nhập vào, tự chia cánh, ngăn kéo và tay nắm.",
-      "icon": ""
+      "description": "Lát sàn theo pattern (Running Bond, Herringbone, Chevron, Hexagon…), vát cạnh gạch, len chân tường, ngưỡng cửa tự nhận diện, cắt mòi 3D ở góc; bảng thống kê gạch xuất PDF/Excel/DXF.",
+      "icon": "icons/smart_floor.svg"
     },
     {
-      "id": "boc_tach",
-      "name": "Bóc Tách Khối Lượng",
-      "category": "Tiện ích",
-      "description": "Thống kê diện tích sàn, tường, số lượng component và xuất ra Excel/CSV.",
-      "icon": ""
+      "id": "pt_wallpanel",
+      "name": "PT Wall Panel – Vách ốp nan",
+      "category": "Nội thất",
+      "description": "Tạo vách ốp nan gỗ/lam 1 click trên mặt phẳng và mặt cong: chia nan đều, tránh lỗ cửa, uốn theo tường cong, cột tròn, trần; có tấm nền, vật liệu và chỉnh sửa lại được.",
+      "icon": "icons/pt_wallpanel.png"
     }
   ]
 }

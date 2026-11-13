@@ -1,9 +1,8 @@
 # encoding: UTF-8
 # =====================================================================
-#  TỰ ĐỘNG CẬP NHẬT PLUGIN TỪ GITHUB RELEASES
-#  Copy file này vào thư mục con của mỗi plugin.
-#  Khi dùng cho plugin khác: chỉ đổi tên module "TuongNhanh" ở dòng 16.
-#  Yêu cầu: SketchUp 2017 trở lên.
+#  TỰ ĐỘNG CẬP NHẬT từ GitHub Releases (doanphutien00-afk/sketchup-plugins)
+#  Kiểm tra tối đa 1 lần/ngày khi mở SketchUp + menu "Kiểm tra cập nhật…".
+#  Phát hành bản mới: tạo Release có tag "tuong_nhanh-v<phiên bản>" kèm file .rbz
 # =====================================================================
 require 'json'
 require 'net/http'
@@ -11,14 +10,15 @@ require 'uri'
 require 'tmpdir'
 
 module KTStudio
-  module TuongNhanh
+module TuongNhanh
     module Updater
-      # ---------- CẤU HÌNH (sửa 2 dòng này) ----------
       GITHUB_OWNER = 'doanphutien00-afk'.freeze
       GITHUB_REPO  = 'sketchup-plugins'.freeze
-      # -----------------------------------------------
+      PLUGIN_ID    = 'tuong_nhanh'.freeze
+      PLUGIN_NAME  = 'Tường Nhanh'.freeze
+      CURRENT_VERSION = TuongNhanh::VERSION
       CHECK_EVERY_HOURS = 24
-      PREF_KEY = "KTStudio_#{PLUGIN_ID}".freeze
+      PREF_KEY = "PTUpdater_#{PLUGIN_ID}".freeze
       API_URL  = "https://api.github.com/repos/#{GITHUB_OWNER}/#{GITHUB_REPO}/releases?per_page=100".freeze
       TAG_RE   = /\A#{Regexp.escape(PLUGIN_ID)}-v(\d+(?:\.\d+)*)\z/
 
@@ -57,8 +57,8 @@ module KTStudio
         end
         latest = find_latest(JSON.parse(res.body))
 
-        if latest.nil? || !newer?(latest[:version], VERSION)
-          UI.messagebox("#{PLUGIN_NAME} v#{VERSION} đã là bản mới nhất.") unless silent
+        if latest.nil? || !newer?(latest[:version], CURRENT_VERSION)
+          UI.messagebox("#{PLUGIN_NAME} v#{CURRENT_VERSION} đã là bản mới nhất.") unless silent
           return
         end
         if silent && Sketchup.read_default(PREF_KEY, 'skip_version', '') == latest[:version]
@@ -67,7 +67,7 @@ module KTStudio
 
         notes = latest[:notes].gsub(/^#+\s*/, '').strip
         notes = notes[0, 600] + '…' if notes.length > 600
-        msg = "Đã có #{PLUGIN_NAME} v#{latest[:version]} (bạn đang dùng v#{VERSION}).\n\n" \
+        msg = "Đã có #{PLUGIN_NAME} v#{latest[:version]} (bạn đang dùng v#{CURRENT_VERSION}).\n\n" \
               "#{notes}\n\n" \
               "Có  = Cập nhật ngay\nKhông = Nhắc lại sau\nHủy  = Bỏ qua phiên bản này"
         case UI.messagebox(msg, MB_YESNOCANCEL)
@@ -138,5 +138,5 @@ module KTStudio
         end
       end
     end
-  end
+end
 end
