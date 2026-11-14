@@ -21,7 +21,7 @@ Website và plugin trong SketchUp đều đọc danh sách Release này, nên **
 2. Tạo repository mới, đặt tên ví dụ `sketchup-plugins`, chọn **Public**.
 3. Upload `index.html`, `plugins.json` và thư mục `icons/` lên repo (Add file → Upload files).
 4. Vào **Settings → Pages**, phần *Branch* chọn `main` / `(root)` rồi bấm **Save**.
-   Sau khoảng 1 phút, trang chạy tại `https://<ten-github>.github.io/sketchup-plugins/`.
+   Sau khoảng 1 phút, trang chạy tại `https://doanphutien00-afk.github.io/`.
 5. Sửa `plugins.json`: điền tên studio và danh sách plugin của bạn.
    - `id` chỉ dùng chữ thường không dấu, số và dấu `_` (ví dụ `tu_bep`).
    - `icon` (tùy chọn): đường dẫn ảnh vuông, ví dụ `icons/tu_bep.png`. Để trống thì trang hiện chữ viết tắt.
@@ -50,7 +50,7 @@ Plugin sẽ tự kiểm tra **tối đa 1 lần/ngày** khi mở SketchUp. Nếu
 
 **Cách 2 – Một lệnh (cài GitHub CLI: https://cli.github.com, rồi chạy `gh auth login` một lần):**
 ```powershell
-.\tools\phat_hanh.ps1 -Loader kt_tuong_nhanh.rb -Repo "doanphutien00-afk/sketchup-plugins" -Notes "- Thêm tính năng X"
+.\tools\phat_hanh.ps1 -Loader kt_tuong_nhanh.rb -Repo "doanphutien00-afk/doanphutien00-afk.github.io" -Notes "- Thêm tính năng X"
 ```
 
 ## D. Lưu ý

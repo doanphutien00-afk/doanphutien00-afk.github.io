@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # =====================================================================
-#  TỰ ĐỘNG CẬP NHẬT từ GitHub Releases (doanphutien00-afk/sketchup-plugins)
+#  TỰ ĐỘNG CẬP NHẬT từ GitHub Releases (doanphutien00-afk/doanphutien00-afk.github.io)
 #  Kiểm tra tối đa 1 lần/ngày khi mở SketchUp + menu "Kiểm tra cập nhật…".
 #  Phát hành bản mới: tạo Release có tag "tuong_nhanh-v<phiên bản>" kèm file .rbz
 # =====================================================================
@@ -13,7 +13,7 @@ module KTStudio
 module TuongNhanh
     module Updater
       GITHUB_OWNER = 'doanphutien00-afk'.freeze
-      GITHUB_REPO  = 'sketchup-plugins'.freeze
+      GITHUB_REPO  = 'doanphutien00-afk.github.io'.freeze
       PLUGIN_ID    = 'tuong_nhanh'.freeze
       PLUGIN_NAME  = 'Tường Nhanh'.freeze
       CURRENT_VERSION = TuongNhanh::VERSION

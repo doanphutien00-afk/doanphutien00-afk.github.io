@@ -10,7 +10,7 @@
 param(
   [Parameter(Mandatory=$true)][string]$Loader,
   [string]$Notes = "",
-  [string]$Repo = "doanphutien00-afk/sketchup-plugins"
+  [string]$Repo = "doanphutien00-afk/doanphutien00-afk.github.io"
 )
 $ErrorActionPreference = "Stop"
 
