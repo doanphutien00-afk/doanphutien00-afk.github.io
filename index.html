@@ -114,6 +114,7 @@ h1 .line:nth-child(2) > span{animation-delay:.12s}
 section{padding:72px 0}
 .sec-head{display:flex; align-items:end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:28px}
 .sec-no{color:var(--accent)}
+h1,h2,h3,.step h4{text-transform:capitalize}
 h2{font-family:var(--serif); font-weight:600; font-size:clamp(28px,3.4vw,40px); margin:6px 0 0; letter-spacing:-.035em}
 .toolbar{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
 .search{position:relative}
@@ -188,6 +189,8 @@ h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.2; m
 .social:hover .lbl,.social:focus-visible .lbl{opacity:1; translate:-50% 0}
 .s-zalo{--brand:#0068ff; color:#fff; background:#0068ff; border-color:#0068ff}
 .s-mail{--brand:var(--accent); color:var(--on-accent); background:var(--accent); border-color:var(--accent)}
+.social.has-img{background:#fff; border-color:#e3e8f0}
+.social.has-img img{width:46px; height:46px; border-radius:10px}
 .s-zalo:hover,.s-mail:hover{background:var(--brand); filter:brightness(1.08)}
 .social .lbl{color:var(--muted)}
 .social::before{color:var(--brand)}
@@ -484,7 +487,7 @@ function renderChrome(){
   }
   $("#notice").innerHTML=state.status?`<div class="notice">${esc(T(state.status))}</div>`:"";
   const items=[];
-  if(c.zalo) items.push({cls:"s-zalo",label:"Zalo",href:`https://zalo.me/${c.zalo.replace(/\D/g,"")}`,
+  if(c.zalo) items.push({cls:"s-zalo"+(c.zalo_icon?" has-img":""),label:"Zalo",href:`https://zalo.me/${c.zalo.replace(/\D/g,"")}`,
     icon:c.zalo_icon?`<img src="${esc(c.zalo_icon)}" alt="">`:`<svg><use href="#i-chat"/></svg>`});
   if(c.email) items.push({cls:"s-mail",label:"Email",href:`mailto:${c.email}`,icon:`<svg><use href="#i-mail"/></svg>`});
   $("#contactCards").innerHTML=items.map(i=>`<a class="social ${i.cls}" href="${esc(i.href)}" target="_blank" rel="noopener" aria-label="${esc(i.label)}" title="${esc(i.label)}">${i.icon}<span class="lbl mono">${esc(i.label)}</span></a>`).join("");
