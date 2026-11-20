@@ -16,7 +16,11 @@ Có bản mới → PT Hub báo trong mục **Cập nhật**, tự tải và cà
    (`pt_cabinet`, `pt_smartlight`, `mai_viet`, `pt_wallpanel`, `pt_stair`, `pt_hub`, `smart_floor`).
 3. Ghi chú thay đổi (mỗi dòng bắt đầu bằng `- `), kéo tệp `.rbz` vào, **Publish release**.
 
-**Cách B – đặt tệp trên trang (khi không tạo Release được):**
+**Cách B – đặt tệp vào `pt-hub/goi/` (Release được tạo TỰ ĐỘNG):**
+GitHub Actions (`.github/workflows/phat-hanh.yml`) tự tạo Release `<mã>-v<phiên bản>` cho mọi tệp
+`pt-hub/goi/<mã>-<phiên bản>.rbz` chưa có Release, lấy tên + ghi chú từ `PT_Hub_phien_ban.json`.
+Nhờ đó lượt tải được đếm trên trang **Thống kê** (`thong-ke.html`).
+Các bước:
 1. Đưa tệp `.rbz` vào `pt-hub/goi/`.
 2. Sửa `PT_Hub_phien_ban.json`: `version`, `date`, `file`, `download_url`
    (`https://doanphutien00-afk.github.io/pt-hub/goi/<tệp>.rbz`), `notes`; đổi `updated` sang giờ hiện tại.

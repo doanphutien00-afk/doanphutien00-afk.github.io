@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thống kê lượt tải — PT Plugins</title>
+<meta name="description" content="Download statistics for PT SketchUp plugins.">
+<script>
+  (function(){ var t,l; try{t=localStorage.getItem("pt-theme");l=localStorage.getItem("pt-lang")}catch(e){}
+    if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+    document.documentElement.dataset.theme=t; document.documentElement.lang=l==="en"?"en":"vi"; })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;--ease:cubic-bezier(.2,.7,.2,1);--r:4px;--maxw:1200px}
+[data-theme="light"]{--bg:#f3f0e9;--surface:#fbfaf6;--surface-2:#efebe2;--ink:#1b1a17;--ink-2:#3a3833;--muted:#777166;--line:#d9d2c4;--line-2:#b9b09e;
+  --accent:#a4472a;--accent-2:#c56a48;--on-accent:#fff;--bar:#a4472a;--bar-hi:#8a3a21;--grid:#e6e0d4;--shadow:0 1px 0 rgba(27,26,23,.04),0 12px 32px -18px rgba(27,26,23,.25);
+  --grid-minor:rgba(27,26,23,.045);--grid-major:rgba(27,26,23,.075)}
+[data-theme="dark"]{--bg:#111315;--surface:#181b1e;--surface-2:#1f2326;--ink:#ebe6db;--ink-2:#c9c3b7;--muted:#8f8a80;--line:#2b2f33;--line-2:#41464c;
+  --accent:#d77a52;--accent-2:#e89670;--on-accent:#1b120d;--bar:#c96a42;--bar-hi:#e0835a;--grid:#262a2e;--shadow:0 1px 0 rgba(0,0,0,.3),0 16px 36px -20px rgba(0,0,0,.7);
+  --grid-minor:rgba(235,230,219,.03);--grid-major:rgba(235,230,219,.055)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+  background-image:linear-gradient(var(--grid-major) 1px,transparent 1px),linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),linear-gradient(var(--grid-minor) 1px,transparent 1px),linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px);
+  background-size:96px 96px,96px 96px,16px 16px,16px 16px;background-attachment:fixed}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600}
+.brand svg{width:26px;height:26px;color:var(--accent)}
+.brand small{font-family:var(--mono);font-weight:400;font-size:11px;color:var(--muted);letter-spacing:.1em}
+.links{display:flex;gap:22px;margin-left:auto}
+.links a{text-decoration:none;font-size:14px;color:var(--ink-2);position:relative}
+.links a.on,.links a:hover{color:var(--ink)}
+.links a::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:1px;background:var(--accent);transition:right .25s}
+.links a.on::after,.links a:hover::after{right:0}
+.ctrls{display:flex;gap:8px;align-items:center}
+.seg{display:flex;border:1px solid var(--line-2);border-radius:999px;padding:2px}
+.seg button{border:0;background:none;padding:4px 10px;border-radius:999px;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.iconbtn{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:999px;background:none;cursor:pointer}
+.iconbtn svg{width:16px;height:16px}
+[data-theme="light"] .i-sun,[data-theme="dark"] .i-moon{display:none}
+header.hero{padding:48px 0 28px}
+.kicker{color:var(--accent);display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+h1{font-weight:600;font-size:clamp(34px,4.6vw,56px);line-height:1.06;letter-spacing:-.04em;margin:14px 0 10px}
+.lead{color:var(--ink-2);font-weight:300;font-size:16.5px;max-width:640px;margin:0}
+.bar-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:13px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--surface);cursor:pointer;font-size:13.5px;transition:border-color .2s,transform .2s}
+.btn:hover{border-color:var(--ink)}
+.btn svg{width:14px;height:14px}
+.btn.spin svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* ô số liệu */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);margin:26px 0 22px}
+.tile{padding:20px 22px;position:relative}
+.tile+.tile{border-left:1px solid var(--line)}
+.tile b{display:block;font-weight:300;font-size:42px;line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-top:6px}
+.tile .sub{color:var(--muted);font-size:13px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .mono{color:var(--muted)}
+/* khối biểu đồ */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:22px;position:relative}
+.panel::before,.panel::after{content:"";position:absolute;width:10px;height:10px;border-color:var(--accent);border-style:solid}
+.panel::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.panel::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.phead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--line)}
+.phead h2{font-size:19px;font-weight:600;letter-spacing:-.02em;margin:0}
+.phead .sp{flex:1}
+.pbody{padding:16px 20px 20px}
+.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:start}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line-2);background:transparent;padding:5px 11px;border-radius:var(--r);cursor:pointer;font-size:12.5px;transition:background .2s,color .2s}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+svg.chart text{font-family:var(--sans);fill:var(--ink-2);font-size:12.5px}
+svg.chart .axis{fill:var(--muted);font-size:11px;font-family:var(--mono)}
+svg.chart .val{fill:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+svg.chart .gl{stroke:var(--grid);stroke-width:1;shape-rendering:crispEdges}
+svg.chart .base{stroke:var(--line-2);stroke-width:1;shape-rendering:crispEdges}
+svg.chart .mark{fill:var(--bar);transition:fill .15s}
+svg.chart .hit{fill:transparent;cursor:pointer}
+svg.chart g.item:hover .mark,svg.chart g.item.on .mark{fill:var(--bar-hi)}
+svg.chart g.item:hover text.lbl{fill:var(--ink)}
+svg.chart .grow{transform-box:fill-box;transform-origin:left center;animation:growx .8s var(--ease) both}
+svg.chart .growy{transform-box:fill-box;transform-origin:center bottom;animation:growy .8s var(--ease) both}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+.empty{color:var(--muted);text-align:center;padding:40px 10px;border:1px dashed var(--line-2);border-radius:var(--r)}
+.tip{position:fixed;pointer-events:none;z-index:40;background:var(--ink);color:var(--bg);padding:8px 11px;border-radius:var(--r);font-size:12.5px;line-height:1.45;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;max-width:260px}
+.tip.show{opacity:1;transform:none}
+.tip b{font-weight:600}
+.tip .m{opacity:.7;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+/* bảng */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:9px 10px;border-bottom:1px solid var(--line-2);cursor:pointer;white-space:nowrap;user-select:none}
+th:hover{color:var(--ink)}
+th.r,td.r{text-align:right}
+th .ar{opacity:.6}
+td{padding:9px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+tr:hover td{background:var(--surface-2)}
+td .pl{display:flex;align-items:center;gap:9px}
+td .ic{width:24px;height:24px;border:1px solid var(--line-2);border-radius:3px;display:grid;place-items:center;background:var(--surface-2);font-size:10px;font-weight:600;flex:none}
+td .ic img{width:16px;height:16px;object-fit:contain}
+[data-theme="dark"] td .ic{background:#efebe2;border-color:#efebe2;color:#1b1a17}
+td a{color:var(--accent);text-decoration:none}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;background:var(--accent);color:var(--on-accent);padding:1px 5px;border-radius:2px;margin-left:6px;vertical-align:1px}
+.note{color:var(--muted);font-size:12.5px;margin-top:12px}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13px}
+.fx{opacity:0;transform:translateY(16px);animation:fadeUp .7s var(--ease) forwards;animation-delay:var(--d,0s)}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@media (max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}.tile:nth-child(3){border-left:0;border-top:1px solid var(--line)}.tile:nth-child(4){border-top:1px solid var(--line)}.grid2{grid-template-columns:1fr}.links{display:none}.ctrls{margin-left:auto}}
+@media (max-width:520px){.wrap{padding:0 16px}.tile b{font-size:32px}.hide-sm{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.fx{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="PT Plugins">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="26" height="26"/><path d="M3 29 29 3M16 3v26" stroke-width="1.4"/></svg>
+      <span>PT Plugins</span><small>FOR SKETCHUP</small>
+    </a>
+    <div class="links">
+      <a href="./#plugins" data-i="nav_plugins"></a>
+      <a href="thong-ke.html" class="on" data-i="nav_stats"></a>
+      <a href="./#contact" data-i="nav_contact"></a>
+    </div>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="Language"><button data-lang="vi">VI</button><button data-lang="en">EN</button></div>
+      <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4m11.4-11.4 1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker mono fx" data-i="kicker"></div>
+    <h1 class="fx" style="--d:.08s" data-i="title"></h1>
+    <p class="lead fx" style="--d:.16s" data-i="lead"></p>
+    <div class="bar-row fx" style="--d:.22s">
+      <button class="btn" id="reload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg><span data-i="reload"></span></button>
+      <span id="stamp"></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tiles fx" style="--d:.28s" id="tiles"></div>
+  <div class="grid2">
+    <section class="panel fx" style="--d:.34s">
+      <div class="phead"><h2 data-i="by_plugin"></h2><span class="sp"></span><span class="mono" style="color:var(--muted)" data-i="downloads"></span></div>
+      <div class="pbody" id="c1"></div>
+    </section>
+    <section class="panel fx" style="--d:.4s">
+      <div class="phead"><h2 data-i="by_version"></h2><span class="sp"></span><div class="chips" id="vchips"></div></div>
+      <div class="pbody" id="c2"></div>
+    </section>
+  </div>
+  <section class="panel fx" style="--d:.46s">
+    <div class="phead"><h2 data-i="all_rel"></h2><span class="sp"></span><div class="chips" id="tchips"></div></div>
+    <div class="pbody" style="overflow-x:auto"><div id="tbl"></div><p class="note" data-i="note"></p></div>
+  </section>
+</main>
+
+<footer><div class="wrap" id="foot"></div></footer>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+const OWNER = (location.hostname.endsWith(".github.io") ? location.hostname.split(".")[0] : "doanphutien00-afk");
+const REPO = OWNER + ".github.io";
+const TAG_RE = /^(.+)-v(\d+(?:\.\d+)*)$/;
+const I18N = {
+  vi:{nav_plugins:"Plugin",nav_stats:"Thống kê",nav_contact:"Liên hệ",kicker:"PT Plugins · Thống kê",title:"Lượt tải plugin",
+    lead:"Số lượt tải mỗi plugin và từng phiên bản, lấy trực tiếp từ GitHub Releases — gồm lượt tải trên trang web và lượt PT Hub tự cập nhật.",
+    reload:"Tải lại",updated:"Cập nhật lúc",loading:"Đang tải số liệu…",total:"Tổng lượt tải",plugins:"Plugin",releases:"Bản phát hành",latest:"Phát hành gần nhất",
+    by_plugin:"Theo plugin",by_version:"Theo phiên bản",downloads:"Lượt tải",all_rel:"Tất cả bản phát hành",all:"Tất cả",
+    th_plugin:"Plugin",th_ver:"Phiên bản",th_date:"Ngày",th_size:"Dung lượng",th_dl:"Lượt tải",versions:"phiên bản",newest:"MỚI NHẤT",
+    err:"Không lấy được số liệu từ GitHub (giới hạn 60 lượt / giờ). Thử lại sau ít phút.",empty:"Chưa có bản phát hành.",
+    note:"GitHub cập nhật số đếm sau vài phút. Chỉ tính lượt tải qua GitHub Releases; tệp đặt sẵn trong pt-hub/goi không được đếm.",
+    top:"đứng đầu",share:"của tổng"},
+  en:{nav_plugins:"Plugins",nav_stats:"Statistics",nav_contact:"Contact",kicker:"PT Plugins · Statistics",title:"Plugin downloads",
+    lead:"Downloads per plugin and per version, read live from GitHub Releases — website downloads plus PT Hub auto-updates.",
+    reload:"Reload",updated:"Updated",loading:"Loading…",total:"Total downloads",plugins:"Plugins",releases:"Releases",latest:"Latest release",
+    by_plugin:"By plugin",by_version:"By version",downloads:"Downloads",all_rel:"All releases",all:"All",
+    th_plugin:"Plugin",th_ver:"Version",th_date:"Date",th_size:"Size",th_dl:"Downloads",versions:"versions",newest:"LATEST",
+    err:"Could not load data from GitHub (limit 60 requests / hour). Try again in a few minutes.",empty:"No releases yet.",
+    note:"GitHub refreshes counts after a few minutes. Only GitHub Release downloads are counted; files hosted in pt-hub/goi are not.",
+    top:"top",share:"of total"}
+};
+const st = { lang: document.documentElement.lang === "en" ? "en" : "vi", plugins: [], rels: [], sel: null, filter: "all", sort: ["date", -1], err: false, loaded: false, at: null };
+const $ = s => document.querySelector(s);
+const T = k => (I18N[st.lang] || I18N.vi)[k] || k;
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const cmpVer = (a, b) => { const x = a.split(".").map(Number), y = b.split(".").map(Number); for (let i = 0; i < Math.max(x.length, y.length); i++) { const d = (x[i] || 0) - (y[i] || 0); if (d) return d; } return 0; };
+const nf = n => Number(n).toLocaleString(st.lang === "en" ? "en-US" : "vi-VN");
+const fdate = d => d ? new Date(d).toLocaleDateString(st.lang === "en" ? "en-GB" : "vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" }) : "–";
+const fsize = b => !b ? "–" : b >= 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(b / 1024)) + " KB";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+async function load() {
+  $("#reload").classList.add("spin"); st.err = false;
+  let manifest = { plugins: [] }, rels = [];
+  try { manifest = await (await fetch("plugins.json", { cache: "no-cache" })).json(); } catch (e) {}
+  try {
+    for (let page = 1; page <= 5; page++) {
+      const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/releases?per_page=100&page=${page}`, { headers: { Accept: "application/vnd.github+json" } });
+      if (!r.ok) throw 0;
+      const list = await r.json(); rels = rels.concat(list);
+      if (list.length < 100) break;
+    }
+  } catch (e) { st.err = true; }
+  const meta = {}; (manifest.plugins || []).forEach(p => meta[p.id] = p);
+  st.rels = [];
+  for (const r of rels) {
+    if (r.draft || r.prerelease) continue;
+    const m = (r.tag_name || "").match(TAG_RE); if (!m) continue;
+    const a = (r.assets || []).find(x => /\.rbz$/i.test(x.name));
+    st.rels.push({ id: m[1], version: m[2], date: r.published_at, url: r.html_url, size: a ? a.size : 0,
+      dl: (r.assets || []).reduce((s, x) => s + (x.download_count || 0), 0) });
+  }
+  const by = {};
+  st.rels.forEach(r => (by[r.id] ||= []).push(r));
+  st.plugins = Object.keys(by).map(id => {
+    const v = by[id].sort((a, b) => cmpVer(b.version, a.version)), p = meta[id] || {};
+    v[0].latest = true;
+    return { id, name: p.name || id, name_en: p.name_en, icon: p.icon, versions: v, dl: v.reduce((s, x) => s + x.dl, 0) };
+  }).sort((a, b) => b.dl - a.dl || a.name.localeCompare(b.name));
+  if (!st.sel || !by[st.sel]) st.sel = st.plugins[0] && st.plugins[0].id;
+  st.loaded = true; st.at = new Date();
+  $("#reload").classList.remove("spin");
+  render(true);
+}
+const pname = p => st.lang === "en" && p.name_en ? p.name_en : p.name;
+
+function render(anim) {
+  document.documentElement.lang = st.lang;
+  document.querySelectorAll("[data-i]").forEach(el => el.textContent = T(el.dataset.i));
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === st.lang));
+  $("#stamp").textContent = st.loaded ? `${T("updated")} ${st.at.toLocaleTimeString(st.lang === "en" ? "en-GB" : "vi-VN", { hour: "2-digit", minute: "2-digit" })}` : T("loading");
+  $("#foot").innerHTML = `© ${new Date().getFullYear()} Đoàn Phú Tiến · <a href="https://github.com/${OWNER}/${REPO}/releases">GitHub Releases ↗</a>`;
+  if (!st.loaded) return;
+  if (st.err && !st.rels.length) {
+    $("#tiles").innerHTML = ""; $("#c1").innerHTML = `<div class="empty">${T("err")}</div>`; $("#c2").innerHTML = ""; $("#tbl").innerHTML = ""; return;
+  }
+  // ô số liệu
+  const total = st.plugins.reduce((s, p) => s + p.dl, 0);
+  const last = st.rels.slice().sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+  const lp = last && st.plugins.find(p => p.id === last.id);
+  $("#tiles").innerHTML =
+    tile(T("total"), total, st.plugins[0] ? `${esc(pname(st.plugins[0]))} ${T("top")} · ${nf(st.plugins[0].dl)}` : "") +
+    tile(T("plugins"), st.plugins.length, "") +
+    tile(T("releases"), st.rels.length, "") +
+    `<div class="tile"><span class="mono">${T("latest")}</span><b style="font-size:24px;margin-top:12px">${last ? esc(pname(lp)) : "–"}</b><div class="sub">${last ? "v" + esc(last.version) + " · " + fdate(last.date) : ""}</div></div>`;
+  if (anim) countUp();
+  barsH($("#c1"), st.plugins.map(p => ({ key: p.id, label: pname(p), value: p.dl, sub: `${p.versions.length} ${T("versions")} · v${p.versions[0].version}`, share: total ? p.dl / total : 0 })), anim);
+  // chọn plugin cho biểu đồ phiên bản
+  $("#vchips").innerHTML = st.plugins.map(p => `<button class="chip" data-sel="${esc(p.id)}" aria-pressed="${p.id === st.sel}">${esc(pname(p))}</button>`).join("");
+  const sp = st.plugins.find(p => p.id === st.sel);
+  cols($("#c2"), sp ? sp.versions.slice().reverse().map(v => ({ key: v.version, label: "v" + v.version, value: v.dl, sub: fdate(v.date) + " · " + fsize(v.size) })) : [], anim);
+  table();
+}
+function tile(label, n, sub) { return `<div class="tile"><span class="mono">${label}</span><b class="cnt" data-n="${n}">${nf(n)}</b><div class="sub">${esc(sub) || "&nbsp;"}</div></div>`; }
+function countUp() {
+  if (reduce) return;
+  document.querySelectorAll(".cnt").forEach(el => {
+    const n = +el.dataset.n, t0 = performance.now(), dur = 1100;
+    (function step(t) { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = nf(Math.round(n * e)); if (k < 1) requestAnimationFrame(step); })(t0);
+  });
+}
+function niceMax(v) { if (v <= 5) return 5; const p = Math.pow(10, Math.floor(Math.log10(v))), m = v / p;
+  return ([1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => m <= s + 1e-9)) * p; }
+function ticks(max) { const n = max <= 5 ? max : ([5, 4, 3, 6].find(k => Number.isInteger(max / k)) || 4);
+  return Array.from({ length: n + 1 }, (_, i) => Math.round(max * i / n)); }
+
+// Thanh ngang: 1 dãy, 1 màu; số ở đầu thanh; rê chuột hiện chi tiết
+function barsH(el, data, anim) {
+  if (!data.length) { el.innerHTML = `<div class="empty">${T("empty")}</div>`; return; }
+  const W = Math.max(300, el.clientWidth || 560), L = W < 440 ? 118 : 172, R = 44, rowH = 38, bh = 18, top = 6, H = top + data.length * rowH + 24;
+  const max = niceMax(Math.max(1, ...data.map(d => d.value))), x = v => L + (W - L - R) * v / max;
+  let g = ticks(max).map(t => `<line class="gl" x1="${x(t)}" x2="${x(t)}" y1="${top}" y2="${H - 22}"/><text class="axis" x="${x(t)}" y="${H - 6}" text-anchor="middle">${nf(t)}</text>`).join("");
+  g += `<line class="base" x1="${L}" x2="${L}" y1="${top}" y2="${H - 22}"/>`;
+  data.forEach((d, i) => {
+    const y = top + i * rowH + (rowH - bh) / 2, w = Math.max(0, x(d.value) - L), r = Math.min(4, w);
+    const path = w <= 0 ? "" : `M${L},${y} h${w - r} a${r},${r} 0 0 1 ${r},${r} v${bh - 2 * r} a${r},${r} 0 0 1 -${r},${r} h-${w - r} Z`;
+    g += `<g class="item" data-k="${esc(d.key)}" data-tip="${esc(JSON.stringify(d))}">
+      <rect class="hit" x="0" y="${top + i * rowH}" width="${W}" height="${rowH}"/>
+      <text class="lbl" x="${L - 10}" y="${y + bh / 2 + 4}" text-anchor="end">${esc(trunc(d.label, W < 440 ? 15 : 24))}</text>
+      ${path ? `<path class="mark${anim ? " grow" : ""}" style="animation-delay:${i * 60}ms" d="${path}"/>` : ""}
+      <text class="val" x="${x(d.value) + 8}" y="${y + bh / 2 + 4}">${nf(d.value)}</text></g>`;
+  });
+  el.innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(T("by_plugin"))}">${g}</svg>`;
+}
+// Cột đứng theo phiên bản (cũ → mới)
+function cols(el, data, anim) {
+  if (!data.length) { el.innerHTML = `<div class="empty">${T("empty")}</div>`; return; }
+  const W = Math.max(300, el.clientWidth || 520), H = 260, L = 40, Rr = 10, top = 22, bot = 40, n = data.length;
+  const slot = (W - L - Rr) / n, bw = Math.min(24, slot * 0.6);
+  const max = niceMax(Math.max(1, ...data.map(d => d.value))), y = v => top + (H - top - bot) * (1 - v / max);
+  let g = ticks(max).map(t => `<line class="gl" x1="${L}" x2="${W - Rr}" y1="${y(t)}" y2="${y(t)}"/><text class="axis" x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${nf(t)}</text>`).join("");
+  g += `<line class="base" x1="${L}" x2="${W - Rr}" y1="${y(0)}" y2="${y(0)}"/>`;
+  const every = Math.ceil(n / 8);
+  data.forEach((d, i) => {
+    const cx = L + slot * i + slot / 2, x0 = cx - bw / 2, h = y(0) - y(d.value), r = Math.min(4, h);
+    const path = h <= 0 ? "" : `M${x0},${y(0)} v-${h - r} a${r},${r} 0 0 1 ${r},-${r} h${bw - 2 * r} a${r},${r} 0 0 1 ${r},${r} v${h - r} Z`;
+    const isMax = d.value === Math.max(...data.map(z => z.value)), isLast = i === n - 1;
+    g += `<g class="item" data-tip="${esc(JSON.stringify(d))}">
+      <rect class="hit" x="${L + slot * i}" y="${top}" width="${slot}" height="${H - top - bot + 22}"/>
+      ${path ? `<path class="mark${anim ? " growy" : ""}" style="animation-delay:${i * 50}ms" d="${path}"/>` : ""}
+      ${(isMax || isLast) && d.value > 0 ? `<text class="val" x="${cx}" y="${y(d.value) - 7}" text-anchor="middle">${nf(d.value)}</text>` : ""}
+      ${i % every === 0 || isLast ? `<text class="axis" x="${cx}" y="${H - bot + 18}" text-anchor="middle">${esc(d.label)}</text>` : ""}</g>`;
+  });
+  el.innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(T("by_version"))}">${g}</svg>`;
+}
+const trunc = (s, n) => s.length > n ? s.slice(0, n - 1) + "…" : s;
+
+function table() {
+  $("#tchips").innerHTML = [["all", T("all")]].concat(st.plugins.map(p => [p.id, pname(p)])).map(([k, l]) => `<button class="chip" data-tf="${esc(k)}" aria-pressed="${st.filter === k}">${esc(l)}</button>`).join("");
+  const rows = st.rels.filter(r => st.filter === "all" || r.id === st.filter).map(r => ({ ...r, p: st.plugins.find(p => p.id === r.id) }));
+  const [k, dir] = st.sort;
+  rows.sort((a, b) => dir * (k === "plugin" ? pname(a.p).localeCompare(pname(b.p)) : k === "version" ? cmpVer(a.version, b.version) : k === "date" ? new Date(a.date) - new Date(b.date) : k === "size" ? a.size - b.size : a.dl - b.dl));
+  const th = (key, label, cls) => `<th class="${cls || ""}" data-sort="${key}">${label} <span class="ar">${st.sort[0] === key ? (st.sort[1] > 0 ? "↑" : "↓") : ""}</span></th>`;
+  $("#tbl").innerHTML = rows.length ? `<table><thead><tr>${th("plugin", T("th_plugin"))}${th("version", T("th_ver"))}${th("date", T("th_date"), "hide-sm")}${th("size", T("th_size"), "r hide-sm")}${th("dl", T("th_dl"), "r")}</tr></thead><tbody>` +
+    rows.map(r => `<tr><td><div class="pl"><span class="ic">${r.p.icon ? `<img src="${esc(r.p.icon)}" alt="">` : esc(pname(r.p).slice(0, 2))}</span>${esc(pname(r.p))}</div></td>
+      <td><a href="${esc(r.url)}">v${esc(r.version)}</a>${r.latest ? `<span class="tag">${T("newest")}</span>` : ""}</td>
+      <td class="hide-sm">${fdate(r.date)}</td><td class="r hide-sm">${fsize(r.size)}</td><td class="r"><b>${nf(r.dl)}</b></td></tr>`).join("") + "</tbody></table>"
+    : `<div class="empty">${T("empty")}</div>`;
+}
+
+// chú thích khi rê chuột
+const tip = $("#tip");
+document.addEventListener("mousemove", e => {
+  const g = e.target.closest && e.target.closest("g.item");
+  if (!g) { tip.classList.remove("show"); return; }
+  const d = JSON.parse(g.dataset.tip);
+  tip.innerHTML = `<b>${esc(d.label)}</b><br>${nf(d.value)} ${T("downloads").toLowerCase()}${d.share != null ? ` · ${Math.round(d.share * 100)}% ${T("share")}` : ""}<br><span class="m">${esc(d.sub)}</span>`;
+  const x = Math.min(innerWidth - tip.offsetWidth - 12, e.clientX + 14), y = Math.min(innerHeight - tip.offsetHeight - 12, e.clientY + 14);
+  tip.style.left = x + "px"; tip.style.top = y + "px"; tip.classList.add("show");
+});
+document.addEventListener("click", e => {
+  const s = e.target.closest("[data-sel]"); if (s) { st.sel = s.dataset.sel; render(true); return; }
+  const g = e.target.closest("#c1 g.item"); if (g) { st.sel = g.dataset.k; render(false); $("#c2").scrollIntoView({ behavior: "smooth", block: "nearest" }); return; }
+  const f = e.target.closest("[data-tf]"); if (f) { st.filter = f.dataset.tf; table(); return; }
+  const h = e.target.closest("th[data-sort]"); if (h) { const k = h.dataset.sort; st.sort = [k, st.sort[0] === k ? -st.sort[1] : (k === "plugin" || k === "version" ? 1 : -1)]; table(); return; }
+  const l = e.target.closest("[data-lang]"); if (l) { st.lang = l.dataset.lang; try { localStorage.setItem("pt-lang", st.lang); } catch (_) {} render(false); return; }
+});
+$("#themeBtn").addEventListener("click", () => { const r = document.documentElement; r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark"; try { localStorage.setItem("pt-theme", r.dataset.theme); } catch (_) {} });
+$("#reload").addEventListener("click", load);
+let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => st.loaded && render(false), 150); });
+render(false); load();
+</script>
+</body>
+</html>
