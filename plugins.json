@@ -7,6 +7,15 @@
       "zalo": "0965132144",
       "email": "doanphutien00@gmail.com",
       "zalo_icon": "icons/zalo.webp"
+    },
+    "auth": {
+      "requireLoginToDownload": true,
+      "firebase": {
+        "apiKey": "",
+        "authDomain": "",
+        "projectId": "",
+        "appId": ""
+      }
     }
   },
   "plugins": [
