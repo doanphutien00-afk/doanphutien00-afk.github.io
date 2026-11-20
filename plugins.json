@@ -18,11 +18,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.1.1.rbz",
-      "version": "2.1.1",
-      "date": "2026-11-20T03:00:00Z",
-      "size": 181108,
-      "notes": "- Đọc đúng tên / phiên bản plugin khai báo bằng hằng số (PT Smartfloor, PT SmartRoof)\n- Icon riêng của từng plugin thay cho logo chung\n- Thêm PT Smartfloor vào danh mục"
+      "download": "pt-hub/goi/pt_hub-2.1.2.rbz",
+      "version": "2.1.2",
+      "date": "2026-11-20T04:00:00Z",
+      "size": 183386,
+      "notes": "- Bấm Cập nhật: tự tải và cài bản mới nhất, nút hiện \"Đang cập nhật…\"\n- Cài xong hiện hộp \"Cập nhật thành công\" kèm nút Khởi động lại SketchUp; thông báo cập nhật tự mất\n- Icon plugin to hơn, nền đen, nét trắng – nhấn cam"
     },
     {
       "id": "mai_viet",

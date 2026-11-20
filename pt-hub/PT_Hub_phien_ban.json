@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-20 10:30",
+  "updated": "2026-11-20 11:00",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -110,7 +110,7 @@
       "date": "2026-11-20",
       "file": "smart_floor-2.10.3.rbz",
       "page": "",
-      "icon": "assets/icon.svg",
+      "icon": "icon.svg",
       "loader_file": "smart_floor.rb",
       "folder": "smart_floor",
       "description_vi": "Lát sàn theo pattern (Running Bond, Herringbone, Chevron, Hexagon…), vát cạnh gạch, len chân tường, ngưỡng cửa tự nhận diện, cắt mòi 3D ở góc; thống kê gạch PDF/Excel/DXF.",
@@ -147,11 +147,11 @@
     {
       "id": "pt_hub",
       "name": "PT Hub",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "date": "2026-11-20",
-      "file": "pt_hub-2.1.1.rbz",
+      "file": "pt_hub-2.1.2.rbz",
       "page": "PT_Hub_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Đọc đúng tên / phiên bản plugin khai báo bằng hằng số (PT Smartfloor, PT SmartRoof)\n- Icon riêng của từng plugin thay cho logo chung\n- Thêm PT Smartfloor vào danh mục",
+      "notes": "- Bấm Cập nhật: tự tải và cài bản mới nhất, nút hiện \"Đang cập nhật…\"\n- Cài xong hiện hộp \"Cập nhật thành công\" kèm nút Khởi động lại SketchUp; thông báo cập nhật tự mất\n- Icon plugin to hơn, nền đen, nét trắng – nhấn cam",
       "loader_file": "pt_hub.rb",
       "folder": "pt_hub",
       "description_vi": "Quản lý, cài đặt, cập nhật plugin PT; thanh công cụ tuỳ chỉnh; góp ý.",
@@ -160,8 +160,8 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "1d607a2dc50249ac0cffe5c2ffd864975a6c6bddaa307d40cb26bdeb29ddb742",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.1.1.rbz",
+      "sha256": "ae794decfc243bafaf2fcb671f94a71f16bdf2e4f43ecdb96fa27308fa78eec9",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.1.2.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/"
     }
   ],
