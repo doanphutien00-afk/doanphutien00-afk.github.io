@@ -10,6 +10,8 @@ Có bản mới → PT Hub báo trong mục **Cập nhật**, tự tải và cà
 
 ## Phát hành bản mới của một plugin
 
+**Cách nhanh nhất – Trang quản trị:** `https://doanphutien00-afk.github.io/admin.html` → tab **Plugin** → *Đăng bản mới* (hoặc *Thêm plugin mới*), kéo thả tệp .rbz, ghi chú thay đổi, bấm **Phát hành**. Trang tự làm bước 1–3 của cách B. Gạt *Hiển thị* để gỡ / hiện lại plugin (đặt `"hidden": true` trong `plugins.json` và `PT_Hub_phien_ban.json`). Lần đầu cần dán token GitHub ở tab *Kết nối GitHub*.
+
 **Cách A – GitHub Release (khuyên dùng, trang web cũng tự hiện):**
 1. Trên GitHub: **Releases → Draft a new release**.
 2. *Tag*: `<mã>-v<phiên bản>`, ví dụ `pt_cabinet-v2.6.3`. Mã = tên tệp nạp không có `.rb`

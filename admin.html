@@ -56,6 +56,7 @@ svg.i{width:16px;height:16px;flex:none}
 .nav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r);border:0;background:none;cursor:pointer;text-align:left;color:var(--ink-2);font-weight:500;transition:background .2s,color .2s}
 .nav:hover{background:var(--surface-2);color:var(--ink)}
 .nav[aria-current="true"]{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.nav .badge[hidden]{display:none}
 .nav .badge{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--accent);color:var(--on-accent);font-size:11px;font-weight:600;display:grid;place-items:center}
 .side .foot{margin-top:auto;padding:12px;font-size:12px;color:var(--muted)}
 .main{padding:26px 28px 60px;min-width:0}
@@ -320,13 +321,13 @@ function renderFeedbackBody() {
   if (S.fbErr) { box.innerHTML = `<div class="msgbox err">Không đọc được dữ liệu: ${esc(S.fbErr)}</div>`; return; }
   const q = S.fbQ.trim().toLowerCase();
   const list = S.fb.filter(x => (S.fbFilter === "all" || x.status === S.fbFilter) && (S.fbType === "all" || x.type === S.fbType)
-    && (!q || `${x.message} ${x.plugin} ${x.contact || ""}`.toLowerCase().includes(q)));
+    && (!q || `${x.message} ${x.plugin} ${x.plugin_name || ""} ${x.name || ""} ${x.email || ""} ${x.contact || ""}`.toLowerCase().includes(q)));
   if (!list.length) { box.innerHTML = `<div class="empty">Chưa có góp ý nào${S.fbFilter !== "all" || S.fbType !== "all" || q ? " phù hợp bộ lọc" : ""}.</div>`; return; }
   if (!list.some(x => x.id === S.sel)) S.sel = list[0].id;
   box.innerHTML = `<div class="fb"><div class="list">${list.map(x => `
       <button class="item ${x.status === "new" ? "new" : ""}" data-id="${x.id}" aria-current="${x.id === S.sel}">
         <div class="r1"><span class="tg ${x.type}">${x.type === "bug" ? "Lỗi" : "Góp ý"}</span>${esc(x.plugin || "")}<span class="st ${x.status}">${ST[x.status] || x.status}</span></div>
-        <div class="msg">${esc(x.message)}</div>
+        <div class="msg">${esc(x.message)}</div>${x.name ? `<div class="r1" style="margin-top:4px">${esc(x.name)}</div>` : ""}
         <div class="r1" style="margin-top:6px">${fmtTime(x.created)}${(x.images || []).length ? ` · ${(x.images || []).length} ảnh` : ""}</div>
       </button>`).join("")}</div><div id="det"></div></div>`;
   box.querySelectorAll(".item").forEach(b => b.onclick = () => { S.sel = b.dataset.id; renderFeedbackBody(); });
@@ -337,21 +338,27 @@ function renderDetail(x) {
   if (x.status === "new") fs.updateDoc(fs.doc(fs.db, "feedback", x.id), { status: "seen" }).catch(() => {});
   $("#det").innerHTML = `<div class="detail view">
     <span class="tg ${x.type}">${x.type === "bug" ? "Báo lỗi" : "Góp ý tính năng"}</span>
-    <h2>${esc(x.plugin || "PT Hub")}</h2>
-    <div class="meta"><span>${fmtTime(x.created)}</span>${x.app_version ? `<span>PT Hub ${esc(x.app_version)}</span>` : ""}${x.contact ? `<span>Liên hệ: <b>${esc(x.contact)}</b></span>` : ""}<span class="st ${x.status}">● ${ST[x.status] || ""}</span></div>
+    <h2>${esc(x.plugin_name || x.plugin || "PT Hub")}</h2>
+    <div class="meta"><span>${fmtTime(x.created)}</span>${x.app_version ? `<span>PT Hub ${esc(x.app_version)}</span>` : ""}${x.name || x.email ? `<span>Người gửi: <b>${esc(x.name || "")}</b> ${x.email ? `&lt;<a href="mailto:${esc(x.email)}">${esc(x.email)}</a>&gt;` : ""}</span>` : ""}${x.contact && x.contact !== x.email ? `<span>Liên hệ: <b>${esc(x.contact)}</b></span>` : ""}${x.sketchup ? `<span>SketchUp ${esc(x.sketchup)}</span>` : ""}<span class="st ${x.status}">● ${ST[x.status] || ""}</span></div>
     <div class="body">${esc(x.message)}</div>
     ${(x.images || []).length ? `<div class="imgs">${x.images.map(im => `<img src="data:${esc(im.mime || "image/jpeg")};base64,${im.data}" alt="${esc(im.name || "")}" title="${esc(im.name || "")}">`).join("")}</div>` : ""}
     ${x.skipped_images ? `<div class="msgbox info">${x.skipped_images} ảnh quá lớn nên không được gửi kèm.</div>` : ""}
     ${x.sysinfo ? `<details><summary>Thông tin máy & SketchUp</summary><pre>${esc(x.sysinfo)}</pre></details>` : ""}
     ${x.log ? `<details><summary>Nhật ký PT Hub</summary><pre>${esc(x.log)}</pre></details>` : ""}
+    <div class="f" style="margin-top:16px"><label>Trả lời người gửi (hiện trong PT Hub của họ)</label><textarea id="rep" style="font-family:var(--sans);font-size:14px;min-height:80px">${esc(x.reply || "")}</textarea>${x.replied?.toDate ? `<small style="color:var(--muted)">Đã trả lời lúc ${fmtTime(x.replied.toDate())}</small>` : ""}</div>
     <div class="acts">
-      ${x.status !== "done" ? `<button class="btn pri sm" data-s="done">✓ Đánh dấu đã xử lý</button>` : `<button class="btn sm" data-s="seen">Mở lại</button>`}
+      <button class="btn pri sm" data-reply>Gửi trả lời</button>
+      ${x.status !== "done" ? `<button class="btn sm" data-s="done">✓ Đánh dấu đã xử lý</button>` : `<button class="btn sm" data-s="seen">Mở lại</button>`}
       <button class="btn sm" data-copy>Sao chép nội dung</button>
       <span style="flex:1"></span>
       <button class="btn dan sm" data-del>Xoá</button>
     </div></div>`;
   const d = $("#det");
   d.querySelectorAll("[data-s]").forEach(b => b.onclick = () => fs.updateDoc(fs.doc(fs.db, "feedback", x.id), { status: b.dataset.s }).then(() => toast("Đã cập nhật")).catch(e => toast(e.message)));
+  d.querySelector("[data-reply]").onclick = () => {
+    const v = $("#rep").value.trim();
+    fs.updateDoc(fs.doc(fs.db, "feedback", x.id), { reply: v, replied: fs.serverTimestamp(), status: "done" }).then(() => toast(v ? "Đã gửi trả lời" : "Đã xoá trả lời")).catch(e => toast(e.message));
+  };
   d.querySelector("[data-copy]").onclick = () => navigator.clipboard.writeText(`${x.type === "bug" ? "Báo lỗi" : "Góp ý"} – ${x.plugin}\n${fmtTime(x.created)}\n\n${x.message}\n\n${x.sysinfo || ""}`).then(() => toast("Đã sao chép"));
   const del = d.querySelector("[data-del]");
   del.onclick = () => {
