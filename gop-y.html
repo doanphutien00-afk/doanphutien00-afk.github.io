@@ -49,6 +49,12 @@ pre{font:12px/1.5 "JetBrains Mono",monospace;background:#0d0e10;border:1px solid
 .lb.open img{transform:none}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--surface-2);border:1px solid var(--line-2);padding:9px 16px;border-radius:10px;animation:rise .3s var(--ease);z-index:60}
 @media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.inp.q{margin-left:0;width:100%}}
+.del{display:inline-flex;align-items:center;gap:6px;margin-left:10px;padding:4px 10px;border-radius:8px;border:1px solid rgba(224,96,96,.45);background:none;color:#e06060;cursor:pointer;font:inherit;font-size:12.5px;transition:background .2s,color .2s,border-color .2s}
+.del svg{width:14px;height:14px}
+.del:hover{background:rgba(224,96,96,.12)}
+.del.armed{background:#e06060;color:#fff;border-color:#e06060}
+.it{transition:opacity .28s ease,transform .28s ease,border-color .2s}
+.it.gone{opacity:0;transform:translateX(24px)}
 </style>
 </head>
 <body>
@@ -89,7 +95,7 @@ function card(x) {
   return `<article class="it" data-id="${x.id}">
     <div class="ih"><span class="tag ${st}">${ST[st] || st}</span><span class="ty ${x.type === "feature" ? "feature" : "bug"}">${x.type === "feature" ? "Góp ý tính năng" : "Báo lỗi"}</span>
       <span class="muted">· ${esc(x.plugin_name || x.plugin || "")}</span><span class="sp"></span>
-      ${admin ? `<span class="muted">${esc(x.name || "")} &lt;${esc(x.email || "")}&gt;</span>` : ""}<span class="muted">${when(x.created)}</span></div>
+      ${admin ? `<span class="muted">${esc(x.name || "")} &lt;${esc(x.email || "")}&gt;</span>` : ""}<span class="muted">${when(x.created)}</span>${admin ? `<button class="del" data-del title="Xoá góp ý này"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg><span>Xoá</span></button>` : ""}</div>
     <div class="msg">${esc(x.message)}</div>
     ${(x.images || []).length ? `<div class="imgs">${x.images.map(im => { const u = typeof im === "string" ? im : `data:${im.mime || "image/jpeg"};base64,${im.data || ""}`; return /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(u) ? `<img src="${u}" alt="">` : ""; }).join("")}</div>` : ""}
     ${x.reply && !admin ? `<div class="reply"><small>Tác giả trả lời${x.replied ? " · " + when(x.replied) : ""}</small>${esc(x.reply)}</div>` : ""}
@@ -126,6 +132,20 @@ root.addEventListener("click", async e => {
   if (f) { filter = f.dataset.f; draw(); return; }
   if (e.target.id === "more") { load(true); return; }
   if (e.target.matches(".imgs img")) { const lb = document.getElementById("lb"); lb.querySelector("img").src = e.target.src; lb.classList.add("open"); return; }
+  const del = e.target.closest("[data-del]");
+  if (del) {
+    if (!del.classList.contains("armed")) {
+      del.classList.add("armed"); del.querySelector("span").textContent = "Bấm lần nữa để xoá";
+      clearTimeout(del._t); del._t = setTimeout(() => { del.classList.remove("armed"); del.querySelector("span").textContent = "Xoá"; }, 4000);
+      return;
+    }
+    const art = del.closest(".it"), id = art.dataset.id; del.disabled = true;
+    try {
+      await fb.F.deleteDoc(fb.F.doc(fb.db, "feedback", id));
+      art.classList.add("gone"); setTimeout(() => { items = items.filter(i => i.id !== id); draw(); }, 280); toast("Đã xoá góp ý");
+    } catch (er) { toast(errMsg(er)); del.disabled = false; }
+    return;
+  }
   if (e.target.matches("[data-save]")) {
     const art = e.target.closest(".it"), id = art.dataset.id, x = items.find(i => i.id === id);
     const status = art.querySelector("[data-st]").value, reply = art.querySelector("[data-rep]").value.trim();

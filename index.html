@@ -137,8 +137,8 @@ h2{font-family:var(--serif); font-weight:600; font-size:clamp(28px,3.4vw,40px); 
 .card-top .tag{color:var(--accent)}
 .card-body{padding:20px; display:flex; flex-direction:column; gap:14px; flex:1}
 .card-head{display:flex; gap:16px; align-items:center}
-.icon{width:56px; height:56px; flex:none; border:1px solid var(--line-2); border-radius:var(--r); display:grid; place-items:center; background:var(--surface-2); font-family:var(--serif); font-size:20px}
-.icon img{width:30px; height:30px; object-fit:contain}
+.icon{width:56px; height:56px; flex:none; border:1px solid #2a2d31; border-radius:14px; display:grid; place-items:center; background:#141517; color:#EEEAE3; font-family:var(--serif); font-size:18px; font-weight:600; box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.icon img{width:34px; height:34px; object-fit:contain}
 h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.2; margin:0; letter-spacing:-.02em}
 .new{font-family:var(--mono); font-size:10px; letter-spacing:.1em; background:var(--accent); color:var(--on-accent); padding:2px 6px; border-radius:2px; margin-left:8px; vertical-align:4px}
 .desc{margin:0; color:var(--ink-2); font-size:14.5px}
@@ -411,7 +411,7 @@ const I18N = {
     nav_plugins:"Plugin", nav_install:"Cài đặt", nav_contact:"Liên hệ", nav_stats:"Thống kê", nav_fb:"Góp ý",
     kicker:"SketchUp Extensions · Kiến trúc & Nội thất",
     hero_title:'<span class="line"><span>Dựng nhanh hơn,</span></span><span class="line"><span><em>thiết kế</em> nhiều hơn.</span></span>',
-    hero_sub:"Bộ công cụ SketchUp do kiến trúc sư viết cho kiến trúc sư — dựng mái, lát sàn, ốp vách chỉ trong vài cú click. Luôn được cập nhật tự động.",
+    hero_sub:"Bộ công cụ SketchUp phục vụ công việc dựng hình, diễn hoạ phối cảnh 3D kiến trúc – nội thất. Luôn được cập nhật tự động.",
     cta_browse:"Xem plugin", cta_contact:"Liên hệ",
     stat_plugins:"Plugin", stat_versions:"Phiên bản", stat_downloads:"Lượt tải",
     sec_plugins_k:"Thư viện", sec_plugins:"Các plugin", search_ph:"Tìm plugin…", all:"Tất cả",
@@ -427,7 +427,7 @@ const I18N = {
     hub_btn:"Cài bằng PT Hub", get_hub:"Tải PT Hub", how:"Hướng dẫn",
     hub_hint:"Plugin PT được cài qua <b>PT Hub</b>: mở SketchUp → PT Hub → tab Plugin → bấm <b>Cài đặt</b> ở <b>{n}</b>. Chưa có PT Hub? Tải về và cài 1 lần.",
     sec_contact_k:"Liên hệ", sec_contact:"Cần hỗ trợ hoặc góp ý?",
-    contact_sub:"Báo lỗi, đề xuất tính năng hay đặt viết plugin riêng cho văn phòng — hãy nhắn cho tôi.",
+    contact_sub:"Báo lỗi, đề xuất tính năng — hãy nhắn cho tôi.",
     zalo:"Zalo", email:"Email", copy:"SAO CHÉP", copied:"Đã sao chép", open:"MỞ",
     cats:{"Kiến trúc":"Kiến trúc","Nội thất":"Nội thất","Tiện ích":"Tiện ích","Khác":"Khác"},
     all_releases:"Tất cả bản phát hành"
@@ -436,7 +436,7 @@ const I18N = {
     nav_plugins:"Plugins", nav_install:"Install", nav_contact:"Contact", nav_stats:"Statistics", nav_fb:"Feedback",
     kicker:"SketchUp Extensions · Architecture & Interiors",
     hero_title:'<span class="line"><span>Model faster,</span></span><span class="line"><span><em>design</em> more.</span></span>',
-    hero_sub:"SketchUp tools written by an architect for architects — roofs, floor patterns and wall panels in a few clicks. Always kept up to date automatically.",
+    hero_sub:"SketchUp tools for 3D modelling and architectural & interior visualisation. Always kept up to date automatically.",
     cta_browse:"Browse plugins", cta_contact:"Get in touch",
     stat_plugins:"Plugins", stat_versions:"Releases", stat_downloads:"Downloads",
     sec_plugins_k:"Library", sec_plugins:"Plugins", search_ph:"Search plugins…", all:"All",
@@ -452,7 +452,7 @@ const I18N = {
     hub_btn:"Install with PT Hub", get_hub:"Get PT Hub", how:"Guide",
     hub_hint:"PT plugins are installed through <b>PT Hub</b>: open SketchUp → PT Hub → Plugins tab → click <b>Install</b> on <b>{n}</b>. No PT Hub yet? Download and install it once.",
     sec_contact_k:"Contact", sec_contact:"Need help or have an idea?",
-    contact_sub:"Bug reports, feature requests or a custom plugin for your studio — just send me a message.",
+    contact_sub:"Bug reports or feature requests — just send me a message.",
     zalo:"Zalo", email:"Email", copy:"COPY", copied:"Copied", open:"OPEN",
     cats:{"Kiến trúc":"Architecture","Nội thất":"Interior","Tiện ích":"Utilities","Khác":"Other"},
     all_releases:"All releases"
