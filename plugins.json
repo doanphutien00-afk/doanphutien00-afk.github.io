@@ -18,11 +18,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.1.2.rbz",
-      "version": "2.1.2",
+      "download": "pt-hub/goi/pt_hub-2.1.3.rbz",
+      "version": "2.1.3",
       "date": "2026-11-20T04:00:00Z",
-      "size": 183386,
-      "notes": "- Bấm Cập nhật: tự tải và cài bản mới nhất, nút hiện \"Đang cập nhật…\"\n- Cài xong hiện hộp \"Cập nhật thành công\" kèm nút Khởi động lại SketchUp; thông báo cập nhật tự mất\n- Icon plugin to hơn, nền đen, nét trắng – nhấn cam"
+      "size": 183422,
+      "notes": "- Bấm Cập nhật: PT Hub tải tệp cài đặt bản mới nhất rồi cài bằng chính chức năng Install Extension của SketchUp (như Extensions → Extension Manager → Install Extension), không phải thao tác tay\n- Về bản cũ: cất bản đang cài vào thùng rác của kho trước khi cài"
     },
     {
       "id": "mai_viet",
