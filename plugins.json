@@ -18,29 +18,39 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.1.0.rbz",
-      "version": "2.1.0",
-      "date": "2026-11-20T04:00:00Z",
-      "size": 180067,
-      "notes": "- Máy chủ GitHub: đọc Releases + plugins.json, tự tải và cài bản mới\n- Làm lại theo mô hình LU Center: danh mục plugin, cài an toàn, khởi động lại SketchUp\n- Thanh công cụ của tôi, góp ý kèm ảnh, song ngữ"
+      "download": "pt-hub/goi/pt_hub-2.1.1.rbz",
+      "version": "2.1.1",
+      "date": "2026-11-20T03:00:00Z",
+      "size": 181108,
+      "notes": "- Đọc đúng tên / phiên bản plugin khai báo bằng hằng số (PT Smartfloor, PT SmartRoof)\n- Icon riêng của từng plugin thay cho logo chung\n- Thêm PT Smartfloor vào danh mục"
     },
     {
       "id": "mai_viet",
-      "name": "Mái Việt",
+      "name": "PT SmartRoof (Mái Việt)",
       "category": "Kiến trúc",
       "description": "Dựng mái Nhật, mái Thái, Mansard từ mặt bằng; lợp ngói tự động theo mặt mái, ngói nóc/rìa, lớp vữa, kim thu lôi, đổi màu ngẫu nhiên và thống kê – dự toán vật tư.",
       "icon": "icons/mai_viet.png",
-      "name_en": "Mai Viet – Roofs & Tiles",
-      "description_en": "Build hip, Thai and Mansard roofs from a floor plan; auto-lay tiles on roof faces, ridge/edge tiles, mortar bed, lightning rods, random color variation and material take-off."
+      "name_en": "PT SmartRoof (Mai Viet)",
+      "description_en": "Build hip, Thai and Mansard roofs from a floor plan; auto-lay tiles on roof faces, ridge/edge tiles, mortar bed, lightning rods, random color variation and material take-off.",
+      "download": "pt-hub/goi/mai_viet-3.0.2.rbz",
+      "version": "3.0.2",
+      "date": "2026-11-20T03:00:00Z",
+      "size": 28466334,
+      "notes": "- Bản 3.0.2 của PT SmartRoof (tên cũ Mái Việt)\n- Giao diện đen – cam, tab có icon, nút gạt, hộp QR ủng hộ / liên hệ"
     },
     {
       "id": "smart_floor",
-      "name": "Smart Floor Generator",
+      "name": "PT Smartfloor",
       "category": "Nội thất",
       "description": "Lát sàn theo pattern (Running Bond, Herringbone, Chevron, Hexagon…), vát cạnh gạch, len chân tường, ngưỡng cửa tự nhận diện, cắt mòi 3D ở góc; bảng thống kê gạch xuất PDF/Excel/DXF.",
       "icon": "icons/smart_floor.svg",
-      "name_en": "Smart Floor Generator",
-      "description_en": "Floor patterns on any face (Running Bond, Herringbone, Chevron, Hexagon…), beveled tiles, skirting, auto-detected door thresholds, true 3D mitre cuts at corners; tile schedule export to PDF/Excel/DXF."
+      "name_en": "PT Smartfloor",
+      "description_en": "Floor patterns on any face (Running Bond, Herringbone, Chevron, Hexagon…), beveled tiles, skirting, auto-detected door thresholds, true 3D mitre cuts at corners; tile schedule export to PDF/Excel/DXF.",
+      "download": "pt-hub/goi/smart_floor-2.10.3.rbz",
+      "version": "2.10.3",
+      "date": "2026-11-20T03:00:00Z",
+      "size": 288729,
+      "notes": "- Bản 2.10.3 của PT Smartfloor (tên cũ Smart Floor Generator)"
     },
     {
       "id": "pt_wallpanel",
@@ -49,7 +59,40 @@
       "description": "Tạo vách ốp nan gỗ/lam 1 click trên mặt phẳng và mặt cong: chia nan đều, tránh lỗ cửa, uốn theo tường cong, cột tròn, trần; có tấm nền, vật liệu và chỉnh sửa lại được.",
       "icon": "icons/pt_wallpanel.png",
       "name_en": "PT Wall Panel – Slat Cladding",
-      "description_en": "One-click timber/louvre slat cladding on flat and curved faces: even spacing, avoids door openings, follows curved walls, round columns and ceilings; backing board, materials and re-editable."
+      "description_en": "One-click timber/louvre slat cladding on flat and curved faces: even spacing, avoids door openings, follows curved walls, round columns and ceilings; backing board, materials and re-editable.",
+      "download": "pt-hub/goi/pt_wallpanel-1.6.2.rbz",
+      "version": "1.6.2",
+      "date": "2026-11-12T03:00:00Z",
+      "size": 202974,
+      "notes": "- Hai cách tạo nan: chọn mặt rồi bấm Tạo, hoặc chọn mẫu rồi rê chuột tới mặt (sáng cam) và click\n- Mặt sáng màu cam theo logo khi rê chuột"
+    },
+    {
+      "id": "pt_cabinet",
+      "name": "PT Cabinet",
+      "category": "Nội thất",
+      "icon": "icons/pt_cabinet.svg",
+      "name_en": "PT Cabinet",
+      "description": "Dựng tủ bếp, tủ áo theo tham số: thùng tủ, cánh (kiểu cánh, nhôm kính, huỳnh – pano – classic), hộc kéo, tay nắm, đợt, thanh chặn; thư viện mẫu tủ, danh sách cắt.",
+      "description_en": "Parametric kitchen and wardrobe cabinets: carcass, doors (styles, aluminium-glass, classic panels), drawers, handles, shelves; cabinet library and cut list.",
+      "download": "pt-hub/goi/pt_cabinet-2.6.7.rbz",
+      "version": "2.6.7",
+      "date": "2026-11-20T03:00:00Z",
+      "size": 2075444,
+      "notes": "- Nhóm cánh mới \"Huỳnh - Pano - Classic\" (12 mẫu) với bảng thông số riêng\n- Co giãn model cánh giữ nguyên phào, góc, đố, tay nắm\n- Kiểu tạo \"Component liên kết\": các cánh giống nhau dùng chung 1 định nghĩa\n- Cánh nhôm kính: thông số khung, kính, lớp sơn; biến dạng model gốc theo thông số"
+    },
+    {
+      "id": "pt_smartlight",
+      "name": "PT Smart Light",
+      "category": "Nội thất",
+      "icon": "icons/pt_smartlight.svg",
+      "name_en": "PT Smart Light",
+      "description": "Đặt đèn âm trần, spot, đèn tường, dải LED và tự đục lỗ trần; đặt đơn hoặc theo lưới, tự liền trần khi xoá đèn, thống kê đèn.",
+      "description_en": "Place downlights, spots, wall lights and LED strips with automatic ceiling cut-outs; single or grid placement, auto-heal on delete, lighting schedule.",
+      "download": "pt-hub/goi/pt_smartlight-1.8.3.rbz",
+      "version": "1.8.3",
+      "date": "2026-11-14T03:00:00Z",
+      "size": 997552,
+      "notes": "- Đặt đèn / LED khi đang mở sửa group không còn bị văng\n- Vùng sáng LED: tắt = xoá, bật = dựng lại"
     }
   ]
 }

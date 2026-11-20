@@ -1,0 +1,45 @@
+# Tự tạo GitHub Release cho mỗi gói mới trong pt-hub/goi/ (tên tệp: <mã>-<phiên bản>.rbz).
+# Release giúp đếm lượt tải (trang web + trang Thống kê) và là nguồn cập nhật chính của PT Hub.
+name: Phát hành tự động
+
+on:
+  push:
+    branches: [main]
+    paths: ['pt-hub/goi/**.rbz', 'pt-hub/PT_Hub_phien_ban.json']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phat-hanh
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tạo Release cho gói chưa phát hành
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          cat=pt-hub/PT_Hub_phien_ban.json
+          # Tạo theo thứ tự phiên bản tăng dần để bản mới nhất được đánh dấu "Latest"
+          for f in $(ls pt-hub/goi/*.rbz | sort -V); do
+            n=$(basename "$f" .rbz)
+            id="${n%-*}"
+            ver="${n##*-}"
+            tag="${id}-v${ver}"
+            if gh release view "$tag" >/dev/null 2>&1; then
+              echo "Đã có $tag"
+              continue
+            fi
+            name=$(jq -r --arg id "$id" '.plugins[] | select(.id==$id) | .name // empty' "$cat")
+            notes=$(jq -r --arg id "$id" --arg v "$ver" '.plugins[] | select(.id==$id and .version==$v) | .notes // empty' "$cat")
+            [ -z "$name" ] && name="$id"
+            [ -z "$notes" ] && notes="- Phát hành $ver"
+            echo "Tạo $tag ($name)"
+            gh release create "$tag" "$f" --title "$name v$ver" --notes "$notes"
+          done
