@@ -20,7 +20,8 @@
         "doanphutien2000@gmail.com",
         "doanphutien00@gmail.com"
       ]
-    }
+    },
+    "license_api": "https://pt-license.doanphutien00.workers.dev"
   },
   "plugins": [
     {
