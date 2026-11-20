@@ -129,9 +129,9 @@ h1{font-size:clamp(28px,4vw,40px);letter-spacing:-.03em;margin:0 0 6px}
 .tk-av img{width:100%;height:100%;object-fit:cover}
 .tk-av.big{width:64px;height:64px;font-size:21px}
 .tag{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:999px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap}
-.tag.moi{color:var(--accent);border-color:rgba(215,122,82,.45);background:rgba(215,122,82,.1)}
-.tag.dang_xu_ly{color:var(--warn);border-color:rgba(224,176,79,.45);background:rgba(224,176,79,.1)}
-.tag.da_xong{color:var(--ok);border-color:rgba(95,191,127,.45);background:rgba(95,191,127,.1)}
+.tag.new{color:var(--accent);border-color:rgba(215,122,82,.45);background:rgba(215,122,82,.1)}
+.tag.seen{color:var(--warn);border-color:rgba(224,176,79,.45);background:rgba(224,176,79,.1)}
+.tag.done{color:var(--ok);border-color:rgba(95,191,127,.45);background:rgba(95,191,127,.1)}
 .tag.bo_qua{color:var(--err);border-color:rgba(224,99,99,.45);background:rgba(224,99,99,.1)}
 .muted{color:var(--muted)}
 .spinner{width:28px;height:28px;border-radius:50%;border:3px solid rgba(215,122,82,.2);border-top-color:var(--accent);animation:spin 1s linear infinite;margin:20px auto}

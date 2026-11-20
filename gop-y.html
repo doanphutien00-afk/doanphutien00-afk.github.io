@@ -52,7 +52,7 @@ pre{font:12px/1.5 "JetBrains Mono",monospace;background:#0d0e10;border:1px solid
 </style>
 </head>
 <body>
-<nav class="nav"><div class="in"><a class="brand" href="/"><img src="/icons/pt_hub.svg" alt="">PT Plugins</a><span class="sp"></span><a href="/">Plugin</a><a href="/thong-ke.html">Thống kê</a></div></nav>
+<nav class="nav"><div class="in"><a class="brand" href="/"><img src="/icons/pt_hub.svg" alt="">PT Plugins</a><span class="sp"></span><a href="/">Plugin</a><a href="/thong-ke.html">Thống kê</a><a href="/admin.html" id="adm" hidden>Quản trị</a></div></nav>
 <main class="wrap">
   <div class="top"><div><h1>Góp ý & báo lỗi</h1><p class="lead" id="lead" style="margin:0">Góp ý gửi từ PT Hub trong SketchUp.</p></div><span class="sp"></span><div id="me"></div></div>
   <div id="root"><div class="spinner"></div></div>
@@ -62,18 +62,18 @@ pre{font:12px/1.5 "JetBrains Mono",monospace;background:#0d0e10;border:1px solid
 import { initFb, loginBox, avatar, esc, errMsg, CSS } from "/tk.js";
 document.getElementById("tkcss").textContent = CSS;
 const root = document.getElementById("root"), me = document.getElementById("me"), lead = document.getElementById("lead");
-const ST = { moi: "Mới gửi", dang_xu_ly: "Đang xử lý", da_xong: "Đã xong", bo_qua: "Không xử lý" };
+const ST = { new: "Mới", seen: "Đã xem", done: "Đã xử lý" };
 let fb, user, admin = false, items = [], filter = "all", q = "", lastDoc = null, more = false;
 
 const toast = t => { const d = document.createElement("div"); d.className = "toast"; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 3200); };
 const when = x => { const d = x?.toDate ? x.toDate() : (x ? new Date(x) : null); return d ? d.toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" }) : ""; };
 
 function draw() {
-  const cnt = k => items.filter(x => (x.status || "moi") === k).length;
-  const list = items.filter(x => (filter === "all" || (x.status || "moi") === filter) &&
+  const cnt = k => items.filter(x => (x.status || "new") === k).length;
+  const list = items.filter(x => (filter === "all" || (x.status || "new") === filter) &&
     (!q || [x.message, x.plugin_name, x.plugin, x.email, x.name].join(" ").toLowerCase().includes(q)));
   let h = "";
-  if (admin) h += `<div class="stats">${[["moi", "Mới gửi"], ["dang_xu_ly", "Đang xử lý"], ["da_xong", "Đã xong"], ["all", "Tổng"]].map(([k, l]) =>
+  if (admin) h += `<div class="stats">${[["new", "Mới"], ["seen", "Đã xem"], ["done", "Đã xử lý"], ["all", "Tổng"]].map(([k, l]) =>
     `<div class="stat"><b>${k === "all" ? items.length : cnt(k)}</b><span>${l}</span></div>`).join("")}</div>`;
   h += `<div class="tools">${[["all", "Tất cả", items.length], ...Object.entries(ST).map(([k, l]) => [k, l, cnt(k)])].map(([k, l, n]) =>
     `<button class="chip ${filter === k ? "on" : ""}" data-f="${k}">${l}<span class="k">${n}</span></button>`).join("")}
@@ -85,15 +85,15 @@ function draw() {
 }
 
 function card(x) {
-  const st = x.status || "moi";
+  const st = x.status || "new";
   return `<article class="it" data-id="${x.id}">
     <div class="ih"><span class="tag ${st}">${ST[st] || st}</span><span class="ty ${x.type === "feature" ? "feature" : "bug"}">${x.type === "feature" ? "Góp ý tính năng" : "Báo lỗi"}</span>
       <span class="muted">· ${esc(x.plugin_name || x.plugin || "")}</span><span class="sp"></span>
       ${admin ? `<span class="muted">${esc(x.name || "")} &lt;${esc(x.email || "")}&gt;</span>` : ""}<span class="muted">${when(x.created)}</span></div>
     <div class="msg">${esc(x.message)}</div>
-    ${(x.images || []).length ? `<div class="imgs">${x.images.map(u => /^data:image\//.test(u) ? `<img src="${esc(u)}" alt="">` : "").join("")}</div>` : ""}
+    ${(x.images || []).length ? `<div class="imgs">${x.images.map(im => { const u = typeof im === "string" ? im : `data:${im.mime || "image/jpeg"};base64,${im.data || ""}`; return /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(u) ? `<img src="${u}" alt="">` : ""; }).join("")}</div>` : ""}
     ${x.reply && !admin ? `<div class="reply"><small>Tác giả trả lời${x.replied ? " · " + when(x.replied) : ""}</small>${esc(x.reply)}</div>` : ""}
-    ${admin ? `<details><summary>Thông tin máy · PT Hub ${esc(x.hub_version || "")} · SketchUp ${esc(x.sketchup || "")}</summary><pre>${esc(x.sysinfo || "")}</pre></details>
+    ${admin ? `<details><summary>Thông tin máy · PT Hub ${esc(x.app_version || x.hub_version || "")} · SketchUp ${esc(x.sketchup || "")}</summary><pre>${esc(x.sysinfo || "")}</pre></details>
       ${x.log ? `<details><summary>Nhật ký PT Hub</summary><pre>${esc(x.log)}</pre></details>` : ""}
       <div class="adm"><select data-st>${Object.entries(ST).map(([k, l]) => `<option value="${k}" ${k === st ? "selected" : ""}>${l}</option>`).join("")}</select>
         <textarea class="inp" data-rep placeholder="Trả lời người gửi (hiện trong PT Hub)…">${esc(x.reply || "")}</textarea>
@@ -150,7 +150,9 @@ try {
       loginBox(document.getElementById("lg"), fb);
       return;
     }
-    admin = !!u.emailVerified && (u.email || "").toLowerCase() === String(fb.site.contact?.email || "").toLowerCase();
+    const admins = (fb.site.auth?.admins || [fb.site.contact?.email || ""]).map(e => String(e).toLowerCase());
+    admin = !!u.emailVerified && admins.includes((u.email || "").toLowerCase());
+    document.getElementById("adm").hidden = !admin;
     lead.textContent = admin ? "Quản lý toàn bộ góp ý – đổi trạng thái và trả lời; người gửi thấy ngay trong PT Hub." : "Góp ý bạn đã gửi từ PT Hub và phản hồi của tác giả.";
     me.innerHTML = `<div class="me">${avatar(u)}<div>${esc(u.displayName || u.email)}<small>${admin ? "Quản trị" : esc(u.email)}</small></div><button class="tk-btn sm" id="out">Đăng xuất</button></div>`;
     document.getElementById("out").onclick = () => fb.A.signOut(fb.auth);

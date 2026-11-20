@@ -4,10 +4,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Tác giả (quản trị): email đã xác minh.
+    // Tác giả (quản trị): email đã xác minh – trùng danh sách site.auth.admins trong plugins.json.
     function isAdmin() {
       return request.auth != null
-        && request.auth.token.email == 'doanphutien00@gmail.com'
+        && request.auth.token.email in ['doanphutien00@gmail.com', 'doanphutien2000@gmail.com']
         && request.auth.token.email_verified == true;
     }
 
@@ -15,7 +15,7 @@ service cloud.firestore {
     match /feedback/{id} {
       allow create: if request.auth != null
         && request.resource.data.uid == request.auth.uid
-        && request.resource.data.status == 'moi'
+        && request.resource.data.status == 'new'
         && request.resource.data.reply == ''
         && request.resource.data.message is string
         && request.resource.data.message.size() > 0
