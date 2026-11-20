@@ -31,11 +31,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.2.0.rbz",
-      "version": "2.2.0",
+      "download": "pt-hub/goi/pt_hub-2.2.1.rbz",
+      "version": "2.2.1",
       "date": "2026-11-20",
-      "size": 197449,
-      "notes": "- Đăng nhập tài khoản PT (dùng chung với trang web): email/mật khẩu hoặc Google qua trình duyệt\n- Góp ý / báo lỗi gửi thẳng lên trang web kèm ảnh (tự nén) và nhật ký; xem trạng thái và phản hồi của tác giả ngay trong PT Hub\n- Trang Plugin: nút chuyển xem dạng danh sách / lưới\n- Ủng hộ tác giả và liên hệ chuyển vào Cài đặt → Hỗ trợ; bỏ tab Nguồn, Nâng cao và các nút Trang phát hành / Trang trên Claude"
+      "size": 197293,
+      "notes": "- Mọi plugin PT cài qua PT Hub: tải từ máy chủ PT và cài thẳng vào SketchUp (không còn mở trang Claude / tải tay)\n- Bỏ nút \"Nhập danh sách từ Claude…\" ở tab Cập nhật\n- Plugin gỡ trên trang quản trị (hidden) không còn hiện để cài mới / cập nhật"
     },
     {
       "id": "mai_viet",

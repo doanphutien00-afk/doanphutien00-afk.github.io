@@ -150,6 +150,10 @@ h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.2; m
 .actions{display:flex; gap:10px; margin-top:auto}
 .actions .btn{flex:1; justify-content:center; padding:11px 14px}
 .log{border-top:1px dashed var(--line-2); padding-top:6px}
+.hubhint{margin-top:12px;padding:12px 14px;border:1px solid var(--accent);border-radius:var(--r);background:color-mix(in srgb,var(--accent) 8%,transparent);animation:hh .35s var(--ease) both}
+.hubhint p{margin:0 0 10px;font-size:14px;color:var(--ink-2)}
+.hh-act{display:flex;gap:8px}.hh-act .btn{flex:1;justify-content:center;padding:8px 12px}
+@keyframes hh{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .rel{padding:12px 0; border-bottom:1px solid var(--line)}
 .rel:last-child{border-bottom:0}
 .rel-top{display:flex; justify-content:space-between; gap:10px; font-size:12px}
@@ -417,9 +421,11 @@ const I18N = {
     demo:"Đang hiển thị dữ liệu mẫu. Trên GitHub Pages trang sẽ lấy phiên bản thật.",
     err:"Không kết nối được máy chủ phiên bản. Vui lòng tải lại sau ít phút.",
     sec_install_k:"Hướng dẫn", sec_install:"Cài đặt trong 1 phút",
-    s1_t:"Tải file cài đặt", s1_d:"Bấm <b>Tải về</b> ở plugin cần dùng để lấy bản mới nhất.",
-    s2_t:"Cài vào SketchUp", s2_d:"<code>Extensions → Extension Manager → Install Extension</code>, chọn file vừa tải.",
-    s3_t:"Tự động cập nhật", s3_d:"Plugin tự kiểm tra bản mới mỗi ngày và hỏi bạn trước khi cập nhật. Có thể kiểm tra thủ công qua menu <b>Kiểm tra cập nhật…</b>",
+    s1_t:"Cài PT Hub", s1_d:"Tải <a href=\"#\" data-gethub><b>PT Hub</b></a> (1 lần duy nhất) rồi cài: <code>Extensions → Extension Manager → Install Extension</code>.",
+    s2_t:"Cài plugin trong PT Hub", s2_d:"Mở <b>PT Hub</b> trong SketchUp → tab <b>Plugin</b> → bấm <b>Cài đặt</b> ở plugin cần dùng. PT Hub tải và cài thẳng vào SketchUp.",
+    s3_t:"Tự động cập nhật", s3_d:"Có bản mới, PT Hub báo ở tab <b>Cập nhật</b> – bấm 1 lần là cài xong, không cần tải tệp.",
+    hub_btn:"Cài bằng PT Hub", get_hub:"Tải PT Hub", how:"Hướng dẫn",
+    hub_hint:"Plugin PT được cài qua <b>PT Hub</b>: mở SketchUp → PT Hub → tab Plugin → bấm <b>Cài đặt</b> ở <b>{n}</b>. Chưa có PT Hub? Tải về và cài 1 lần.",
     sec_contact_k:"Liên hệ", sec_contact:"Cần hỗ trợ hoặc góp ý?",
     contact_sub:"Báo lỗi, đề xuất tính năng hay đặt viết plugin riêng cho văn phòng — hãy nhắn cho tôi.",
     zalo:"Zalo", email:"Email", copy:"SAO CHÉP", copied:"Đã sao chép", open:"MỞ",
@@ -440,9 +446,11 @@ const I18N = {
     demo:"Showing sample data. On GitHub Pages the real releases are loaded.",
     err:"Could not reach the release server. Please reload in a few minutes.",
     sec_install_k:"Guide", sec_install:"Install in one minute",
-    s1_t:"Download the installer", s1_d:"Click <b>Download</b> on the plugin you need to get the latest build.",
-    s2_t:"Install in SketchUp", s2_d:"<code>Extensions → Extension Manager → Install Extension</code>, then pick the file.",
-    s3_t:"Auto-updates", s3_d:"Each plugin checks for new versions daily and asks before updating. You can also use <b>Check for updates…</b> in its menu.",
+    s1_t:"Install PT Hub", s1_d:"Download <a href=\"#\" data-gethub><b>PT Hub</b></a> once and install it: <code>Extensions → Extension Manager → Install Extension</code>.",
+    s2_t:"Install plugins in PT Hub", s2_d:"Open <b>PT Hub</b> in SketchUp → <b>Plugins</b> tab → click <b>Install</b> on the plugin you need. PT Hub downloads and installs it.",
+    s3_t:"Auto-updates", s3_d:"New versions appear in the <b>Updates</b> tab – one click installs them, no files to download.",
+    hub_btn:"Install with PT Hub", get_hub:"Get PT Hub", how:"Guide",
+    hub_hint:"PT plugins are installed through <b>PT Hub</b>: open SketchUp → PT Hub → Plugins tab → click <b>Install</b> on <b>{n}</b>. No PT Hub yet? Download and install it once.",
     sec_contact_k:"Contact", sec_contact:"Need help or have an idea?",
     contact_sub:"Bug reports, feature requests or a custom plugin for your studio — just send me a message.",
     zalo:"Zalo", email:"Email", copy:"COPY", copied:"Copied", open:"OPEN",
@@ -530,11 +538,14 @@ function render(){
           <div><dt class="mono">${T("downloads")}</dt><dd>${fmtNum(p.downloads)}</dd></div>
         </dl>
         <div class="actions">
-          <a class="btn primary" href="${esc(L?.url||"#")}" aria-disabled="${!L?.url}"><svg><use href="#i-dl"/></svg>${L?T("download"):T("unreleased")}</a>
+          ${p.id==="pt_hub"?`<a class="btn primary" href="${esc(L?.url||"#")}" aria-disabled="${!L?.url}"><svg><use href="#i-dl"/></svg>${L?T("get_hub"):T("unreleased")}</a>`:
+            `<button class="btn primary" data-hub="${esc(p.id)}" aria-expanded="${state.hub===p.id}" ${L?"":"disabled"}><svg><use href="#i-dl"/></svg>${L?T("hub_btn"):T("unreleased")}</button>`}
           ${p.versions.length?`<button class="btn ghost" data-log="${esc(p.id)}" aria-expanded="${open}"><svg><use href="#i-log"/></svg>${open?T("hide"):T("changelog")}</button>`:""}
         </div>
+        ${state.hub===p.id?`<div class="hubhint"><p>${T("hub_hint").replace("{n}",esc(name))}</p><div class="hh-act">
+          <a class="btn primary" href="${esc(hubUrl()||"#")}"><svg><use href="#i-dl"/></svg>${T("get_hub")}</a><a class="btn ghost" href="#install">${T("how")}</a></div></div>`:""}
         ${open?`<div class="log">${p.versions.map(v=>`<div class="rel">
-          <div class="rel-top mono"><span><b>v${esc(v.version)}</b> · ${fmtDate(v.date)}</span>${v.url?`<a href="${esc(v.url)}">${T("this_ver")} ↓</a>`:""}</div>
+          <div class="rel-top mono"><span><b>v${esc(v.version)}</b> · ${fmtDate(v.date)}</span>${v.url&&p.id==="pt_hub"?`<a href="${esc(v.url)}">${T("this_ver")} ↓</a>`:""}</div>
           <div class="notes">${md(v.notes)||`<i>${T("no_notes")}</i>`}</div></div>`).join("")}</div>`:""}
       </div>
     </article>`}).join("");
@@ -569,7 +580,9 @@ function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 
 $("#q").addEventListener("input",e=>{state.q=e.target.value;render()});
 $("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;state.cat=b.dataset.c;renderChips();render()});
-$("#grid").addEventListener("click",e=>{const b=e.target.closest("[data-log]");if(!b)return;const id=b.dataset.log;state.open.has(id)?state.open.delete(id):state.open.add(id);render()});
+function hubUrl(){return state.plugins.find(x=>x.id==="pt_hub")?.latest?.url||""}
+document.addEventListener("click",e=>{const g=e.target.closest("[data-gethub]");if(!g)return;e.preventDefault();const u=hubUrl();if(u){const a=document.createElement("a");a.href=u;a.className="btn primary";a.style.display="none";$("#grid").appendChild(a);a.click();a.remove()}});
+$("#grid").addEventListener("click",e=>{const h=e.target.closest("[data-hub]");if(h){state.hub=state.hub===h.dataset.hub?null:h.dataset.hub;render();return}const b=e.target.closest("[data-log]");if(!b)return;const id=b.dataset.log;state.open.has(id)?state.open.delete(id):state.open.add(id);render()});
 document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>{state.lang=b.dataset.lang;save("pt-lang",state.lang);applyI18n()}));
 $("#themeBtn").addEventListener("click",()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==="dark"?"light":"dark";save("pt-theme",r.dataset.theme)});
 
