@@ -1,0 +1,23 @@
+name = "pt-license"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+FIREBASE_PROJECT = "pt-plugins"
+ADMINS = "doanphutien00@gmail.com,doanphutien2000@gmail.com"
+SITE_ORIGIN = "https://doanphutien00-afk.github.io"
+BANK_ACC = ""        # số tài khoản nhận tiền (đã liên kết SePay)
+BANK_NAME = ""       # tên ngân hàng theo SePay, vd. Techcombank / MBBank / Vietcombank
+BANK_HOLDER = ""     # tên chủ tài khoản
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pt-license"
+database_id = ""     # điền sau khi tạo: npx wrangler d1 create pt-license
+
+[triggers]
+crons = ["17 3 * * *"]   # dọn đơn quá hạn mỗi ngày
+
+# Bí mật (không ghi vào tệp này):
+#   npx wrangler secret put LICENSE_PRIVATE_JWK   (khoá ký bản quyền – JSON)
+#   npx wrangler secret put SEPAY_API_KEY         (khoá webhook đặt trong SePay)

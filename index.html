@@ -147,6 +147,12 @@ h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.2; m
 .specs div + div{padding-left:12px; border-left:1px solid var(--line)}
 .specs dt{color:var(--muted); font-size:10px; letter-spacing:.06em; white-space:nowrap}
 .specs dd{margin:2px 0 0; font-size:13.5px; font-weight:500; white-space:nowrap}
+.price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px dashed color-mix(in srgb,var(--accent) 55%,transparent);border-radius:var(--r);text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--accent) 6%,transparent);transition:background .25s,border-color .25s,transform .25s var(--ease)}
+.price b{font-size:19px;color:var(--accent);letter-spacing:-.02em}
+.price span{font-size:12.5px;color:var(--muted)}
+.price em{margin-left:auto;font-style:normal;font-size:13px;font-weight:600;color:var(--accent);transition:transform .25s var(--ease)}
+.price:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);border-style:solid}
+.price:hover em{transform:translateX(3px)}
 .actions{display:flex; gap:10px; margin-top:auto}
 .actions .btn{flex:1; justify-content:center; padding:11px 14px}
 .log{border-top:1px dashed var(--line-2); padding-top:6px}
@@ -284,6 +290,7 @@ footer a{color:var(--ink-2)}
       <a href="#install" data-i18n="nav_install"></a>
       <a href="thong-ke.html" data-i18n="nav_stats"></a>
       <a href="gop-y.html" data-i18n="nav_fb"></a>
+      <a href="mua.html" data-i18n="nav_buy"></a>
       <a href="#contact" data-i18n="nav_contact"></a>
     </div>
     <div class="ctrls">
@@ -408,7 +415,7 @@ const NEW_DAYS = 14;
 
 const I18N = {
   vi:{
-    nav_plugins:"Plugin", nav_install:"Cài đặt", nav_contact:"Liên hệ", nav_stats:"Thống kê", nav_fb:"Góp ý",
+    nav_plugins:"Plugin", nav_install:"Cài đặt", nav_contact:"Liên hệ", nav_buy:"Mua bản quyền", buy:"Mua bản quyền", owned_l:"vĩnh viễn · 2 máy · dùng thử 7 ngày", nav_stats:"Thống kê", nav_fb:"Góp ý",
     kicker:"SketchUp Extensions · Kiến trúc & Nội thất",
     hero_title:'<span class="line"><span>Dựng nhanh hơn,</span></span><span class="line"><span><em>thiết kế</em> nhiều hơn.</span></span>',
     hero_sub:"Bộ công cụ SketchUp phục vụ công việc dựng hình, diễn hoạ phối cảnh 3D kiến trúc – nội thất. Luôn được cập nhật tự động.",
@@ -433,7 +440,7 @@ const I18N = {
     all_releases:"Tất cả bản phát hành"
   },
   en:{
-    nav_plugins:"Plugins", nav_install:"Install", nav_contact:"Contact", nav_stats:"Statistics", nav_fb:"Feedback",
+    nav_plugins:"Plugins", nav_install:"Install", nav_contact:"Contact", nav_buy:"Buy license", buy:"Buy license", owned_l:"lifetime · 2 PCs · 7-day trial", nav_stats:"Statistics", nav_fb:"Feedback",
     kicker:"SketchUp Extensions · Architecture & Interiors",
     hero_title:'<span class="line"><span>Model faster,</span></span><span class="line"><span><em>design</em> more.</span></span>',
     hero_sub:"SketchUp tools for 3D modelling and architectural & interior visualisation. Always kept up to date automatically.",
@@ -459,6 +466,7 @@ const I18N = {
   }
 };
 
+const PRICE={mai_viet:129000,smart_floor:99000,pt_wallpanel:79000,pt_smartlight:79000,pt_cabinet:99000};
 const TAG_RE=/^(.+)-v(\d+(?:\.\d+)*)$/;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -537,6 +545,7 @@ function render(){
           <div><dt class="mono">${T("size")}</dt><dd>${fmtSize(L?.size)}</dd></div>
           <div><dt class="mono">${T("downloads")}</dt><dd>${fmtNum(p.downloads)}</dd></div>
         </dl>
+        ${PRICE[p.id]?`<a class="price" href="mua.html?p=${esc(p.id)}"><b>${PRICE[p.id].toLocaleString("vi-VN")}đ</b><span>${T("owned_l")}</span><em>${T("buy")} →</em></a>`:""}
         <div class="actions">
           ${p.id==="pt_hub"?`<a class="btn primary" href="${esc(L?.url||"#")}" aria-disabled="${!L?.url}"><svg><use href="#i-dl"/></svg>${L?T("get_hub"):T("unreleased")}</a>`:
             `<button class="btn primary" data-hub="${esc(p.id)}" aria-expanded="${state.hub===p.id}" ${L?"":"disabled"}><svg><use href="#i-dl"/></svg>${L?T("hub_btn"):T("unreleased")}</button>`}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mua bản quyền — PT Plugins</title>
+<meta name="description" content="Mua bản quyền vĩnh viễn plugin PT cho SketchUp: thanh toán QR, kích hoạt bằng PT Hub.">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style id="tkcss"></style>
+<style>
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 28px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative;animation:rise .45s var(--ease) both}
+.step:nth-child(2){animation-delay:.06s}.step:nth-child(3){animation-delay:.12s}.step:nth-child(4){animation-delay:.18s}
+.step b{display:block;margin:6px 0 4px}
+.step p{margin:0;color:var(--ink-2);font-size:13.5px}
+.step .n{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent);letter-spacing:.1em}
+.step.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:start}
+.prods{display:grid;gap:10px}
+.prod{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;transition:border-color .2s,transform .2s,background .2s;text-align:left;width:100%}
+.prod:hover{border-color:var(--line-2);transform:translateX(3px)}
+.prod.on{border-color:var(--accent);background:rgba(215,122,82,.07)}
+.prod .ic{width:46px;height:46px;border-radius:12px;background:#141517;border:1px solid #2a2d31;display:grid;place-items:center;flex:none}
+.prod .ic img{width:28px;height:28px}
+.prod .nm{font-weight:600}
+.prod .ds{font-size:12.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.prod .pr{margin-left:auto;font-weight:700;color:var(--accent);white-space:nowrap}
+.prod .own{margin-left:auto;font-size:12px;color:var(--ok);font-weight:600}
+.terms{margin-top:18px}
+.terms h3{margin:0 0 10px;font-size:16px}
+.terms ul{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+.terms li{display:flex;gap:10px;color:var(--ink-2);font-size:14px}
+.terms li::before{content:"";flex:none;width:7px;height:7px;margin-top:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg)}
+.pay h2{margin:0 0 4px;font-size:20px}
+.who{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px dashed var(--line-2);border-radius:10px;margin:12px 0 16px;font-size:13.5px}
+.who b{color:var(--ink)}
+.qrwrap{display:grid;grid-template-columns:220px 1fr;gap:18px;align-items:center}
+.qr{width:220px;height:220px;border-radius:14px;background:#fff;padding:10px;display:grid;place-items:center;position:relative;overflow:hidden}
+.qr img{width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .4s}
+.qr img.ld{opacity:1}
+.qr.paid::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;font-size:90px;color:#fff;background:rgba(47,160,100,.92);animation:pop .45s var(--ease)}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.kv{display:grid;gap:8px}
+.kv div{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:9px;background:var(--surface-2)}
+.kv span{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.kv b{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:15px}
+.kv b .mono{font-size:15px}
+.cp{border:1px solid var(--line-2);background:none;border-radius:7px;padding:2px 8px;font-size:11.5px;color:var(--muted);cursor:pointer}
+.cp:hover{color:var(--ink);border-color:var(--accent)}
+.status{display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 14px;border-radius:10px;background:var(--surface-2);font-size:14px}
+.status .dot{width:10px;height:10px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 0 rgba(224,176,79,.6);animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(224,176,79,0)}100%{box-shadow:0 0 0 0 rgba(224,176,79,0)}}
+.status.ok{background:rgba(95,191,127,.12);color:var(--ok)}
+.status.ok .dot{background:var(--ok);animation:none}
+.status.err{background:rgba(224,99,99,.12);color:var(--err)}
+.status.err .dot{background:var(--err);animation:none}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px}
+.done h2{color:var(--ok)}
+.done ol{padding-left:18px;color:var(--ink-2)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:50;animation:rise .25s var(--ease)}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.qrwrap{grid-template-columns:1fr}.qr{margin:0 auto}.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="in"><a class="brand" href="/"><img src="/icons/pt_hub.svg" alt="">PT Plugins</a><span class="sp"></span><a href="/">Plugin</a><a href="/ban-quyen.html">Bản quyền của tôi</a></div></nav>
+<main class="wrap">
+  <h1>Mua bản quyền</h1>
+  <p class="lead">Bản quyền vĩnh viễn · dùng trên 2 máy · nhận mọi bản cập nhật trong tương lai.</p>
+  <div class="steps" id="steps">
+    <div class="step" data-s="1"><span class="n">01</span><b>Đăng nhập bằng Google</b><p>Email Google dùng khi mua sẽ là tài khoản sở hữu plugin.</p></div>
+    <div class="step" data-s="2"><span class="n">02</span><b>Thanh toán</b><p>Quét mã QR và giữ nguyên số tiền, nội dung chuyển khoản.</p></div>
+    <div class="step" data-s="3"><span class="n">03</span><b>Hệ thống xác nhận</b><p>Trang thanh toán tự cập nhật khi giao dịch được ghi nhận.</p></div>
+    <div class="step" data-s="4"><span class="n">04</span><b>Cài đặt bằng PT Hub</b><p>Đăng nhập đúng tài khoản Google đã mua rồi bấm Cài đặt.</p></div>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="prods" id="prods"></div>
+      <div class="card terms">
+        <h3>Cách tính bản quyền</h3>
+        <ul>
+          <li>Bản quyền vĩnh viễn theo máy, được cập nhật mọi bản cập nhật trong tương lai.</li>
+          <li>1 bản quyền = 2 máy.</li>
+          <li>Chuyển sang máy khác: huỷ kích hoạt trên máy cũ (trong PT Hub hoặc trang Bản quyền của tôi), rồi kích hoạt trên máy mới.</li>
+          <li>Máy hỏng hoặc cài lại Windows: tự reset thiết bị ở trang <a href="/ban-quyen.html">Bản quyền của tôi</a> (30 ngày/lần), hoặc liên hệ tác giả để reset.</li>
+          <li>Chưa mua: dùng thử đầy đủ tính năng 7 ngày trên mỗi máy.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card pay" id="pay"><div class="spinner"></div></div>
+  </div>
+</main>
+<script type="module">
+import { initFb, loginBox, avatar, esc, errMsg, CSS } from "/tk.js";
+import { api, money, PRICES } from "/lic.js";
+document.getElementById("tkcss").textContent = CSS;
+const $ = s => document.querySelector(s);
+const toast = t => { const d = document.createElement("div"); d.className = "toast"; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2600); };
+const stepOn = n => document.querySelectorAll(".step").forEach(s => s.classList.toggle("on", +s.dataset.s === n));
+
+let fb, user, products = [], sel = new URLSearchParams(location.search).get("p"), owned = new Set(), order = null, poll = null;
+
+const manifest = await fetch("/plugins.json", { cache: "no-store" }).then(r => r.json());
+products = manifest.plugins.filter(p => PRICES[p.id] && !p.hidden).map(p => ({ ...p, price: PRICES[p.id] }));
+if (!products.some(p => p.id === sel)) sel = products[0]?.id;
+
+function drawProds() {
+  $("#prods").innerHTML = products.map(p => `<button class="prod ${p.id === sel ? "on" : ""}" data-p="${p.id}">
+    <span class="ic"><img src="/${esc(p.icon)}" alt=""></span>
+    <span style="min-width:0"><span class="nm">${esc(p.name)}</span><span class="ds">${esc(p.description || "")}</span></span>
+    ${owned.has(p.id) ? `<span class="own">✓ Đã sở hữu</span>` : `<span class="pr">${money(p.price)}</span>`}</button>`).join("");
+}
+$("#prods").onclick = e => {
+  const b = e.target.closest("[data-p]"); if (!b || b.dataset.p === sel) return;
+  sel = b.dataset.p; history.replaceState(null, "", "?p=" + sel); stopPoll(); order = null; drawProds(); drawPay();
+};
+
+function stopPoll() { if (poll) { clearInterval(poll); poll = null; } }
+
+function drawPay() {
+  const p = products.find(x => x.id === sel), el = $("#pay");
+  if (!user) {
+    stepOn(1);
+    el.innerHTML = `<h2>${esc(p.name)} · ${money(p.price)}</h2><p class="muted" style="margin:0 0 16px">Đăng nhập bằng Google để mua. Email Google này sẽ là tài khoản sở hữu bản quyền.</p><div id="lg"></div>`;
+    loginBox($("#lg"), fb);
+    return;
+  }
+  const who = `<div class="who">${avatar(user)}<div>Mua cho tài khoản<br><b>${esc(user.email)}</b></div><button class="tk-btn sm" id="out" style="margin-left:auto">Đổi tài khoản</button></div>`;
+  if (owned.has(sel)) {
+    stepOn(4);
+    el.innerHTML = `<h2>${esc(p.name)}</h2>${who}<div class="status ok"><span class="dot"></span>Tài khoản này đã sở hữu bản quyền ${esc(p.name)}.</div>
+      <p class="note">Mở PT Hub trong SketchUp, đăng nhập <b>${esc(user.email)}</b> rồi bấm Cài đặt / Kích hoạt. Quản lý máy ở <a href="/ban-quyen.html">Bản quyền của tôi</a>.</p>`;
+  } else if (!order) {
+    stepOn(2);
+    el.innerHTML = `<h2>${esc(p.name)} · ${money(p.price)}</h2>${who}
+      <p class="muted" style="margin:0 0 16px">Bấm để tạo mã QR thanh toán riêng cho đơn hàng của bạn (giữ trong 24 giờ).</p>
+      <button class="tk-btn primary" id="mk" style="width:100%;padding:12px">Tạo mã QR thanh toán</button><div class="tk-msg err" id="err" style="margin-top:10px"></div>`;
+    $("#mk").onclick = createOrder;
+  } else drawOrder();
+  $("#out")?.addEventListener("click", () => fb.A.signOut(fb.auth));
+}
+
+async function createOrder() {
+  const b = $("#mk"); b.disabled = true; b.innerHTML = `<span class="spinner" style="width:18px;height:18px;margin:0;border-width:2px"></span>`;
+  try {
+    order = (await api(fb, "/api/orders", { method: "POST", body: { product: sel } })).order;
+    drawOrder(); startPoll();
+  } catch (e) {
+    if (e.code === "already_owned") { owned.add(sel); drawProds(); drawPay(); return; }
+    b.disabled = false; b.textContent = "Tạo mã QR thanh toán"; $("#err").textContent = e.message;
+  }
+}
+
+function drawOrder() {
+  const o = order, p = products.find(x => x.id === o.product), el = $("#pay");
+  if (o.status === "paid") {
+    stepOn(4); stopPoll(); owned.add(o.product); drawProds();
+    el.innerHTML = `<div class="done"><h2>✓ Thanh toán thành công</h2>
+      <p>Bản quyền <b>${esc(p.name)}</b> đã được cấp cho <b>${esc(user.email)}</b>.</p>
+      <ol><li>Mở <b>PT Hub</b> trong SketchUp (chưa có? <a href="/#plugins">tải PT Hub</a>).</li>
+      <li>Vào Cài đặt → Tài khoản, đăng nhập đúng <b>${esc(user.email)}</b>.</li>
+      <li>Ở tab Plugin, bấm <b>Cài đặt</b> (hoặc <b>Kích hoạt</b> nếu đã cài) ${esc(p.name)}.</li></ol>
+      <p class="note">Mã đơn: <span class="mono">${esc(o.code)}</span> · Quản lý máy ở <a href="/ban-quyen.html">Bản quyền của tôi</a>.</p></div>`;
+    return;
+  }
+  stepOn(o.status === "pending" ? 3 : 2);
+  const exp = new Date(o.expires * 1000);
+  el.innerHTML = `<h2>Quét mã để thanh toán</h2><p class="muted" style="margin:0 0 16px">Dùng app ngân hàng bất kỳ. <b>Giữ nguyên số tiền và nội dung chuyển khoản.</b></p>
+    <div class="qrwrap"><div class="qr" id="qr"><img src="${esc(o.qr)}" alt="Mã QR thanh toán" onload="this.classList.add('ld')"></div>
+    <div class="kv">
+      <div><span>Số tiền</span><b>${money(o.amount)} <button class="cp" data-c="${o.amount}">Sao chép</button></b></div>
+      <div><span>Nội dung chuyển khoản</span><b><span class="mono">${esc(o.code)}</span><button class="cp" data-c="${esc(o.code)}">Sao chép</button></b></div>
+      ${o.bank?.acc ? `<div><span>${esc(o.bank.name || "Ngân hàng")}</span><b><span class="mono">${esc(o.bank.acc)}</span><button class="cp" data-c="${esc(o.bank.acc)}">Sao chép</button></b></div>` : ""}
+      ${o.bank?.holder ? `<div><span>Chủ tài khoản</span><b>${esc(o.bank.holder)}</b></div>` : ""}
+    </div></div>
+    <div class="status ${o.status === "expired" ? "err" : ""}" id="st"><span class="dot"></span>${o.status === "expired" ? "Đơn đã hết hạn – tạo mã mới." : "Đang chờ thanh toán… trang sẽ tự cập nhật khi tiền về."}</div>
+    <p class="note">Mã giữ đến ${exp.toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" })}. Đã chuyển nhưng sau 10 phút chưa xác nhận? Liên hệ tác giả kèm mã <span class="mono">${esc(o.code)}</span>.</p>
+    ${o.status === "expired" ? `<button class="tk-btn primary" id="mk" style="width:100%;margin-top:10px">Tạo mã mới</button>` : ""}`;
+  el.querySelectorAll(".cp").forEach(b => b.onclick = () => navigator.clipboard.writeText(b.dataset.c).then(() => toast("Đã sao chép: " + b.dataset.c)));
+  $("#mk")?.addEventListener("click", () => { order = null; drawPay(); });
+}
+
+function startPoll() {
+  stopPoll();
+  poll = setInterval(async () => {
+    if (document.hidden || !order) return;
+    try {
+      const o = (await api(fb, "/api/orders/" + order.code)).order;
+      if (o.status !== order.status) { order = o; drawOrder(); }
+    } catch (e) {}
+  }, 4000);
+}
+
+async function loadMine() {
+  owned = new Set();
+  try {
+    const me = await api(fb, "/api/me");
+    me.licenses.forEach(l => owned.add(l.product));
+    const pend = me.orders.find(o => o.product === sel && o.status === "pending" && o.expires * 1000 > Date.now());
+    if (pend && !owned.has(sel)) { order = pend; startPoll(); }
+  } catch (e) { if (e.code === "no_api") { $("#pay").innerHTML = `<div class="status err"><span class="dot"></span>${esc(e.message)}</div>`; throw e; } }
+}
+
+drawProds();
+try {
+  fb = await initFb();
+  fb.A.onAuthStateChanged(fb.auth, async u => {
+    user = u; order = null; stopPoll();
+    if (u && !u.emailVerified) { $("#pay").innerHTML = `<div class="status err"><span class="dot"></span>Email ${esc(u.email)} chưa xác minh. Hãy đăng nhập bằng Google.</div><button class="tk-btn" id="o2" style="margin-top:12px">Đăng nhập tài khoản khác</button>`; $("#o2").onclick = () => fb.A.signOut(fb.auth); return; }
+    if (u) { $("#pay").innerHTML = `<div class="spinner"></div>`; try { await loadMine(); } catch (e) { return; } }
+    drawProds(); drawPay();
+  });
+} catch (e) { $("#pay").innerHTML = `<div class="status err"><span class="dot"></span>${esc(errMsg(e))}</div>`; }
+</script>
+</body>
+</html>
