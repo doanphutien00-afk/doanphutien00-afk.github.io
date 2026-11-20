@@ -33,7 +33,15 @@ jobs:
             ver="${n##*-}"
             tag="${id}-v${ver}"
             if gh release view "$tag" >/dev/null 2>&1; then
-              echo "Đã có $tag"
+              # Gói dựng lại cùng phiên bản (khác dung lượng) → thay tệp trong Release cho khớp sha256 trong danh sách
+              rsz=$(gh release view "$tag" --json assets --jq ".assets[] | select(.name==\"$(basename "$f")\") | .size" || echo 0)
+              fsz=$(stat -c%s "$f")
+              if [ "$rsz" != "$fsz" ]; then
+                echo "Thay tệp $tag ($rsz → $fsz byte)"
+                gh release upload "$tag" "$f" --clobber
+              else
+                echo "Đã có $tag"
+              fi
               continue
             fi
             name=$(jq -r --arg id "$id" '.plugins[] | select(.id==$id) | .name // empty' "$cat")
