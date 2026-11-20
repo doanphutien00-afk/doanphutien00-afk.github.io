@@ -38,8 +38,19 @@ const fromB64u = s => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/
 class HttpError extends Error { constructor(status, code, msg) { super(msg || code); this.status = status; this.code = code; } }
 const bad = (code, msg, status = 400) => { throw new HttpError(status, code, msg); };
 
+// Cấu hình mặc định (biến môi trường trên Cloudflare, nếu có, sẽ ghi đè)
+const DEFAULTS = {
+  FIREBASE_PROJECT: "pt-plugins",
+  ADMINS: "doanphutien00@gmail.com,doanphutien2000@gmail.com",
+  SITE_ORIGIN: "https://doanphutien00-afk.github.io",
+  BANK_ACC: "0965132144",
+  BANK_NAME: "MBBank",
+  BANK_HOLDER: "DOAN PHU TIEN",
+};
+
 export default {
-  async fetch(req, env) {
+  async fetch(req, env0) {
+    const env = { ...DEFAULTS, ...env0 };
     const cors = corsHeaders(req, env);
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
     try {
@@ -52,7 +63,8 @@ export default {
     }
   },
   // dọn đơn quá hạn (Cron Trigger, tuỳ chọn)
-  async scheduled(_ev, env) {
+  async scheduled(_ev, env0) {
+    const env = { ...DEFAULTS, ...env0 };
     await env.DB.prepare("UPDATE orders SET status='expired' WHERE status='pending' AND created < ?").bind(now() - ORDER_HOURS * 3600).run();
   },
 };
@@ -71,6 +83,7 @@ async function route(req, env) {
   if (p === "/api/products" && m === "GET") return { ok: true, products: PRODUCTS, max_devices: MAX_DEVICES, trial_days: TRIAL_DAYS };
   if (p === "/api/sepay/webhook" && m === "POST") return sepayWebhook(req, env);
   if (p === "/api/trial" && m === "POST") return trial(await body(req), env);
+  if (p === "/api/pubkey" && m === "GET") return { ok: true, pem: await publicPem(env) };
 
   const user = await authUser(req, env);                    // các API dưới cần đăng nhập
   if (p === "/api/orders" && m === "POST") return createOrder(user, await body(req), env);
@@ -86,6 +99,7 @@ async function route(req, env) {
     const b = m === "POST" ? await body(req) : {};
     switch (p) {
       case "/api/admin/overview": return adminOverview(env, url);
+      case "/api/admin/config": return { ok: true, webhook_url: url.origin + "/api/sepay/webhook", sepay_api_key: await sepayKey(env), auth_header: "Authorization: Apikey <khoá>", pem: await publicPem(env), bank: { acc: env.BANK_ACC, name: env.BANK_NAME, holder: env.BANK_HOLDER } };
       case "/api/admin/reset": return adminReset(b, env);
       case "/api/admin/revoke": return adminRevoke(b, env);
       case "/api/admin/grant": return adminGrant(b, env);
@@ -122,9 +136,40 @@ async function authUser(req, env) {
 const isAdmin = (u, env) => (env.ADMINS || "").toLowerCase().split(/[,\s]+/).includes(u.email);
 
 /* ------------------------------------------------ ký token bản quyền */
+// Khoá & cấu hình bí mật: lấy từ Secret nếu có, không thì tự sinh 1 lần và lưu trong D1 (bảng kv).
+async function kvGet(env, k) {
+  await env.DB.prepare("CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY, v TEXT NOT NULL)").run();
+  return (await env.DB.prepare("SELECT v FROM kv WHERE k=?").bind(k).first())?.v ?? null;
+}
+async function kvInit(env, k, make) {
+  let v = await kvGet(env, k);
+  if (v == null) {
+    await env.DB.prepare("INSERT OR IGNORE INTO kv (k,v) VALUES (?,?)").bind(k, await make()).run();
+    v = await kvGet(env, k);
+  }
+  return v;
+}
+async function privJwk(env) {
+  if (env.LICENSE_PRIVATE_JWK) return env.LICENSE_PRIVATE_JWK;
+  return kvInit(env, "license_private_jwk", async () => {
+    const k = await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, true, ["sign", "verify"]);
+    return JSON.stringify(await crypto.subtle.exportKey("jwk", k.privateKey));
+  });
+}
+async function publicPem(env) {
+  const j = JSON.parse(await privJwk(env)); delete j.d; j.key_ops = ["verify"];
+  const pub = await crypto.subtle.importKey("jwk", j, { name: "ECDSA", namedCurve: "P-256" }, true, ["verify"]);
+  const b = btoa(String.fromCharCode(...new Uint8Array(await crypto.subtle.exportKey("spki", pub))));
+  return "-----BEGIN PUBLIC KEY-----\n" + b.match(/.{1,64}/g).join("\n") + "\n-----END PUBLIC KEY-----\n";
+}
+async function sepayKey(env) {
+  if (env.SEPAY_API_KEY) return env.SEPAY_API_KEY;
+  return kvInit(env, "sepay_api_key", async () => [...crypto.getRandomValues(new Uint8Array(24))].map(x => x.toString(16).padStart(2, "0")).join(""));
+}
+
 let PRIV = null;
 async function sign(payload, env) {
-  if (!PRIV) PRIV = await crypto.subtle.importKey("jwk", JSON.parse(env.LICENSE_PRIVATE_JWK), { name: "ECDSA", namedCurve: "P-256" }, false, ["sign"]);
+  if (!PRIV) PRIV = await crypto.subtle.importKey("jwk", JSON.parse(await privJwk(env)), { name: "ECDSA", namedCurve: "P-256" }, false, ["sign"]);
   const data = b64uStr(JSON.stringify(payload));
   const sig = await crypto.subtle.sign({ name: "ECDSA", hash: "SHA-256" }, PRIV, new TextEncoder().encode(data));
   return data + "." + b64u(sig);   // chữ ký dạng r||s (64 byte)
@@ -167,7 +212,7 @@ async function getOrder(user, code, env) {
 /* ------------------------------------------------ webhook SePay */
 async function sepayWebhook(req, env) {
   const auth = req.headers.get("Authorization") || "";
-  if (!env.SEPAY_API_KEY || auth.replace(/^Apikey\s+/i, "").trim() !== env.SEPAY_API_KEY) bad("forbidden", "Sai khoá webhook", 401);
+  if (auth.replace(/^Apikey\s+/i, "").trim() !== await sepayKey(env)) bad("forbidden", "Sai khoá webhook", 401);
   const t = await body(req);
   if (t.transferType && t.transferType !== "in") return { success: true, ignored: "out" };
   const id = String(t.id ?? t.referenceCode ?? "");
