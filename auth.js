@@ -77,6 +77,8 @@ const css = `
 .au-menu .who b{display:block;font-size:14.5px}
 .au-menu .who span{font-size:12.5px;color:var(--muted);word-break:break-all}
 .au-menu .warn{display:block;margin-top:6px;font-size:11.5px;color:var(--accent)}
+.au-menu .au-mi{display:block;padding:9px 10px;border-radius:6px;font-size:13.5px;text-decoration:none;color:inherit}
+.au-menu .au-mi:hover{background:var(--surface-2);color:var(--accent)}
 .au-menu button{width:100%;text-align:left;border:0;background:none;padding:9px 10px;border-radius:6px;cursor:pointer;font-size:13.5px}
 .au-menu button:hover{background:var(--surface-2)}
 
@@ -163,6 +165,7 @@ function renderSlot() {
       <div class="who"><b>${t("au_hello")}, ${esc2(name)}</b><span>${esc2(user.email)}</span>${needVerify ? `<span class="warn">● ${t("au_verify")}</span>` : ""}</div>
       ${isAdmin ? `<button id="auAdmin">★ ${t("au_admin")}</button>` : ""}
       ${needVerify ? `<button id="auResend">${t("au_resend")}</button>` : ""}
+      <a class="au-mi" href="gop-y.html">${document.documentElement.lang === "en" ? "Feedback & bug reports" : "Góp ý & báo lỗi"}</a>
       <button id="auOut">${t("au_logout")}</button>
     </div></div>`;
   const menu = slot.querySelector("#auMenu");

@@ -31,11 +31,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.1.5.rbz",
-      "version": "2.1.5",
-      "date": "2026-11-20T04:00:00Z",
-      "size": 186238,
-      "notes": "- Sửa lỗi \"tệp tải về không hợp lệ\" (SketchUp 2022): tải tệp cài đặt bằng Net::HTTP chạy nền, kiểm tra đủ dung lượng và toàn bộ gói trước khi cài\n- Tệp tải về hỏng → tự tải lại bằng cách khác, rồi thử link dự phòng; lỗi ghi rõ lý do (vd. tệp hỏng 1.2/2.0 MB)\n- Không lặp lại cùng một thông báo lỗi"
+      "download": "pt-hub/goi/pt_hub-2.2.0.rbz",
+      "version": "2.2.0",
+      "date": "2026-11-20",
+      "size": 197320,
+      "notes": "- Đăng nhập tài khoản PT (dùng chung với trang web): email/mật khẩu hoặc Google qua trình duyệt\n- Góp ý / báo lỗi gửi thẳng lên trang web kèm ảnh (tự nén) và nhật ký; xem trạng thái và phản hồi của tác giả ngay trong PT Hub\n- Trang Plugin: nút chuyển xem dạng danh sách / lưới\n- Ủng hộ tác giả và liên hệ chuyển vào Cài đặt → Hỗ trợ; bỏ tab Nguồn, Nâng cao và các nút Trang phát hành / Trang trên Claude"
     },
     {
       "id": "mai_viet",

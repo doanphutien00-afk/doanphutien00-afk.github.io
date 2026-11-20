@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Liên kết PT Hub — PT Plugins</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style id="tkcss"></style>
+<style>
+.wrap{max-width:560px}
+.who{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.who b{display:block;font-size:17px}
+.done{text-align:center}
+.done .ok{width:58px;height:58px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;background:rgba(95,191,127,.14);color:var(--ok);font-size:28px;animation:pop .45s var(--ease)}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:none;opacity:1}}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.err{color:var(--err)}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="in"><a class="brand" href="/"><img src="/icons/pt_hub.svg" alt="">PT Plugins</a><span class="sp"></span><a href="/gop-y.html">Góp ý</a></div></nav>
+<main class="wrap">
+  <h1>Liên kết PT Hub</h1>
+  <p class="lead">Đăng nhập tài khoản PT trên trang này để PT Hub trong SketchUp dùng chung tài khoản.</p>
+  <div class="card" id="box"><div class="spinner"></div></div>
+</main>
+<script type="module">
+import { initFb, loginBox, avatar, esc, errMsg, CSS } from "/tk.js";
+document.getElementById("tkcss").textContent = CSS;
+const box = document.getElementById("box");
+const code = new URLSearchParams(location.search).get("ma") || "";
+let linked = false;
+
+if (!/^[a-f0-9]{32}$/.test(code)) {
+  box.innerHTML = `<p class="err">Link liên kết không hợp lệ. Hãy mở PT Hub → Cài đặt → Tài khoản → “Tiếp tục với Google” để mở lại trang này.</p>`;
+} else {
+  try {
+    const fb = await initFb();
+    fb.A.onAuthStateChanged(fb.auth, u => {
+      if (linked) return;
+      if (!u) { loginBox(box, fb, "Đăng nhập để liên kết với PT Hub"); return; }
+      const name = u.displayName || u.email;
+      box.innerHTML = `<div class="who">${avatar(u, true)}<div><b>${esc(name)}</b><span class="muted">${esc(u.email)}</span></div></div>
+        <p>Cho phép <b>PT Hub</b> trên máy tính này đăng nhập bằng tài khoản trên?</p>
+        <p class="err" id="er"></p>
+        <div class="row"><button class="tk-btn primary" id="go">Liên kết PT Hub</button><button class="tk-btn" id="other">Dùng tài khoản khác</button></div>`;
+      document.getElementById("other").onclick = () => fb.A.signOut(fb.auth);
+      document.getElementById("go").onclick = async e => {
+        e.target.disabled = true;
+        try {
+          await fb.F.setDoc(fb.F.doc(fb.db, "hub_links", code), {
+            uid: u.uid, email: u.email || "", refresh: u.refreshToken, created: fb.F.serverTimestamp()
+          });
+          linked = true;
+          box.innerHTML = `<div class="done"><div class="ok">✓</div><h2 style="margin:0 0 6px">Đã liên kết</h2>
+            <p class="muted">Quay lại SketchUp – PT Hub sẽ tự đăng nhập trong vài giây. Có thể đóng trang này.</p></div>`;
+        } catch (er) { document.getElementById("er").textContent = errMsg(er); e.target.disabled = false; }
+      };
+    });
+  } catch (er) { box.innerHTML = `<p class="err">${esc(errMsg(er))}</p>`; }
+}
+</script>
+</body>
+</html>

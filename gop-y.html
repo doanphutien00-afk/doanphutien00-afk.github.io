@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Góp ý & báo lỗi — PT Plugins</title>
+<meta name="description" content="Góp ý, báo lỗi plugin PT gửi từ PT Hub.">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style id="tkcss"></style>
+<style>
+.top{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.top .sp{flex:1}
+.me{display:flex;align-items:center;gap:10px}
+.me small{display:block;color:var(--muted);font-size:12px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.chip{border:1px solid var(--line-2);background:none;border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer;color:var(--ink-2);transition:.2s}
+.chip:hover{border-color:var(--accent)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip .k{opacity:.7;margin-left:5px;font-size:12px}
+.inp.q{margin-left:auto;min-width:220px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em}
+.stat span{color:var(--muted);font-size:12.5px}
+.list{display:flex;flex-direction:column;gap:12px}
+.it{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;animation:rise .35s var(--ease) both;transition:border-color .2s}
+.it:hover{border-color:var(--line-2)}
+.ih{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ih .sp{flex:1}
+.ty{font-weight:600}
+.ty.bug::before{content:"● ";color:var(--err)}
+.ty.feature::before{content:"● ";color:var(--accent)}
+.msg{white-space:pre-wrap;word-break:break-word;margin:10px 0 4px}
+.imgs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.imgs img{height:96px;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;transition:transform .2s}
+.imgs img:hover{transform:scale(1.03)}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--muted);font-size:13px}
+pre{font:12px/1.5 "JetBrains Mono",monospace;background:#0d0e10;border:1px solid var(--line);border-radius:8px;padding:10px;max-height:300px;overflow:auto;white-space:pre-wrap}
+.reply{margin-top:10px;padding:10px 12px;border-left:3px solid var(--accent);background:rgba(215,122,82,.08);border-radius:0 8px 8px 0;white-space:pre-wrap}
+.reply small{display:block;color:var(--accent);font-weight:600}
+.adm{display:flex;gap:8px;margin-top:12px;align-items:flex-start;flex-wrap:wrap}
+.adm textarea{flex:1;min-width:240px;min-height:44px;resize:vertical}
+.adm select{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px}
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.lb.open{opacity:1;pointer-events:auto}
+.lb img{max-width:94vw;max-height:92vh;border-radius:8px;transform:scale(.96);transition:transform .25s var(--ease)}
+.lb.open img{transform:none}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--surface-2);border:1px solid var(--line-2);padding:9px 16px;border-radius:10px;animation:rise .3s var(--ease);z-index:60}
+@media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.inp.q{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="in"><a class="brand" href="/"><img src="/icons/pt_hub.svg" alt="">PT Plugins</a><span class="sp"></span><a href="/">Plugin</a><a href="/thong-ke.html">Thống kê</a></div></nav>
+<main class="wrap">
+  <div class="top"><div><h1>Góp ý & báo lỗi</h1><p class="lead" id="lead" style="margin:0">Góp ý gửi từ PT Hub trong SketchUp.</p></div><span class="sp"></span><div id="me"></div></div>
+  <div id="root"><div class="spinner"></div></div>
+</main>
+<div class="lb" id="lb"><img alt=""></div>
+<script type="module">
+import { initFb, loginBox, avatar, esc, errMsg, CSS } from "/tk.js";
+document.getElementById("tkcss").textContent = CSS;
+const root = document.getElementById("root"), me = document.getElementById("me"), lead = document.getElementById("lead");
+const ST = { moi: "Mới gửi", dang_xu_ly: "Đang xử lý", da_xong: "Đã xong", bo_qua: "Không xử lý" };
+let fb, user, admin = false, items = [], filter = "all", q = "", lastDoc = null, more = false;
+
+const toast = t => { const d = document.createElement("div"); d.className = "toast"; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 3200); };
+const when = x => { const d = x?.toDate ? x.toDate() : (x ? new Date(x) : null); return d ? d.toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" }) : ""; };
+
+function draw() {
+  const cnt = k => items.filter(x => (x.status || "moi") === k).length;
+  const list = items.filter(x => (filter === "all" || (x.status || "moi") === filter) &&
+    (!q || [x.message, x.plugin_name, x.plugin, x.email, x.name].join(" ").toLowerCase().includes(q)));
+  let h = "";
+  if (admin) h += `<div class="stats">${[["moi", "Mới gửi"], ["dang_xu_ly", "Đang xử lý"], ["da_xong", "Đã xong"], ["all", "Tổng"]].map(([k, l]) =>
+    `<div class="stat"><b>${k === "all" ? items.length : cnt(k)}</b><span>${l}</span></div>`).join("")}</div>`;
+  h += `<div class="tools">${[["all", "Tất cả", items.length], ...Object.entries(ST).map(([k, l]) => [k, l, cnt(k)])].map(([k, l, n]) =>
+    `<button class="chip ${filter === k ? "on" : ""}" data-f="${k}">${l}<span class="k">${n}</span></button>`).join("")}
+    <input class="inp q" id="q" placeholder="Tìm nội dung, plugin, email…" value="${esc(q)}"></div>`;
+  h += list.length ? `<div class="list">${list.map(card).join("")}</div>` :
+    `<div class="empty">${items.length ? "Không có góp ý phù hợp." : admin ? "Chưa có góp ý nào." : "Bạn chưa gửi góp ý nào. Gửi từ PT Hub → Góp ý trong SketchUp."}</div>`;
+  if (more) h += `<div style="text-align:center;margin-top:16px"><button class="tk-btn" id="more">Tải thêm</button></div>`;
+  root.innerHTML = h;
+}
+
+function card(x) {
+  const st = x.status || "moi";
+  return `<article class="it" data-id="${x.id}">
+    <div class="ih"><span class="tag ${st}">${ST[st] || st}</span><span class="ty ${x.type === "feature" ? "feature" : "bug"}">${x.type === "feature" ? "Góp ý tính năng" : "Báo lỗi"}</span>
+      <span class="muted">· ${esc(x.plugin_name || x.plugin || "")}</span><span class="sp"></span>
+      ${admin ? `<span class="muted">${esc(x.name || "")} &lt;${esc(x.email || "")}&gt;</span>` : ""}<span class="muted">${when(x.created)}</span></div>
+    <div class="msg">${esc(x.message)}</div>
+    ${(x.images || []).length ? `<div class="imgs">${x.images.map(u => /^data:image\//.test(u) ? `<img src="${esc(u)}" alt="">` : "").join("")}</div>` : ""}
+    ${x.reply && !admin ? `<div class="reply"><small>Tác giả trả lời${x.replied ? " · " + when(x.replied) : ""}</small>${esc(x.reply)}</div>` : ""}
+    ${admin ? `<details><summary>Thông tin máy · PT Hub ${esc(x.hub_version || "")} · SketchUp ${esc(x.sketchup || "")}</summary><pre>${esc(x.sysinfo || "")}</pre></details>
+      ${x.log ? `<details><summary>Nhật ký PT Hub</summary><pre>${esc(x.log)}</pre></details>` : ""}
+      <div class="adm"><select data-st>${Object.entries(ST).map(([k, l]) => `<option value="${k}" ${k === st ? "selected" : ""}>${l}</option>`).join("")}</select>
+        <textarea class="inp" data-rep placeholder="Trả lời người gửi (hiện trong PT Hub)…">${esc(x.reply || "")}</textarea>
+        <button class="tk-btn primary sm" data-save>Lưu</button></div>` : ""}
+  </article>`;
+}
+
+async function load(next) {
+  const F = fb.F, col = F.collection(fb.db, "feedback");
+  try {
+    let snap;
+    if (admin) {
+      const parts = [col, F.orderBy("created", "desc"), F.limit(40)];
+      if (next && lastDoc) parts.splice(2, 0, F.startAfter(lastDoc));
+      snap = await F.getDocs(F.query(...parts));
+      more = snap.docs.length === 40; lastDoc = snap.docs[snap.docs.length - 1] || lastDoc;
+    } else {
+      snap = await F.getDocs(F.query(col, F.where("uid", "==", user.uid), F.limit(100)));
+      more = false;
+    }
+    const got = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    items = next ? items.concat(got) : got;
+    if (!admin) items.sort((a, b) => (b.created?.toMillis?.() || 0) - (a.created?.toMillis?.() || 0));
+    draw();
+  } catch (er) { root.innerHTML = `<div class="card"><p style="color:var(--err)">${esc(errMsg(er))}</p></div>`; }
+}
+
+root.addEventListener("click", async e => {
+  const f = e.target.closest("[data-f]");
+  if (f) { filter = f.dataset.f; draw(); return; }
+  if (e.target.id === "more") { load(true); return; }
+  if (e.target.matches(".imgs img")) { const lb = document.getElementById("lb"); lb.querySelector("img").src = e.target.src; lb.classList.add("open"); return; }
+  if (e.target.matches("[data-save]")) {
+    const art = e.target.closest(".it"), id = art.dataset.id, x = items.find(i => i.id === id);
+    const status = art.querySelector("[data-st]").value, reply = art.querySelector("[data-rep]").value.trim();
+    e.target.disabled = true;
+    try {
+      await fb.F.updateDoc(fb.F.doc(fb.db, "feedback", id), { status, reply, replied: fb.F.serverTimestamp() });
+      Object.assign(x, { status, reply }); toast("Đã lưu"); draw();
+    } catch (er) { toast(errMsg(er)); e.target.disabled = false; }
+  }
+});
+root.addEventListener("input", e => { if (e.target.id === "q") { q = e.target.value.toLowerCase(); const p = e.target.selectionStart; draw(); const i = document.getElementById("q"); i.focus(); i.setSelectionRange(p, p); } });
+document.getElementById("lb").onclick = e => e.currentTarget.classList.remove("open");
+
+try {
+  fb = await initFb();
+  fb.A.onAuthStateChanged(fb.auth, u => {
+    user = u; items = []; lastDoc = null; filter = "all";
+    if (!u) {
+      me.innerHTML = "";
+      lead.textContent = "Đăng nhập để xem góp ý bạn đã gửi từ PT Hub và phản hồi của tác giả.";
+      root.innerHTML = `<div class="card" id="lg"></div>`;
+      loginBox(document.getElementById("lg"), fb);
+      return;
+    }
+    admin = !!u.emailVerified && (u.email || "").toLowerCase() === String(fb.site.contact?.email || "").toLowerCase();
+    lead.textContent = admin ? "Quản lý toàn bộ góp ý – đổi trạng thái và trả lời; người gửi thấy ngay trong PT Hub." : "Góp ý bạn đã gửi từ PT Hub và phản hồi của tác giả.";
+    me.innerHTML = `<div class="me">${avatar(u)}<div>${esc(u.displayName || u.email)}<small>${admin ? "Quản trị" : esc(u.email)}</small></div><button class="tk-btn sm" id="out">Đăng xuất</button></div>`;
+    document.getElementById("out").onclick = () => fb.A.signOut(fb.auth);
+    root.innerHTML = `<div class="spinner"></div>`;
+    load(false);
+  });
+} catch (er) { root.innerHTML = `<div class="card"><p style="color:var(--err)">${esc(errMsg(er))}</p></div>`; }
+</script>
+</body>
+</html>

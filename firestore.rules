@@ -1,0 +1,38 @@
+rules_version = '2';
+// Quy tắc bảo mật Firestore cho dự án pt-plugins (PT Hub + trang web).
+// Dán toàn bộ vào: Firebase Console → Firestore Database → Rules → Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Tác giả (quản trị): email đã xác minh.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'doanphutien00@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // Góp ý / báo lỗi gửi từ PT Hub.
+    match /feedback/{id} {
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'moi'
+        && request.resource.data.reply == ''
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 5000;
+      allow read: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    // Liên kết đăng nhập PT Hub ↔ trình duyệt (mã ngẫu nhiên 32 ký tự, hiệu lực 10 phút).
+    match /hub_links/{code} {
+      allow create: if request.auth != null
+        && code.size() == 32
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.created == request.time;
+      allow get: if resource.data.created > request.time - duration.value(10, 'm');
+      allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow list, update: if false;
+    }
+  }
+}
