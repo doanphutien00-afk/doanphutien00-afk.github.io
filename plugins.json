@@ -11,10 +11,10 @@
     "auth": {
       "requireLoginToDownload": true,
       "firebase": {
-        "apiKey": "",
-        "authDomain": "",
-        "projectId": "",
-        "appId": ""
+        "apiKey": "AIzaSyBUN66tg1dP-pH9rmi5yeJT2AoAXW9p574",
+        "authDomain": "pt-plugins.firebaseapp.com",
+        "projectId": "pt-plugins",
+        "appId": "1:69869095006:web:93f7fd6c9386a651bccccf"
       }
     }
   },
