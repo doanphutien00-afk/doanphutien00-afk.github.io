@@ -18,11 +18,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.1.4.rbz",
-      "version": "2.1.4",
+      "download": "pt-hub/goi/pt_hub-2.1.5.rbz",
+      "version": "2.1.5",
       "date": "2026-11-20T04:00:00Z",
-      "size": 185317,
-      "notes": "- Sửa lỗi cập nhật mãi không xong: hàng đợi việc không còn bị kẹt khi cài gặp lỗi nạp mã\n- Cập nhật 1 bấm: tải bản mới nhất từ máy chủ rồi cài ngay vào SketchUp (Install Extension), không chờ Downloads\n- Nút hiện từng bước \"Đang tải… / Đang cài vào SketchUp…\"; mỗi lần tải tối đa 90 giây, máy chủ chính không trả lời thì tự dùng link dự phòng\n- Luôn kết thúc bằng \"Cập nhật thành công\" hoặc báo lỗi kèm lý do"
+      "size": 186238,
+      "notes": "- Sửa lỗi \"tệp tải về không hợp lệ\" (SketchUp 2022): tải tệp cài đặt bằng Net::HTTP chạy nền, kiểm tra đủ dung lượng và toàn bộ gói trước khi cài\n- Tệp tải về hỏng → tự tải lại bằng cách khác, rồi thử link dự phòng; lỗi ghi rõ lý do (vd. tệp hỏng 1.2/2.0 MB)\n- Không lặp lại cùng một thông báo lỗi"
     },
     {
       "id": "mai_viet",

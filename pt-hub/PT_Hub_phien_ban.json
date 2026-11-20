@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-20 11:30",
+  "updated": "2026-11-20 11:45",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -21,7 +21,8 @@
       "sha256": "488107d6c3a03888314019007cc8a55a06307d7ca95649f5de35d192bbbfa3df",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_cabinet-2.6.7.rbz",
       "tutorial_url": "",
-      "icon": "icons/box2cab.svg"
+      "icon": "icons/box2cab.svg",
+      "size": 2075444
     },
     {
       "id": "pt_smartlight",
@@ -45,7 +46,8 @@
       "sha256": "44dcb0a519bd85934d00ffe31aa98394af1e623d3faa9e1a306b17d1b01ba514",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_smartlight-1.8.3.rbz",
       "tutorial_url": "",
-      "icon": "icons/panel.svg"
+      "icon": "icons/panel.svg",
+      "size": 997552
     },
     {
       "id": "mai_viet",
@@ -72,7 +74,8 @@
       "sha256": "d8c863a029edff51a4ecbfd68ea12a0f6f1644889539dd4207577c55b4aa9720",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/mai_viet-3.0.2.rbz",
       "tutorial_url": "",
-      "icon": "icons/roof.svg"
+      "icon": "icons/roof.svg",
+      "size": 28466334
     },
     {
       "id": "pt_wallpanel",
@@ -97,7 +100,8 @@
       "sha256": "6dfbafaeeba9400a008cbb97443d5e41ac9363573f879836ddd2f8ea4ee157ab",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.6.2.rbz",
       "tutorial_url": "",
-      "icon": "icons/dialog.svg"
+      "icon": "icons/dialog.svg",
+      "size": 202974
     },
     {
       "id": "smart_floor",
@@ -122,7 +126,8 @@
       "sha256": "95c6b68b08acf0edb6143194d10a4bf30695f04d5fa2c79ec8a28d322bf57237",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/smart_floor-2.10.3.rbz",
       "tutorial_url": "",
-      "notes": "- Bản 2.10.3 của PT Smartfloor (tên cũ Smart Floor Generator)"
+      "notes": "- Bản 2.10.3 của PT Smartfloor (tên cũ Smart Floor Generator)",
+      "size": 288729
     },
     {
       "id": "pt_stair",
@@ -147,11 +152,11 @@
     {
       "id": "pt_hub",
       "name": "PT Hub",
-      "version": "2.1.4",
+      "version": "2.1.5",
       "date": "2026-11-20",
-      "file": "pt_hub-2.1.4.rbz",
+      "file": "pt_hub-2.1.5.rbz",
       "page": "PT_Hub_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Sửa lỗi cập nhật mãi không xong: hàng đợi việc không còn bị kẹt khi cài gặp lỗi nạp mã\n- Cập nhật 1 bấm: tải bản mới nhất từ máy chủ rồi cài ngay vào SketchUp (Install Extension), không chờ Downloads\n- Nút hiện từng bước \"Đang tải… / Đang cài vào SketchUp…\"; mỗi lần tải tối đa 90 giây, máy chủ chính không trả lời thì tự dùng link dự phòng\n- Luôn kết thúc bằng \"Cập nhật thành công\" hoặc báo lỗi kèm lý do",
+      "notes": "- Sửa lỗi \"tệp tải về không hợp lệ\" (SketchUp 2022): tải tệp cài đặt bằng Net::HTTP chạy nền, kiểm tra đủ dung lượng và toàn bộ gói trước khi cài\n- Tệp tải về hỏng → tự tải lại bằng cách khác, rồi thử link dự phòng; lỗi ghi rõ lý do (vd. tệp hỏng 1.2/2.0 MB)\n- Không lặp lại cùng một thông báo lỗi",
       "loader_file": "pt_hub.rb",
       "folder": "pt_hub",
       "description_vi": "Quản lý, cài đặt, cập nhật plugin PT; thanh công cụ tuỳ chỉnh; góp ý.",
@@ -160,9 +165,10 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "0f8ee936aa76287e5f53db22904d94de64baf4cafdcffe4a748f9d3e92a44fa3",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.1.4.rbz",
-      "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/"
+      "sha256": "5766f1efa56f468c7e6216c4ad5499dd2ecca4c0dd0de33ad9463d7483b9c18d",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.1.5.rbz",
+      "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
+      "size": 186238
     }
   ],
   "schema_version": 2
