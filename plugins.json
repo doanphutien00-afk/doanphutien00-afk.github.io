@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.3.0.rbz",
-      "version": "2.3.0",
-      "date": "2026-11-20T15:57:03Z",
-      "size": 203675,
-      "notes": "- Mục Bản quyền trong PT Hub: kích hoạt, dùng thử 7 ngày, huỷ kích hoạt để chuyển máy\n- Đăng nhập Google tự đồng bộ bản quyền đã mua\n- Nút Mua bản quyền / Quản lý thiết bị mở trang web"
+      "download": "pt-hub/goi/pt_hub-2.3.1.rbz",
+      "version": "2.3.1",
+      "date": "2026-11-20T16:13:09Z",
+      "size": 203674,
+      "notes": "- Mục Bản quyền trong PT Hub: kích hoạt, dùng thử 3 ngày, huỷ kích hoạt để chuyển máy\n- Đăng nhập Google tự đồng bộ bản quyền đã mua\n- Nút Mua bản quyền / Quản lý thiết bị mở trang web"
     },
     {
       "id": "mai_viet",
@@ -46,11 +46,11 @@
       "icon": "icons/mai_viet.svg",
       "name_en": "PT SmartRoof (Mai Viet)",
       "description_en": "Build hip, Thai and Mansard roofs from a floor plan; auto-lay tiles on roof faces, ridge/edge tiles, mortar bed, lightning rods, random color variation and material take-off.",
-      "download": "pt-hub/goi/mai_viet-3.0.3.rbz",
-      "version": "3.0.3",
-      "date": "2026-11-20T15:57:03Z",
+      "download": "pt-hub/goi/mai_viet-3.0.4.rbz",
+      "version": "3.0.4",
+      "date": "2026-11-20T16:13:09Z",
       "size": 28464044,
-      "notes": "- Có bản quyền: dùng thử 7 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
     },
     {
       "id": "smart_floor",
@@ -60,11 +60,11 @@
       "icon": "icons/smart_floor.svg",
       "name_en": "PT Smartfloor",
       "description_en": "Floor patterns on any face (Running Bond, Herringbone, Chevron, Hexagon…), beveled tiles, skirting, auto-detected door thresholds, true 3D mitre cuts at corners; tile schedule export to PDF/Excel/DXF.",
-      "download": "pt-hub/goi/smart_floor-2.10.4.rbz",
-      "version": "2.10.4",
-      "date": "2026-11-20T15:57:03Z",
+      "download": "pt-hub/goi/smart_floor-2.10.5.rbz",
+      "version": "2.10.5",
+      "date": "2026-11-20T16:13:09Z",
       "size": 290610,
-      "notes": "- Có bản quyền: dùng thử 7 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
     },
     {
       "id": "pt_wallpanel",
@@ -74,11 +74,11 @@
       "icon": "icons/pt_wallpanel.svg",
       "name_en": "PT Wall Panel – Slat Cladding",
       "description_en": "One-click timber/louvre slat cladding on flat and curved faces: even spacing, avoids door openings, follows curved walls, round columns and ceilings; backing board, materials and re-editable.",
-      "download": "pt-hub/goi/pt_wallpanel-1.6.3.rbz",
-      "version": "1.6.3",
-      "date": "2026-11-20T15:57:03Z",
+      "download": "pt-hub/goi/pt_wallpanel-1.6.4.rbz",
+      "version": "1.6.4",
+      "date": "2026-11-20T16:13:09Z",
       "size": 206313,
-      "notes": "- Có bản quyền: dùng thử 7 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
     },
     {
       "id": "pt_cabinet",
@@ -88,11 +88,11 @@
       "name_en": "PT Cabinet",
       "description": "Dựng tủ bếp, tủ áo theo tham số: thùng tủ, cánh (kiểu cánh, nhôm kính, huỳnh – pano – classic), hộc kéo, tay nắm, đợt, thanh chặn; thư viện mẫu tủ, danh sách cắt.",
       "description_en": "Parametric kitchen and wardrobe cabinets: carcass, doors (styles, aluminium-glass, classic panels), drawers, handles, shelves; cabinet library and cut list.",
-      "download": "pt-hub/goi/pt_cabinet-2.6.8.rbz",
-      "version": "2.6.8",
-      "date": "2026-11-20T15:57:03Z",
-      "size": 2072373,
-      "notes": "- Có bản quyền: dùng thử 7 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "download": "pt-hub/goi/pt_cabinet-2.6.9.rbz",
+      "version": "2.6.9",
+      "date": "2026-11-20T16:13:09Z",
+      "size": 2072372,
+      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
     },
     {
       "id": "pt_smartlight",
@@ -102,11 +102,11 @@
       "name_en": "PT Smart Light",
       "description": "Đặt đèn âm trần, spot, đèn tường, dải LED và tự đục lỗ trần; đặt đơn hoặc theo lưới, tự liền trần khi xoá đèn, thống kê đèn.",
       "description_en": "Place downlights, spots, wall lights and LED strips with automatic ceiling cut-outs; single or grid placement, auto-heal on delete, lighting schedule.",
-      "download": "pt-hub/goi/pt_smartlight-1.8.4.rbz",
-      "version": "1.8.4",
-      "date": "2026-11-20T15:57:03Z",
+      "download": "pt-hub/goi/pt_smartlight-1.8.5.rbz",
+      "version": "1.8.5",
+      "date": "2026-11-20T16:13:09Z",
       "size": 994810,
-      "notes": "- Có bản quyền: dùng thử 7 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại doanphutien00-afk.github.io/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
     }
   ]
 }

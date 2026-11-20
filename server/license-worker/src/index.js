@@ -3,7 +3,7 @@
 //  • Đơn hàng + mã QR (SePay / VietQR), webhook SePay tự xác nhận thanh toán
 //  • Bản quyền vĩnh viễn theo email Google, 1 bản quyền = 2 máy
 //  • Kích hoạt / huỷ kích hoạt / tự reset (30 ngày 1 lần) / quản trị reset
-//  • Dùng thử 7 ngày theo máy
+//  • Dùng thử 3 ngày theo máy
 //  • Token bản quyền ký ECDSA P-256 – plugin kiểm tra offline bằng khoá công khai
 //
 //  Biến môi trường (wrangler.toml [vars] hoặc Settings → Variables):
@@ -24,7 +24,7 @@ export const PRODUCTS = {
   pt_cabinet:    { name: "PT Cabinet",     price: 99000 },
 };
 const MAX_DEVICES = 2;
-const TRIAL_DAYS = 7;
+const TRIAL_DAYS = 3;
 const TOKEN_DAYS = 30;            // token bản quyền phải làm mới online trong 30 ngày
 const ORDER_HOURS = 24;
 const SELF_RESET_DAYS = 30;
