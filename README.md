@@ -59,3 +59,10 @@ Plugin sẽ tự kiểm tra **tối đa 1 lần/ngày** khi mở SketchUp. Nếu
 - GitHub giới hạn 60 lượt đọc/giờ cho mỗi IP nếu không đăng nhập, quá đủ cho việc kiểm tra 1 lần/ngày.
 - Không xóa Release cũ: website dùng chúng cho mục *Lịch sử phiên bản*.
 - Muốn dùng tên miền riêng: điền `CONFIG.owner` / `CONFIG.repo` ở đầu phần `<script>` trong `index.html`.
+
+---
+
+## E. PT Hub – trình quản lý plugin
+`pt-hub/` chứa máy chủ cập nhật cho **PT Hub** (cài từ trang web). PT Hub đọc chính các Release ở trên
+(cùng mẫu tag `<id>-v<phiên bản>`) và tệp `pt-hub/PT_Hub_phien_ban.json`, rồi tự tải – cài bản mới cho mọi plugin PT.
+Xem `pt-hub/README.md`.

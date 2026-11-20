@@ -11,6 +11,20 @@
   },
   "plugins": [
     {
+      "id": "pt_hub",
+      "name": "PT Hub",
+      "category": "Tiện ích",
+      "description": "Trung tâm quản lý plugin PT: cài đặt, tự động cập nhật, quay lại bản cũ, thanh công cụ tuỳ chỉnh, góp ý kèm ảnh chụp.",
+      "icon": "icons/pt_hub.svg",
+      "name_en": "PT Hub",
+      "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
+      "download": "pt-hub/goi/pt_hub-2.1.0.rbz",
+      "version": "2.1.0",
+      "date": "2026-11-20T04:00:00Z",
+      "size": 180067,
+      "notes": "- Máy chủ GitHub: đọc Releases + plugins.json, tự tải và cài bản mới\n- Làm lại theo mô hình LU Center: danh mục plugin, cài an toàn, khởi động lại SketchUp\n- Thanh công cụ của tôi, góp ý kèm ảnh, song ngữ"
+    },
+    {
       "id": "mai_viet",
       "name": "Mái Việt",
       "category": "Kiến trúc",
