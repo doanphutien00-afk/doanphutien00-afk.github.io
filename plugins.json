@@ -15,7 +15,11 @@
         "authDomain": "pt-plugins.firebaseapp.com",
         "projectId": "pt-plugins",
         "appId": "1:69869095006:web:93f7fd6c9386a651bccccf"
-      }
+      },
+      "admins": [
+        "doanphutien2000@gmail.com",
+        "doanphutien00@gmail.com"
+      ]
     }
   },
   "plugins": [

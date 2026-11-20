@@ -15,7 +15,7 @@ Object.assign(I18N.vi, {
   au_t_signup: "Tạo tài khoản", au_s_signup: "Miễn phí. Chỉ mất 30 giây.",
   au_t_reset: "Đặt lại mật khẩu", au_s_reset: "Nhập email đã đăng ký, chúng tôi sẽ gửi link đặt lại mật khẩu.",
   au_need_login: "Vui lòng đăng nhập để tải plugin.",
-  au_hello: "Xin chào", au_verify: "Chưa xác minh email", au_resend: "Gửi lại email xác minh",
+  au_admin: "Trang quản trị", au_hello: "Xin chào", au_verify: "Chưa xác minh email", au_resend: "Gửi lại email xác minh",
   au_ok_signup: "Đã tạo tài khoản! Kiểm tra hộp thư để xác minh email.",
   au_ok_reset: "Đã gửi link đặt lại mật khẩu. Kiểm tra hộp thư (cả mục Spam).",
   au_ok_login: "Đăng nhập thành công", au_ok_logout: "Đã đăng xuất", au_ok_verify: "Đã gửi lại email xác minh",
@@ -43,7 +43,7 @@ Object.assign(I18N.en, {
   au_t_signup: "Create your account", au_s_signup: "Free. Takes 30 seconds.",
   au_t_reset: "Reset password", au_s_reset: "Enter your registered email and we'll send you a reset link.",
   au_need_login: "Please sign in to download plugins.",
-  au_hello: "Hello", au_verify: "Email not verified", au_resend: "Resend verification email",
+  au_admin: "Admin dashboard", au_hello: "Hello", au_verify: "Email not verified", au_resend: "Resend verification email",
   au_ok_signup: "Account created! Check your inbox to verify your email.",
   au_ok_reset: "Reset link sent. Check your inbox (and Spam).",
   au_ok_login: "Signed in", au_ok_logout: "Signed out", au_ok_verify: "Verification email sent",
@@ -155,16 +155,19 @@ function renderSlot() {
   }
   const name = user.displayName || user.email.split("@")[0];
   const ini = name.split(/\s+/).map(w => w[0]).slice(-2).join("").toUpperCase();
+  const isAdmin = user.emailVerified && (cfg.admins || []).map(e => e.toLowerCase()).includes((user.email || "").toLowerCase());
   const needVerify = user.providerData.some(p => p.providerId === "password") && !user.emailVerified;
   slot.innerHTML = `<div class="au-user">
     <button class="au-avatar" id="auAv" aria-label="${esc2(name)}">${user.photoURL ? `<img src="${esc2(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : esc2(ini)}</button>
     <div class="au-menu" id="auMenu">
       <div class="who"><b>${t("au_hello")}, ${esc2(name)}</b><span>${esc2(user.email)}</span>${needVerify ? `<span class="warn">● ${t("au_verify")}</span>` : ""}</div>
+      ${isAdmin ? `<button id="auAdmin">★ ${t("au_admin")}</button>` : ""}
       ${needVerify ? `<button id="auResend">${t("au_resend")}</button>` : ""}
       <button id="auOut">${t("au_logout")}</button>
     </div></div>`;
   const menu = slot.querySelector("#auMenu");
   slot.querySelector("#auAv").onclick = e => { e.stopPropagation(); menu.classList.toggle("open"); };
+  const ad = slot.querySelector("#auAdmin"); if (ad) ad.onclick = () => { location.href = "admin.html"; };
   slot.querySelector("#auOut").onclick = async () => { await fb.signOut(fb.auth); toast(t("au_ok_logout")); };
   const rs = slot.querySelector("#auResend");
   if (rs) rs.onclick = async () => { try { await fb.sendEmailVerification(user); toast(t("au_ok_verify")); } catch (e) { toast(errMsg(e)); } };

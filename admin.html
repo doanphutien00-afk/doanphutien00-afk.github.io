@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Quản trị — PT Plugins</title>
+<script>
+  (function(){ var t; try{ t=localStorage.getItem("pt-theme") }catch(e){}
+    if(!t) t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+    document.documentElement.dataset.theme=t; })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;--ease:cubic-bezier(.2,.7,.2,1);--r:8px}
+[data-theme="light"]{--bg:#f3f0e9;--surface:#fbfaf6;--surface-2:#efebe2;--ink:#1b1a17;--ink-2:#3a3833;--muted:#777166;--line:#d9d2c4;--line-2:#b9b09e;--accent:#a4472a;--accent-2:#c56a48;--on-accent:#fff;--ok:#2a8a5c;--warn:#b7791f;--err:#c23b3b;--shadow:0 12px 32px -18px rgba(27,26,23,.3)}
+[data-theme="dark"]{--bg:#111315;--surface:#181b1e;--surface-2:#1f2326;--ink:#ebe6db;--ink-2:#c9c3b7;--muted:#8f8a80;--line:#2b2f33;--line-2:#41464c;--accent:#d77a52;--accent-2:#e89670;--on-accent:#1b120d;--ok:#4cbf86;--warn:#e0a23a;--err:#e06060;--shadow:0 16px 36px -20px rgba(0,0,0,.7)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14.5px/1.55 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg.i{width:16px;height:16px;flex:none}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;height:58px;display:flex;align-items:center;gap:14px;padding:0 20px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;text-decoration:none;color:var(--ink)}
+.brand svg{width:24px;height:24px;color:var(--accent)}
+.brand .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;padding:3px 7px;border-radius:4px;background:var(--accent);color:var(--on-accent)}
+.top .sp{flex:1}
+.ib{width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);background:none;display:grid;place-items:center;cursor:pointer;transition:border-color .2s}
+.ib:hover{border-color:var(--accent)}
+.who{display:flex;align-items:center;gap:10px;font-size:13px}
+.who img,.who .av{width:32px;height:32px;border-radius:50%;border:2px solid var(--accent);object-fit:cover;display:grid;place-items:center;background:var(--surface-2);font-weight:600}
+.who small{display:block;color:var(--muted);font-size:11.5px}
+.link{color:var(--ink-2);text-decoration:none;font-size:13.5px}
+.link:hover{color:var(--accent)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--surface);cursor:pointer;font-weight:500;font-size:13.5px;transition:background .2s,border-color .2s,transform .12s;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--ink)}
+.btn:active{transform:scale(.98)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.pri:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.btn.dan{color:var(--err);border-color:color-mix(in srgb,var(--err) 50%,transparent)}
+.btn.dan.armed{background:var(--err);color:#fff;border-color:var(--err)}
+.btn.sm{padding:6px 11px;font-size:12.5px}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+/* layout */
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 58px)}
+.side{border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px}
+.nav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r);border:0;background:none;cursor:pointer;text-align:left;color:var(--ink-2);font-weight:500;transition:background .2s,color .2s}
+.nav:hover{background:var(--surface-2);color:var(--ink)}
+.nav[aria-current="true"]{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.nav .badge{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--accent);color:var(--on-accent);font-size:11px;font-weight:600;display:grid;place-items:center}
+.side .foot{margin-top:auto;padding:12px;font-size:12px;color:var(--muted)}
+.main{padding:26px 28px 60px;min-width:0}
+.view{animation:vin .35s var(--ease)}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:24px;font-weight:600;letter-spacing:-.02em;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 20px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.chip{border:1px solid var(--line-2);background:none;padding:6px 12px;border-radius:999px;cursor:pointer;font-size:12.5px;transition:.2s}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.search{flex:1;min-width:180px;max-width:320px;padding:8px 12px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface)}
+
+/* feedback */
+.fb{display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:16px;align-items:start}
+.list{display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 220px);overflow:auto;padding-right:4px}
+.item{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:border-color .2s,transform .2s;position:relative;text-align:left;width:100%}
+.item:hover{border-color:var(--line-2);transform:translateX(2px)}
+.item[aria-current="true"]{border-color:var(--accent)}
+.item.new::before{content:"";position:absolute;left:-1px;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+.item .r1{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+.item .msg{margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13.5px}
+.item.new .msg{font-weight:500}
+.tg{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.tg.bug{background:color-mix(in srgb,var(--err) 16%,transparent);color:var(--err)}
+.tg.feature{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.st{font-size:11px;margin-left:auto}
+.st.new{color:var(--accent)} .st.seen{color:var(--warn)} .st.done{color:var(--ok)}
+.detail{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:22px;box-shadow:var(--shadow);min-height:300px}
+.detail h2{font-size:18px;margin:6px 0 2px;font-weight:600}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:12.5px;margin-bottom:16px}
+.body{white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:14px;font-size:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.imgs img{width:150px;height:100px;object-fit:cover;border-radius:6px;border:1px solid var(--line);cursor:zoom-in;transition:transform .2s}
+.imgs img:hover{transform:scale(1.04)}
+details{margin-top:14px;border:1px solid var(--line);border-radius:var(--r)}
+summary{padding:10px 14px;cursor:pointer;font-size:13px;color:var(--ink-2)}
+details pre{margin:0;padding:12px 14px;border-top:1px solid var(--line);max-height:320px;overflow:auto;font:12px/1.5 var(--mono);white-space:pre-wrap}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.empty{color:var(--muted);text-align:center;padding:50px 20px;border:1px dashed var(--line-2);border-radius:12px}
+
+/* plugins */
+.tbl{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.row{display:grid;grid-template-columns:44px 1.6fr .8fr .9fr 120px auto;gap:14px;align-items:center;padding:12px 16px;border-top:1px solid var(--line);transition:background .2s}
+.row:first-child{border-top:0}
+.row.head{background:var(--surface-2);font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.row:not(.head):hover{background:color-mix(in srgb,var(--surface-2) 60%,transparent)}
+.row.off{opacity:.55}
+.pic{width:40px;height:40px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);display:grid;place-items:center;overflow:hidden;font-weight:600;font-size:13px}
+.pic img{width:26px;height:26px;object-fit:contain}
+.row b{display:block;font-weight:600}
+.row small{color:var(--muted);font-family:var(--mono);font-size:11.5px}
+.sw{position:relative;width:40px;height:22px;border-radius:11px;background:var(--line-2);border:0;cursor:pointer;transition:background .25s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .25s var(--ease);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.sw[aria-checked="true"]{background:var(--ok)}
+.sw[aria-checked="true"]::after{transform:translateX(18px)}
+.swl{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+
+/* forms / modal */
+.ov{position:fixed;inset:0;z-index:50;background:rgba(8,8,10,.6);backdrop-filter:blur(5px);display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
+.ov.open{opacity:1;pointer-events:auto}
+.modal{width:min(620px,100%);max-height:calc(100vh - 40px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:14px;padding:26px;transform:translateY(16px) scale(.98);transition:transform .35s var(--ease);position:relative}
+.ov.open .modal{transform:none}
+.modal h3{margin:0 0 4px;font-size:20px}
+.x{position:absolute;right:12px;top:10px;width:32px;height:32px;border:0;background:none;border-radius:50%;cursor:pointer;font-size:20px;color:var(--muted)}
+.x:hover{background:var(--surface-2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.f label{font-size:12.5px;color:var(--muted);font-weight:500}
+.f input,.f select,.f textarea{padding:10px 12px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--bg);transition:border-color .2s,box-shadow .2s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.f textarea{min-height:110px;resize:vertical;font-family:var(--mono);font-size:12.5px}
+.drop{border:2px dashed var(--line-2);border-radius:12px;padding:26px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:16px}
+.drop:hover,.drop.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.drop b{display:block;font-size:15px;margin-bottom:4px}
+.drop small{color:var(--muted)}
+.fileinfo{display:flex;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);margin-bottom:16px;font-size:13px}
+.fileinfo .mono{color:var(--muted);text-transform:none;letter-spacing:0;font-size:11.5px;word-break:break-all}
+.steps{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--muted)}
+.steps li.run{color:var(--ink)} .steps li.ok{color:var(--ok)} .steps li.err{color:var(--err)}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;flex:none;display:grid;place-items:center}
+.steps li.run .dot{border-right-color:transparent;animation:spin .7s linear infinite}
+.steps li.ok .dot{background:currentColor}
+@keyframes spin{to{transform:rotate(360deg)}}
+.msgbox{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-top:12px}
+.msgbox.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.msgbox.err{background:color-mix(in srgb,var(--err) 14%,transparent);color:var(--err)}
+.msgbox.info{background:var(--surface-2);color:var(--ink-2)}
+.card{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:22px;max-width:640px}
+.card ol{padding-left:20px;margin:8px 0 16px}
+.card li{margin:4px 0}
+.gate{min-height:calc(100vh - 58px);display:grid;place-items:center;padding:20px}
+.gate .card{text-align:center;max-width:400px;width:100%}
+.gate .card .btn{width:100%;margin-top:10px}
+.lb{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.85);display:grid;place-items:center;padding:30px;cursor:zoom-out;opacity:0;pointer-events:none;transition:opacity .25s}
+.lb.open{opacity:1;pointer-events:auto}
+.lb img{max-width:100%;max-height:100%;border-radius:6px}
+.toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:var(--r);font-size:13.5px;transition:.25s;pointer-events:none;z-index:80}
+.toast.show{opacity:1;translate:-50% 0}
+.spin{width:22px;height:22px;border:2px solid var(--accent);border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;margin:40px auto}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .side{flex-direction:row;border-right:0;border-bottom:1px solid var(--line);overflow:auto;padding:10px}
+  .side .foot{display:none}
+  .fb{grid-template-columns:1fr}
+  .list{max-height:none}
+  .row{grid-template-columns:40px 1fr auto;}
+  .row > :nth-child(3),.row > :nth-child(4){display:none}
+  .row.head{display:none}
+  .main{padding:18px}
+  .who span{display:none}
+  .grid2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12Z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9m-4 4 3 3m-6 0 2 2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 20h16"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></symbol>
+  <symbol id="i-g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 12.2h-7.5"/><path d="M19.6 9A8 8 0 1 0 20 12.2"/></symbol>
+</svg>
+
+<header class="top">
+  <a class="brand" href="./"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="26" height="26"/><path d="M3 29 29 3M16 3v26" stroke-width="1.4"/></svg>PT Plugins <span class="tag">ADMIN</span></a>
+  <span class="sp"></span>
+  <a class="link" href="./">← Trang chủ</a>
+  <button class="ib" id="themeBtn" title="Sáng / tối"><svg class="i"><use href="#i-sun"/></svg></button>
+  <div class="who" id="who"></div>
+</header>
+<div id="app"><div class="spin"></div></div>
+
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<div class="lb" id="lb"><img alt=""></div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+const SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const toast = (m) => { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2200); };
+const fmtTime = d => d ? d.toLocaleString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit", year: "numeric" }) : "–";
+const fmtSize = b => !b ? "–" : b >= 1048576 ? (b / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(b / 1024)) + " KB";
+const today = () => new Date().toISOString().slice(0, 10);
+
+/* ---------- Kho GitHub ---------- */
+const host = location.hostname;
+const OWNER = host.endsWith(".github.io") ? host.split(".")[0] : "doanphutien00-afk";
+const REPO = host.endsWith(".github.io") ? (location.pathname.split("/").filter(Boolean)[0]?.endsWith(".html") || !location.pathname.split("/").filter(Boolean)[0] ? host : location.pathname.split("/").filter(Boolean)[0]) : "doanphutien00-afk.github.io";
+const SITE = `https://${OWNER}.github.io/` + (REPO === `${OWNER}.github.io` ? "" : REPO + "/");
+const CATALOG = "pt-hub/PT_Hub_phien_ban.json";
+const ls = { get: k => { try { return localStorage.getItem(k) } catch (e) { return null } }, set: (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v) } catch (e) {} } };
+
+$("#themeBtn").onclick = () => { const r = document.documentElement; r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark"; ls.set("pt-theme", r.dataset.theme); };
+
+let S = { user: null, admins: [], tab: location.hash.slice(1) || "feedback", fb: [], fbFilter: "all", fbType: "all", fbQ: "", sel: null, cat: null, site: null, gh: null };
+let fb, fs;
+
+/* ---------- Khởi động ---------- */
+const manifest = await (await fetch("plugins.json", { cache: "no-cache" })).json().catch(() => ({}));
+const cfg = manifest.site?.auth || {};
+S.admins = (cfg.admins || []).map(e => e.toLowerCase());
+const [{ initializeApp }, A, F] = await Promise.all([import(SDK + "firebase-app.js"), import(SDK + "firebase-auth.js"), import(SDK + "firebase-firestore.js")]);
+const app = initializeApp(cfg.firebase);
+fb = { ...A, auth: A.getAuth(app) };
+fs = { ...F, db: F.getFirestore(app) };
+fb.auth.languageCode = "vi";
+
+const isAdmin = u => u && u.emailVerified && S.admins.includes((u.email || "").toLowerCase());
+let unsub = null;
+A.onAuthStateChanged(fb.auth, u => {
+  S.user = u; renderWho();
+  if (unsub) { unsub(); unsub = null; }
+  if (!u) return renderLogin();
+  if (!isAdmin(u)) return renderDenied();
+  renderShell(); listenFeedback();
+});
+
+function renderWho() {
+  const u = S.user;
+  if (!u) { $("#who").innerHTML = ""; return; }
+  const name = u.displayName || u.email.split("@")[0];
+  $("#who").innerHTML = `${u.photoURL ? `<img src="${esc(u.photoURL)}" referrerpolicy="no-referrer" alt="">` : `<span class="av">${esc(name[0].toUpperCase())}</span>`}
+    <span>${esc(name)}<small>${esc(u.email)}</small></span>
+    <button class="ib" id="outBtn" title="Đăng xuất"><svg class="i"><use href="#i-out"/></svg></button>`;
+  $("#outBtn").onclick = () => fb.signOut(fb.auth);
+}
+
+/* ---------- Cổng đăng nhập ---------- */
+function renderLogin(err) {
+  $("#app").innerHTML = `<div class="gate"><div class="card view">
+    <h1>Khu vực quản trị</h1><p class="sub">Đăng nhập bằng tài khoản quản trị viên.</p>
+    <button class="btn" id="gBtn"><svg class="i"><use href="#i-g"/></svg>Tiếp tục với Google</button>
+    <form id="eForm" style="margin-top:16px;text-align:left">
+      <div class="f"><label>Email</label><input id="em" type="email" autocomplete="email" required></div>
+      <div class="f"><label>Mật khẩu</label><input id="pw" type="password" autocomplete="current-password" required></div>
+      <button class="btn pri" style="width:100%">Đăng nhập</button>
+    </form>
+    ${err ? `<div class="msgbox err">${esc(err)}</div>` : ""}
+  </div></div>`;
+  $("#gBtn").onclick = async () => { try { await fb.signInWithPopup(fb.auth, new fb.GoogleAuthProvider()); } catch (e) { if (e.code !== "auth/popup-closed-by-user") renderLogin(e.message); } };
+  $("#eForm").onsubmit = async e => { e.preventDefault(); try { await fb.signInWithEmailAndPassword(fb.auth, $("#em").value.trim(), $("#pw").value); } catch (er) { renderLogin("Email hoặc mật khẩu không đúng."); } };
+}
+function renderDenied() {
+  const u = S.user;
+  $("#app").innerHTML = `<div class="gate"><div class="card view">
+    <h1>Không có quyền truy cập</h1>
+    <p class="sub">Tài khoản <b>${esc(u.email)}</b> không phải quản trị viên${!u.emailVerified ? " (hoặc email chưa được xác minh)" : ""}.</p>
+    <a class="btn" href="./">Về trang chủ</a><button class="btn" id="o2">Đăng nhập tài khoản khác</button></div></div>`;
+  $("#o2").onclick = () => fb.signOut(fb.auth);
+}
+
+/* ---------- Khung chính ---------- */
+const TABS = [["feedback", "i-msg", "Góp ý & báo lỗi"], ["plugins", "i-box", "Plugin"], ["github", "i-key", "Kết nối GitHub"]];
+function renderShell() {
+  $("#app").innerHTML = `<div class="shell">
+    <nav class="side">${TABS.map(([id, ic, t]) => `<button class="nav" data-tab="${id}"><svg class="i"><use href="#${ic}"/></svg>${t}${id === "feedback" ? `<span class="badge" id="nb" hidden></span>` : ""}</button>`).join("")}
+      <div class="foot">Chỉ tài khoản quản trị mới thấy trang này.</div></nav>
+    <main class="main" id="main"></main></div>`;
+  document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => go(b.dataset.tab));
+  go(S.tab);
+}
+function go(tab) {
+  S.tab = tab; history.replaceState(null, "", "#" + tab);
+  document.querySelectorAll("[data-tab]").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab));
+  ({ feedback: viewFeedback, plugins: viewPlugins, github: viewGitHub })[tab]?.();
+}
+
+/* =========================================================
+   GÓP Ý & BÁO LỖI (Firestore: collection "feedback")
+   ========================================================= */
+function listenFeedback() {
+  const q = fs.query(fs.collection(fs.db, "feedback"), fs.orderBy("created", "desc"), fs.limit(300));
+  unsub = fs.onSnapshot(q, snap => {
+    S.fb = snap.docs.map(d => ({ id: d.id, ...d.data(), created: d.data().created?.toDate?.() || null }));
+    const n = S.fb.filter(x => x.status === "new").length, nb = $("#nb");
+    if (nb) { nb.hidden = !n; nb.textContent = n; }
+    if (S.tab === "feedback") renderFeedbackBody();
+  }, err => { S.fbErr = err.message; if (S.tab === "feedback") renderFeedbackBody(); });
+}
+const ST = { new: "Mới", seen: "Đã xem", done: "Đã xử lý" };
+function viewFeedback() {
+  $("#main").innerHTML = `<div class="view"><h1>Góp ý & báo lỗi</h1><p class="sub">Gửi từ PT Hub trong SketchUp. Cập nhật trực tiếp, không cần tải lại trang.</p>
+    <div class="bar">
+      ${[["all", "Tất cả"], ["new", "Mới"], ["seen", "Đã xem"], ["done", "Đã xử lý"]].map(([k, t]) => `<button class="chip" data-f="${k}" aria-pressed="${S.fbFilter === k}">${t}</button>`).join("")}
+      <span style="width:8px"></span>
+      ${[["all", "Mọi loại"], ["bug", "Báo lỗi"], ["feature", "Góp ý"]].map(([k, t]) => `<button class="chip" data-t="${k}" aria-pressed="${S.fbType === k}">${t}</button>`).join("")}
+      <input class="search" id="fq" placeholder="Tìm nội dung, plugin…" value="${esc(S.fbQ)}">
+    </div><div id="fbBody"><div class="spin"></div></div></div>`;
+  document.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { S.fbFilter = b.dataset.f; viewFeedback(); });
+  document.querySelectorAll("[data-t]").forEach(b => b.onclick = () => { S.fbType = b.dataset.t; viewFeedback(); });
+  $("#fq").oninput = e => { S.fbQ = e.target.value; renderFeedbackBody(); };
+  if (S.fb.length || S.fbErr) renderFeedbackBody();
+}
+function renderFeedbackBody() {
+  const box = $("#fbBody"); if (!box) return;
+  if (S.fbErr) { box.innerHTML = `<div class="msgbox err">Không đọc được dữ liệu: ${esc(S.fbErr)}</div>`; return; }
+  const q = S.fbQ.trim().toLowerCase();
+  const list = S.fb.filter(x => (S.fbFilter === "all" || x.status === S.fbFilter) && (S.fbType === "all" || x.type === S.fbType)
+    && (!q || `${x.message} ${x.plugin} ${x.contact || ""}`.toLowerCase().includes(q)));
+  if (!list.length) { box.innerHTML = `<div class="empty">Chưa có góp ý nào${S.fbFilter !== "all" || S.fbType !== "all" || q ? " phù hợp bộ lọc" : ""}.</div>`; return; }
+  if (!list.some(x => x.id === S.sel)) S.sel = list[0].id;
+  box.innerHTML = `<div class="fb"><div class="list">${list.map(x => `
+      <button class="item ${x.status === "new" ? "new" : ""}" data-id="${x.id}" aria-current="${x.id === S.sel}">
+        <div class="r1"><span class="tg ${x.type}">${x.type === "bug" ? "Lỗi" : "Góp ý"}</span>${esc(x.plugin || "")}<span class="st ${x.status}">${ST[x.status] || x.status}</span></div>
+        <div class="msg">${esc(x.message)}</div>
+        <div class="r1" style="margin-top:6px">${fmtTime(x.created)}${(x.images || []).length ? ` · ${(x.images || []).length} ảnh` : ""}</div>
+      </button>`).join("")}</div><div id="det"></div></div>`;
+  box.querySelectorAll(".item").forEach(b => b.onclick = () => { S.sel = b.dataset.id; renderFeedbackBody(); });
+  renderDetail(list.find(x => x.id === S.sel));
+}
+function renderDetail(x) {
+  if (!x) return;
+  if (x.status === "new") fs.updateDoc(fs.doc(fs.db, "feedback", x.id), { status: "seen" }).catch(() => {});
+  $("#det").innerHTML = `<div class="detail view">
+    <span class="tg ${x.type}">${x.type === "bug" ? "Báo lỗi" : "Góp ý tính năng"}</span>
+    <h2>${esc(x.plugin || "PT Hub")}</h2>
+    <div class="meta"><span>${fmtTime(x.created)}</span>${x.app_version ? `<span>PT Hub ${esc(x.app_version)}</span>` : ""}${x.contact ? `<span>Liên hệ: <b>${esc(x.contact)}</b></span>` : ""}<span class="st ${x.status}">● ${ST[x.status] || ""}</span></div>
+    <div class="body">${esc(x.message)}</div>
+    ${(x.images || []).length ? `<div class="imgs">${x.images.map(im => `<img src="data:${esc(im.mime || "image/jpeg")};base64,${im.data}" alt="${esc(im.name || "")}" title="${esc(im.name || "")}">`).join("")}</div>` : ""}
+    ${x.skipped_images ? `<div class="msgbox info">${x.skipped_images} ảnh quá lớn nên không được gửi kèm.</div>` : ""}
+    ${x.sysinfo ? `<details><summary>Thông tin máy & SketchUp</summary><pre>${esc(x.sysinfo)}</pre></details>` : ""}
+    ${x.log ? `<details><summary>Nhật ký PT Hub</summary><pre>${esc(x.log)}</pre></details>` : ""}
+    <div class="acts">
+      ${x.status !== "done" ? `<button class="btn pri sm" data-s="done">✓ Đánh dấu đã xử lý</button>` : `<button class="btn sm" data-s="seen">Mở lại</button>`}
+      <button class="btn sm" data-copy>Sao chép nội dung</button>
+      <span style="flex:1"></span>
+      <button class="btn dan sm" data-del>Xoá</button>
+    </div></div>`;
+  const d = $("#det");
+  d.querySelectorAll("[data-s]").forEach(b => b.onclick = () => fs.updateDoc(fs.doc(fs.db, "feedback", x.id), { status: b.dataset.s }).then(() => toast("Đã cập nhật")).catch(e => toast(e.message)));
+  d.querySelector("[data-copy]").onclick = () => navigator.clipboard.writeText(`${x.type === "bug" ? "Báo lỗi" : "Góp ý"} – ${x.plugin}\n${fmtTime(x.created)}\n\n${x.message}\n\n${x.sysinfo || ""}`).then(() => toast("Đã sao chép"));
+  const del = d.querySelector("[data-del]");
+  del.onclick = () => {
+    if (!del.classList.contains("armed")) { del.classList.add("armed"); del.textContent = "Bấm lần nữa để xoá vĩnh viễn"; setTimeout(() => { del.classList.remove("armed"); del.textContent = "Xoá"; }, 4000); return; }
+    fs.deleteDoc(fs.doc(fs.db, "feedback", x.id)).then(() => toast("Đã xoá")).catch(e => toast(e.message));
+  };
+  d.querySelectorAll(".imgs img").forEach(im => im.onclick = () => { $("#lb img").src = im.src; $("#lb").classList.add("open"); });
+}
+$("#lb").onclick = () => $("#lb").classList.remove("open");
+
+/* =========================================================
+   GITHUB API (token lưu trong trình duyệt của quản trị viên)
+   ========================================================= */
+const token = () => ls.get("pt-gh-token");
+async function gh(path, opt = {}) {
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}${path}`, {
+    ...opt, headers: { Accept: "application/vnd.github+json", Authorization: `Bearer ${token()}`, "X-GitHub-Api-Version": "2022-11-28", ...(opt.body ? { "Content-Type": "application/json" } : {}), ...(opt.headers || {}) }
+  });
+  if (!r.ok) { let m = r.statusText; try { m = (await r.json()).message } catch (e) {} throw new Error(`GitHub ${r.status}: ${m}`); }
+  return r.status === 204 ? null : r.json();
+}
+async function readJson(path) {
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=main&t=${Date.now()}`, { headers: { Accept: "application/vnd.github.raw+json", ...(token() ? { Authorization: `Bearer ${token()}` } : {}) } });
+  if (!r.ok) throw new Error(`Không đọc được ${path} (${r.status})`);
+  return JSON.parse(await r.text());
+}
+const b64 = buf => { let s = "", a = new Uint8Array(buf); for (let i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); };
+const jsonText = o => JSON.stringify(o, null, 2) + "\n";
+
+// Một commit gồm nhiều tệp: [{path, base64}|{path, text}]
+async function commitFiles(files, message, onStep = () => {}) {
+  onStep("ref"); const ref = await gh("/git/ref/heads/main");
+  const head = ref.object.sha; const base = await gh(`/git/commits/${head}`);
+  const tree = [];
+  for (const f of files) {
+    if (f.base64 != null) { onStep("blob", f.path); const b = await gh("/git/blobs", { method: "POST", body: JSON.stringify({ content: f.base64, encoding: "base64" }) }); tree.push({ path: f.path, mode: "100644", type: "blob", sha: b.sha }); }
+    else tree.push({ path: f.path, mode: "100644", type: "blob", content: f.text });
+  }
+  onStep("commit");
+  const t = await gh("/git/trees", { method: "POST", body: JSON.stringify({ base_tree: base.tree.sha, tree }) });
+  const c = await gh("/git/commits", { method: "POST", body: JSON.stringify({ message, tree: t.sha, parents: [head] }) });
+  onStep("push"); await gh("/git/refs/heads/main", { method: "PATCH", body: JSON.stringify({ sha: c.sha }) });
+  return c;
+}
+
+function viewGitHub() {
+  const has = !!token();
+  $("#main").innerHTML = `<div class="view"><h1>Kết nối GitHub</h1><p class="sub">Cần để đăng / gỡ plugin. Token chỉ lưu trong trình duyệt này, không gửi đi đâu ngoài GitHub.</p>
+    <div class="card">
+      ${has ? `<div class="msgbox ${S.gh?.ok ? "ok" : "info"}" id="ghs">${S.gh?.ok ? `Đã kết nối với quyền ghi vào <b>${OWNER}/${REPO}</b> (tài khoản ${esc(S.gh.login)}).` : "Đã có token. Bấm Kiểm tra để xác nhận."}</div>` : ""}
+      <ol>
+        <li>Mở <a href="https://github.com/settings/personal-access-tokens/new?name=PT%20Plugins%20Admin&description=Dang%20plugin%20tu%20trang%20quan%20tri&target_name=${OWNER}&expires_in=366&contents=write" target="_blank" rel="noopener">trang tạo token GitHub ↗</a>.</li>
+        <li><b>Repository access</b>: chọn <i>Only select repositories</i> → <code>${OWNER}/${REPO}</code>.</li>
+        <li><b>Permissions → Contents</b>: <i>Read and write</i>. Bấm <b>Generate token</b>, sao chép token.</li>
+        <li>Dán vào ô dưới và bấm <b>Lưu & kiểm tra</b>.</li>
+      </ol>
+      <div class="f"><label>Token GitHub</label><input id="tk" type="password" placeholder="github_pat_…" autocomplete="off" value="${has ? "••••••••••••" : ""}"></div>
+      <div class="bar"><button class="btn pri" id="tkSave">Lưu & kiểm tra</button>${has ? `<button class="btn dan" id="tkDel">Xoá token khỏi trình duyệt</button>` : ""}</div>
+      <div id="tkMsg"></div>
+    </div></div>`;
+  $("#tkSave").onclick = async () => {
+    const v = $("#tk").value.trim();
+    if (v && !/^•+$/.test(v)) ls.set("pt-gh-token", v);
+    if (!token()) return;
+    await checkGitHub();
+    $("#tkMsg").innerHTML = S.gh.ok ? `<div class="msgbox ok">Kết nối thành công. Bạn có thể đăng plugin.</div>` : `<div class="msgbox err">${esc(S.gh.err)}</div>`;
+    if (S.gh.ok) setTimeout(viewGitHub, 900);
+  };
+  if (has) $("#tkDel").onclick = () => { ls.set("pt-gh-token", null); S.gh = null; viewGitHub(); toast("Đã xoá token"); };
+}
+async function checkGitHub() {
+  try {
+    const r = await gh("");
+    if (!r.permissions?.push) throw new Error("Token không có quyền ghi (Contents: Read and write) vào kho này.");
+    const u = await fetch("https://api.github.com/user", { headers: { Authorization: `Bearer ${token()}` } }).then(r => r.ok ? r.json() : {}).catch(() => ({}));
+    S.gh = { ok: true, login: u.login || "?" };
+  } catch (e) { S.gh = { ok: false, err: e.message }; }
+  return S.gh;
+}
+
+/* =========================================================
+   PLUGIN: danh sách, đăng bản mới, gỡ / hiện lại
+   ========================================================= */
+async function loadCatalog() {
+  const [cat, site] = await Promise.all([readJson(CATALOG), readJson("plugins.json")]);
+  S.cat = cat; S.site = site;
+}
+async function viewPlugins() {
+  $("#main").innerHTML = `<div class="view"><div class="bar" style="justify-content:space-between"><div><h1>Plugin</h1><p class="sub" style="margin:0">Đăng bản mới, thêm plugin, gỡ khỏi trang web & PT Hub.</p></div>
+    <button class="btn pri" id="addBtn"><svg class="i"><use href="#i-plus"/></svg>Thêm plugin mới</button></div>
+    ${!token() ? `<div class="msgbox info">Chưa kết nối GitHub – bạn vẫn xem được danh sách, nhưng cần <a href="#github" data-go="github">kết nối GitHub</a> để đăng / gỡ.</div>` : ""}
+    <div id="pl" style="margin-top:14px"><div class="spin"></div></div></div>`;
+  $("#addBtn").onclick = () => openUpload(null);
+  document.querySelector("[data-go]")?.addEventListener("click", e => { e.preventDefault(); go("github"); });
+  try { await loadCatalog(); } catch (e) { $("#pl").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; return; }
+  renderPlugins();
+}
+function plist() {
+  const ids = [...new Set([...S.cat.plugins.map(p => p.id), ...S.site.plugins.map(p => p.id)])];
+  return ids.map(id => {
+    const c = S.cat.plugins.find(p => p.id === id) || {}, s = S.site.plugins.find(p => p.id === id) || {};
+    return { id, name: c.name || s.name || id, version: c.version || s.version || "", date: c.date || (s.date || "").slice(0, 10), size: c.size || s.size, icon: s.icon || "", hidden: !!(s.hidden || c.hidden), file: c.file };
+  });
+}
+function renderPlugins() {
+  $("#pl").innerHTML = `<div class="tbl"><div class="row head"><span></span><span>Plugin</span><span>Phiên bản</span><span>Cập nhật</span><span>Hiển thị</span><span></span></div>
+    ${plist().map(p => `<div class="row ${p.hidden ? "off" : ""}">
+      <div class="pic">${p.icon ? `<img src="${esc(p.icon)}" alt="">` : esc(p.name.slice(0, 2).toUpperCase())}</div>
+      <div><b>${esc(p.name)}</b><small>${esc(p.id)}</small></div>
+      <div>${p.version ? "v" + esc(p.version) : "–"}<br><small>${fmtSize(p.size)}</small></div>
+      <div>${esc(p.date || "–")}</div>
+      <div class="swl"><button class="sw" role="switch" aria-checked="${!p.hidden}" data-vis="${esc(p.id)}" title="${p.hidden ? "Đang ẩn – bấm để hiện lại" : "Đang hiện – bấm để gỡ khỏi trang"}"></button>${p.hidden ? "Đã gỡ" : "Đang hiện"}</div>
+      <div><button class="btn sm" data-up="${esc(p.id)}"><svg class="i"><use href="#i-up"/></svg>Đăng bản mới</button></div>
+    </div>`).join("")}</div>`;
+  document.querySelectorAll("[data-up]").forEach(b => b.onclick = () => openUpload(b.dataset.up));
+  document.querySelectorAll("[data-vis]").forEach(b => b.onclick = () => openToggle(b.dataset.vis));
+}
+
+/* ---------- modal ---------- */
+function modal(html) { $("#modal").innerHTML = `<button class="x" data-x>×</button>` + html; $("#ov").classList.add("open"); $("#modal [data-x]").onclick = closeModal; }
+function closeModal() { if (S.busy) return; $("#ov").classList.remove("open"); }
+$("#ov").addEventListener("click", e => { if (e.target.id === "ov") closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); $("#lb").classList.remove("open"); } });
+const needToken = () => { if (token()) return false; modal(`<h3>Cần kết nối GitHub</h3><p class="sub">Để đăng hoặc gỡ plugin, hãy kết nối GitHub trước.</p><button class="btn pri" id="gg">Kết nối GitHub</button>`); $("#gg").onclick = () => { closeModal(); go("github"); }; return true; };
+
+/* ---------- Gỡ / hiện lại ---------- */
+function openToggle(id) {
+  if (needToken()) return;
+  const p = plist().find(x => x.id === id), hide = !p.hidden;
+  modal(`<h3>${hide ? "Gỡ" : "Hiện lại"} ${esc(p.name)}?</h3>
+    <p class="sub">${hide ? "Plugin sẽ bị ẩn khỏi trang web và danh sách cài đặt của PT Hub. Tệp và các bản phát hành cũ vẫn được giữ, có thể hiện lại bất cứ lúc nào. Người đã cài sẽ không bị gỡ khỏi máy." : "Plugin sẽ xuất hiện lại trên trang web và trong PT Hub."}</p>
+    <div class="bar"><button class="btn ${hide ? "dan armed" : "pri"}" id="go">${hide ? "Gỡ khỏi trang" : "Hiện lại"}</button><button class="btn" data-c>Huỷ</button></div><div id="tgMsg"></div>`);
+  $("#modal [data-c]").onclick = closeModal;
+  $("#go").onclick = async () => {
+    S.busy = true; $("#go").disabled = true; $("#tgMsg").innerHTML = `<div class="msgbox info">Đang cập nhật…</div>`;
+    try {
+      await loadCatalog();
+      const set = o => { if (!o) return; if (hide) o.hidden = true; else delete o.hidden; };
+      set(S.site.plugins.find(x => x.id === id)); set(S.cat.plugins.find(x => x.id === id));
+      if (!S.site.plugins.find(x => x.id === id) && hide) S.site.plugins.push({ id, name: p.name, hidden: true });
+      S.cat.updated = new Date().toISOString().slice(0, 19).replace("T", " ");
+      await commitFiles([{ path: "plugins.json", text: jsonText(S.site) }, { path: CATALOG, text: jsonText(S.cat) }], `${hide ? "Gỡ" : "Hiện lại"} plugin ${id} (trang quản trị)`);
+      S.busy = false; closeModal(); toast(hide ? "Đã gỡ – trang web cập nhật sau khoảng 1 phút" : "Đã hiện lại – trang web cập nhật sau khoảng 1 phút"); renderPlugins();
+    } catch (e) { S.busy = false; $("#go").disabled = false; $("#tgMsg").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; }
+  };
+}
+
+/* ---------- Đọc .rbz (ZIP) để tự nhận mã + phiên bản ---------- */
+async function inspectRbz(buf) {
+  const dv = new DataView(buf), u8 = new Uint8Array(buf);
+  let eocd = -1; for (let i = u8.length - 22; i >= Math.max(0, u8.length - 65557); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  if (eocd < 0) throw new Error("Tệp không phải gói .rbz (ZIP) hợp lệ");
+  const n = dv.getUint16(eocd + 10, true); let p = dv.getUint32(eocd + 16, true); const ents = [];
+  const dec = new TextDecoder();
+  for (let k = 0; k < n; k++) {
+    const meth = dv.getUint16(p + 10, true), csz = dv.getUint32(p + 20, true), nl = dv.getUint16(p + 28, true), xl = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true), off = dv.getUint32(p + 42, true);
+    ents.push({ name: dec.decode(u8.subarray(p + 46, p + 46 + nl)), meth, csz, off }); p += 46 + nl + xl + cl;
+  }
+  const loader = ents.find(e => /^[^/]+\.rb$/i.test(e.name));
+  if (!loader) throw new Error("Không thấy tệp nạp .rb ở gốc gói");
+  const id = loader.name.replace(/\.rb$/i, "");
+  const lo = loader.off, ds = lo + 30 + dv.getUint16(lo + 26, true) + dv.getUint16(lo + 28, true);
+  let data = u8.subarray(ds, ds + loader.csz), text = "";
+  if (loader.meth === 8) data = new Uint8Array(await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer());
+  text = dec.decode(data);
+  const vm = text.match(/VERSION\s*=\s*['"](\d+(?:\.\d+)+)['"]/);
+  const nm = text.match(/SketchupExtension\.new\(\s*['"]([^'"]+)['"]/);
+  return { id, version: vm ? vm[1] : "", name: nm ? nm[1] : "", hasFolder: ents.some(e => e.name.startsWith(id + "/")) };
+}
+async function sha256(buf) { return [...new Uint8Array(await crypto.subtle.digest("SHA-256", buf))].map(b => b.toString(16).padStart(2, "0")).join(""); }
+
+/* ---------- Đăng bản mới / thêm plugin ---------- */
+function openUpload(id) {
+  if (needToken()) return;
+  const isNew = !id, p = id ? plist().find(x => x.id === id) : null;
+  let file = null, buf = null, info = null;
+  modal(`<h3>${isNew ? "Thêm plugin mới" : `Đăng bản mới · ${esc(p.name)}`}</h3>
+    <p class="sub">${isNew ? "Chọn tệp .rbz – mã và phiên bản được đọc tự động từ gói." : `Đang là v${esc(p.version || "–")}. Chọn tệp .rbz của bản mới.`}</p>
+    <label class="drop" id="drop"><input type="file" accept=".rbz" hidden id="fi"><b>Kéo thả tệp .rbz vào đây</b><small>hoặc bấm để chọn tệp</small></label>
+    <div id="fiInfo"></div>
+    <form id="upf">
+      <div class="grid2">
+        <div class="f"><label>Mã plugin</label><input id="u_id" value="${esc(id || "")}" ${id ? "readonly" : ""} pattern="[a-z0-9_]+" required placeholder="vd: pt_stair"></div>
+        <div class="f"><label>Phiên bản</label><input id="u_ver" required pattern="\\d+(\\.\\d+)+" placeholder="vd: 1.2.0"></div>
+      </div>
+      ${isNew ? `<div class="grid2">
+        <div class="f"><label>Tên hiển thị</label><input id="u_name" required></div>
+        <div class="f"><label>Nhóm</label><select id="u_cat"><option>Kiến trúc</option><option>Nội thất</option><option>Tiện ích</option></select></div></div>
+        <div class="f"><label>Mô tả (tiếng Việt)</label><input id="u_dvi" required></div>
+        <div class="f"><label>Mô tả (tiếng Anh) – tuỳ chọn</label><input id="u_den"></div>` : ""}
+      <div class="f"><label>Ghi chú thay đổi (mỗi dòng bắt đầu bằng "- ")</label><textarea id="u_notes" required placeholder="- Thêm tính năng …&#10;- Sửa lỗi …"></textarea></div>
+      <div class="bar"><button class="btn pri" id="pub" disabled><svg class="i"><use href="#i-up"/></svg>Phát hành</button><button class="btn" type="button" data-c>Huỷ</button></div>
+    </form><ul class="steps" id="steps"></ul><div id="upMsg"></div>`);
+  $("#modal [data-c]").onclick = closeModal;
+  const drop = $("#drop"), fi = $("#fi");
+  ["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", e => e.dataTransfer.files[0] && pick(e.dataTransfer.files[0]));
+  fi.onchange = () => fi.files[0] && pick(fi.files[0]);
+  async function pick(f) {
+    file = f; $("#fiInfo").innerHTML = `<div class="fileinfo"><div class="spin" style="margin:0;width:16px;height:16px"></div>Đang đọc ${esc(f.name)}…</div>`;
+    try {
+      buf = await f.arrayBuffer(); info = await inspectRbz(buf); info.sha = await sha256(buf);
+      if (id && info.id !== id) throw new Error(`Gói này là plugin "${info.id}", không phải "${id}".`);
+      if (!id) { $("#u_id").value = info.id; if (info.name && $("#u_name") && !$("#u_name").value) $("#u_name").value = info.name; }
+      if (info.version) $("#u_ver").value = info.version;
+      $("#fiInfo").innerHTML = `<div class="fileinfo"><svg class="i" style="color:var(--ok)"><use href="#i-box"/></svg><div><b>${esc(f.name)}</b> · ${fmtSize(f.size)}<br><span class="mono">mã ${esc(info.id)} · v${esc(info.version || "?")} · sha256 ${info.sha.slice(0, 16)}…</span></div></div>`;
+      $("#pub").disabled = false;
+    } catch (e) { file = null; $("#fiInfo").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; $("#pub").disabled = true; }
+  }
+  $("#upf").onsubmit = async e => {
+    e.preventDefault(); if (!file) return;
+    const pid = $("#u_id").value.trim(), ver = $("#u_ver").value.trim(), notes = $("#u_notes").value.trim();
+    if (!/^[a-z0-9_]+$/.test(pid)) return $("#upMsg").innerHTML = `<div class="msgbox err">Mã plugin chỉ gồm chữ thường, số và dấu _</div>`;
+    if (isNew && plist().some(x => x.id === pid)) return $("#upMsg").innerHTML = `<div class="msgbox err">Plugin "${esc(pid)}" đã có – hãy dùng "Đăng bản mới".</div>`;
+    if (!isNew && p.version && ver === p.version) return $("#upMsg").innerHTML = `<div class="msgbox err">Phiên bản ${esc(ver)} đã phát hành. Hãy tăng số phiên bản.</div>`;
+    const fname = `${pid}-${ver}.rbz`;
+    const steps = [["read", "Đọc danh mục mới nhất"], ["blob", `Tải lên ${fname} (${fmtSize(file.size)})`], ["commit", "Cập nhật danh mục PT Hub + trang web"], ["push", "Đẩy lên kho GitHub"]];
+    $("#steps").innerHTML = steps.map(([k, t]) => `<li data-k="${k}"><span class="dot"></span>${t}</li>`).join("");
+    const mark = k => { let hit = false; steps.forEach(([s]) => { const li = $(`#steps [data-k="${s}"]`); if (s === k) { li.className = "run"; hit = true; } else if (!hit) li.className = "ok"; }); };
+    S.busy = true; $("#pub").disabled = true; $("#upMsg").innerHTML = "";
+    try {
+      mark("read"); await loadCatalog();
+      const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, "Z");
+      // danh mục PT Hub
+      let c = S.cat.plugins.find(x => x.id === pid);
+      if (!c) {
+        const tpl = S.cat.plugins.find(x => x.type) || {};
+        c = { id: pid, name: $("#u_name").value.trim(), version: ver, date: today(), file: fname, page: "", notes, loader_file: `${pid}.rb`, folder: pid,
+          description_vi: $("#u_dvi").value.trim(), description_en: $("#u_den").value.trim(), min_sketchup_version: tpl.min_sketchup_version || 2021,
+          max_sketchup_version: tpl.max_sketchup_version || 2027, requires_restart: true, type: tpl.type || "plugin", sha256: "", download_url: "", tutorial_url: "", icon: "", size: 0 };
+        S.cat.plugins.push(c);
+      }
+      Object.assign(c, { version: ver, date: today(), file: fname, notes, sha256: info.sha, size: file.size, download_url: `${SITE}pt-hub/goi/${fname}` });
+      S.cat.updated = iso.slice(0, 19).replace("T", " ");
+      // trang web
+      let s = S.site.plugins.find(x => x.id === pid);
+      if (!s) { s = { id: pid, name: c.name, category: $("#u_cat").value, description: c.description_vi, icon: "", name_en: c.name, description_en: c.description_en || c.description_vi }; S.site.plugins.push(s); }
+      Object.assign(s, { download: `pt-hub/goi/${fname}`, version: ver, date: iso, size: file.size, notes });
+      await commitFiles([{ path: `pt-hub/goi/${fname}`, base64: b64(buf) }, { path: CATALOG, text: jsonText(S.cat) }, { path: "plugins.json", text: jsonText(S.site) }],
+        `Phát hành ${c.name} ${ver} (trang quản trị)`, k => mark(k === "ref" ? "read" : k));
+      document.querySelectorAll("#steps li").forEach(li => li.className = "ok");
+      S.busy = false;
+      $("#upMsg").innerHTML = `<div class="msgbox ok"><b>Đã phát hành ${esc(c.name)} v${esc(ver)}.</b><br>GitHub đang tự tạo bản phát hành (khoảng 1 phút) – sau đó trang web và PT Hub của người dùng sẽ nhận bản mới.
+        <br><a href="https://github.com/${OWNER}/${REPO}/actions" target="_blank" rel="noopener">Xem tiến trình ↗</a></div>`;
+      $("#upf").style.display = "none"; $("#drop").style.display = "none";
+      renderPlugins();
+    } catch (er) {
+      S.busy = false; $("#pub").disabled = false;
+      const li = $("#steps li.run"); if (li) li.className = "err";
+      $("#upMsg").innerHTML = `<div class="msgbox err">${esc(er.message)}</div>`;
+    }
+  };
+}
+
+if (token()) checkGitHub();
+</script>
+</body>
+</html>
