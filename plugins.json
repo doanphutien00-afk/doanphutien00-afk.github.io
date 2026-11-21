@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.5.4.rbz",
-      "version": "2.5.4",
-      "date": "2026-11-21T08:58:53Z",
-      "size": 213760,
-      "notes": "- Nút Mua bản quyền, Quản lý thiết bị, Góp ý, tài khoản mở trang ptplugin.pages.dev"
+      "download": "pt-hub/goi/pt_hub-2.5.5.rbz",
+      "version": "2.5.5",
+      "date": "2026-11-22",
+      "size": 214216,
+      "notes": "- Plugin bị gỡ khỏi PT Hub trên máy chủ (cờ \"hidden\") không còn hiện ở bất kỳ đâu trong PT Hub (kể cả khi đã cài hoặc có tệp trong máy) và không tự cài / cập nhật\n- Tạm gỡ PT Kitchen Designer và PT Stair khỏi PT Hub"
     },
     {
       "id": "mai_viet",
