@@ -71,7 +71,7 @@ export default {
 
 function corsHeaders(req, env) {
   const o = req.headers.get("Origin") || "";
-  const allow = !o || o === env.SITE_ORIGIN || /^http:\/\/localhost(:\d+)?$/.test(o) ? (o || "*") : env.SITE_ORIGIN;
+  const allow = !o || o === env.SITE_ORIGIN || o === "https://ptplugin.pages.dev" || /^http:\/\/localhost(:\d+)?$/.test(o) ? (o || "*") : env.SITE_ORIGIN;
   return { "Access-Control-Allow-Origin": allow, "Access-Control-Allow-Methods": "GET,POST,OPTIONS", "Access-Control-Allow-Headers": "Authorization,Content-Type", "Access-Control-Max-Age": "86400", Vary: "Origin" };
 }
 function json(o, status, headers) { return new Response(JSON.stringify(o), { status, headers: { "Content-Type": "application/json; charset=utf-8", ...headers } }); }
