@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.5.2.rbz",
-      "version": "2.5.2",
+      "download": "pt-hub/goi/pt_hub-2.5.3.rbz",
+      "version": "2.5.3",
       "date": "2026-11-21",
-      "size": 213251,
-      "notes": "- Sửa: sau khi khởi động lại từ PT Hub, bảng PT Hub / Welcome bị trắng xoá – nay SketchUp được mở lại qua Windows Explorer như bấm biểu tượng, không còn dính tiến trình của bản SketchUp cũ\n- Bảng PT Hub không hiện nội dung → tự nạp lại, vẫn lỗi thì hướng dẫn tắt hẳn rồi mở lại SketchUp"
+      "size": 214118,
+      "notes": "- Sửa: Kho công cụ trống (0 công cụ) – nay gộp 3 nguồn: bộ dò, mọi lệnh đang có trong SketchUp, lệnh trên các thanh công cụ; tên plugin lấy cả từ thư mục chứa icon\n- Kho trống thì hiện số liệu chẩn đoán và ghi vào nhật ký"
     },
     {
       "id": "mai_viet",
