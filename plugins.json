@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.5.0.rbz",
-      "version": "2.5.0",
+      "download": "pt-hub/goi/pt_hub-2.5.1.rbz",
+      "version": "2.5.1",
       "date": "2026-11-21",
-      "size": 212213,
-      "notes": "- Dùng thử: đồng hồ đếm ngược ngày + giờ:phút:giây, chạy từng giây\n- Thanh công cụ → Kho công cụ: dò MỌI công cụ của MỌI plugin (kể cả lệnh chỉ có trong menu), tìm kiếm, lọc theo plugin, bấm + để thêm vào thanh riêng\n- Bộ dò công cụ \"!pt_hub_tools.rb\" tự cài vào Plugins; mở lại SketchUp 1 lần để dò đủ"
+      "size": 212370,
+      "notes": "- Sửa: khởi động lại SketchUp từ PT Hub làm bảng Welcome (và các bảng HTML) bị trắng – nay chờ các tiến trình phụ của SketchUp (trình duyệt nhúng) thoát hẳn rồi mới mở lại"
     },
     {
       "id": "mai_viet",
