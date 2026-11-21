@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-22 01:30",
+  "updated": "2026-11-22 01:50",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -158,11 +158,11 @@
     {
       "id": "pt_hub",
       "name": "PT Hub",
-      "version": "2.5.5",
+      "version": "2.6.0",
       "date": "2026-11-22",
-      "file": "pt_hub-2.5.5.rbz",
+      "file": "pt_hub-2.6.0.rbz",
       "page": "PT_Hub_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Plugin bị gỡ khỏi PT Hub trên máy chủ (cờ \"hidden\") không còn hiện ở bất kỳ đâu trong PT Hub (kể cả khi đã cài hoặc có tệp trong máy) và không tự cài / cập nhật\n- Tạm gỡ PT Kitchen Designer và PT Stair khỏi PT Hub",
+      "notes": "- PT Hub cập nhật theo trang web: tự kiểm tra trang web mỗi 30 phút (chỉnh trong Cài đặt → Cập nhật → Theo dõi trang web)\n- Web có phiên bản mới → tự tải & cài (khi bật Tự cập nhật); web có plugin mới → hiện ngay trong PT Hub + thông báo (bật Tự cài plugin mới thì cài luôn); plugin bị gỡ trên web → biến khỏi PT Hub\n- Luôn lấy danh sách mới nhất (bỏ qua bộ nhớ đệm của web)",
       "loader_file": "pt_hub.rb",
       "folder": "pt_hub",
       "description_vi": "Quản lý, cài đặt, cập nhật plugin PT; thanh công cụ tuỳ chỉnh; góp ý.",
@@ -171,10 +171,10 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "206fe007b04901fb1f23a0990526a433ef01cecfc67145b245040e7ef05ff3fe",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.5.5.rbz",
+      "sha256": "237c22631dd8319f94a836e003e4f7f939cc7357329b3ecc9f8957f525e27561",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.6.0.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
-      "size": 214216
+      "size": 215288
     },
     {
       "id": "pt_kitchen",
