@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.4.0.rbz",
-      "version": "2.4.0",
+      "download": "pt-hub/goi/pt_hub-2.5.0.rbz",
+      "version": "2.5.0",
       "date": "2026-11-21",
-      "size": 207603,
-      "notes": "- Dùng thử: đếm ngược theo ngày + giờ (vd. \"còn 2 ngày 14 giờ\"), tự chạy mỗi 30 giây, kèm giờ hết hạn\n- Khởi động lại SketchUp từ PT Hub → mở lại kèm bảng Welcome to SketchUp\n- Cài đặt → Tài khoản: danh sách plugin đã mua bản quyền (ngày mua, số máy, kích hoạt / cài ngay)\n- Thanh công cụ: dò lệnh của mọi plugin; thanh tự tạo và thanh của mọi plugin giữ đúng vị trí đã xếp sau khi tắt / mở SketchUp"
+      "size": 212213,
+      "notes": "- Dùng thử: đồng hồ đếm ngược ngày + giờ:phút:giây, chạy từng giây\n- Thanh công cụ → Kho công cụ: dò MỌI công cụ của MỌI plugin (kể cả lệnh chỉ có trong menu), tìm kiếm, lọc theo plugin, bấm + để thêm vào thanh riêng\n- Bộ dò công cụ \"!pt_hub_tools.rb\" tự cài vào Plugins; mở lại SketchUp 1 lần để dò đủ"
     },
     {
       "id": "mai_viet",
