@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.3.1.rbz",
-      "version": "2.3.1",
-      "date": "2026-11-20T16:13:09Z",
-      "size": 203674,
-      "notes": "- Mục Bản quyền trong PT Hub: kích hoạt, dùng thử 3 ngày, huỷ kích hoạt để chuyển máy\n- Đăng nhập Google tự đồng bộ bản quyền đã mua\n- Nút Mua bản quyền / Quản lý thiết bị mở trang web"
+      "download": "pt-hub/goi/pt_hub-2.4.0.rbz",
+      "version": "2.4.0",
+      "date": "2026-11-21",
+      "size": 207603,
+      "notes": "- Dùng thử: đếm ngược theo ngày + giờ (vd. \"còn 2 ngày 14 giờ\"), tự chạy mỗi 30 giây, kèm giờ hết hạn\n- Khởi động lại SketchUp từ PT Hub → mở lại kèm bảng Welcome to SketchUp\n- Cài đặt → Tài khoản: danh sách plugin đã mua bản quyền (ngày mua, số máy, kích hoạt / cài ngay)\n- Thanh công cụ: dò lệnh của mọi plugin; thanh tự tạo và thanh của mọi plugin giữ đúng vị trí đã xếp sau khi tắt / mở SketchUp"
     },
     {
       "id": "mai_viet",
