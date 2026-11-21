@@ -573,7 +573,7 @@ async function load(){
   const byId={};
   for(const r of releases){ if(r.draft||r.prerelease)continue; const m=(r.tag_name||"").match(TAG_RE); if(!m)continue;
     const a=(r.assets||[]).find(a=>/\.rbz$/i.test(a.name));
-    (byId[m[1]]||=[]).push({version:m[2],date:r.published_at,notes:r.body||"",url:a?.browser_download_url,size:a?.size,downloads:(r.assets||[]).reduce((s,x)=>s+(x.download_count||0),0)}); }
+    (byId[m[1]]||=[]).push({version:m[2],date:r.published_at,notes:r.body||"",url:a&&!location.hostname.endsWith(".github.io")?`/pt-hub/goi/${encodeURIComponent(r.tag_name)}/${encodeURIComponent(a.name)}`:a?.browser_download_url,size:a?.size,downloads:(r.assets||[]).reduce((s,x)=>s+(x.download_count||0),0)}); }
   const known=new Set((manifest.plugins||[]).map(p=>p.id));
   const extra=Object.keys(byId).filter(id=>!known.has(id)).map(id=>({id,name:id,category:"Khác",description:""}));
   state.site=manifest.site||{};
