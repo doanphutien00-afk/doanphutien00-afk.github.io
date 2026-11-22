@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.6.0.rbz",
-      "version": "2.6.0",
+      "download": "pt-hub/goi/pt_hub-2.7.0.rbz",
+      "version": "2.7.0",
       "date": "2026-11-22",
-      "size": 215288,
-      "notes": "- PT Hub cập nhật theo trang web: tự kiểm tra trang web mỗi 30 phút (chỉnh trong Cài đặt → Cập nhật → Theo dõi trang web)\n- Web có phiên bản mới → tự tải & cài (khi bật Tự cập nhật); web có plugin mới → hiện ngay trong PT Hub + thông báo (bật Tự cài plugin mới thì cài luôn); plugin bị gỡ trên web → biến khỏi PT Hub\n- Luôn lấy danh sách mới nhất (bỏ qua bộ nhớ đệm của web)"
+      "size": 216403,
+      "notes": "- Chỉ dùng plugin & phiên bản đăng trên trang web: không còn tự nhận tệp .rbz trong Downloads (bản thử như PT StairBuilder không tự lên PT Hub), bản thử trong máy không được cài; plugin bạn tự \"Cài từ tệp .rbz\" vẫn hiện\n- Nút Khởi động lại: hỏi lại 1 lần → hỏi lưu bản vẽ → đóng & mở lại SketchUp → bảng Welcome to SketchUp"
     },
     {
       "id": "mai_viet",
