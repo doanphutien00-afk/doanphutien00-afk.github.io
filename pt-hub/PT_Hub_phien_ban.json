@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-22 15:15",
+  "updated": "2026-11-23 13:45:44",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -114,9 +114,9 @@
         "Smart Floor Generator",
         "Smart Floor"
       ],
-      "version": "2.10.6",
-      "date": "2026-11-21",
-      "file": "smart_floor-2.10.6.rbz",
+      "version": "2.11.0",
+      "date": "2026-11-23",
+      "file": "smart_floor-2.11.0.rbz",
       "page": "",
       "icon": "icon.svg",
       "loader_file": "smart_floor.rb",
@@ -127,11 +127,11 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "paid",
-      "sha256": "f712fee324ebae212c57de0b97499a0960416b80a77f6b6648c91b0b2bee6ef7",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/smart_floor-2.10.6.rbz",
+      "sha256": "e09270e9c4d02560d31883f08983ce99363f712856442c49cfed9dd2ca314b64",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/smart_floor-2.11.0.rbz",
       "tutorial_url": "",
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)",
-      "size": 290599,
+      "notes": "-cập nhật giao diện\n-sửa lỗi\n-cập nhật sàn mới\n-cập nhật tính năng",
+      "size": 312913,
       "price": 99000
     },
     {

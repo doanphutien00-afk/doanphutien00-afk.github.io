@@ -60,11 +60,11 @@
       "icon": "icons/smart_floor.svg",
       "name_en": "PT Smartfloor",
       "description_en": "Floor patterns on any face (Running Bond, Herringbone, Chevron, Hexagon…), beveled tiles, skirting, auto-detected door thresholds, true 3D mitre cuts at corners; tile schedule export to PDF/Excel/DXF.",
-      "download": "pt-hub/goi/smart_floor-2.10.6.rbz",
-      "version": "2.10.6",
-      "date": "2026-11-21T08:58:53Z",
-      "size": 290599,
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "download": "pt-hub/goi/smart_floor-2.11.0.rbz",
+      "version": "2.11.0",
+      "date": "2026-11-23T13:45:44Z",
+      "size": 312913,
+      "notes": "-cập nhật giao diện\n-sửa lỗi\n-cập nhật sàn mới\n-cập nhật tính năng"
     },
     {
       "id": "pt_wallpanel",
