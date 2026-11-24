@@ -1,15 +1,15 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-23 13:45:44",
+  "updated": "2026-11-24 04:58:50",
   "plugins": [
     {
       "id": "pt_cabinet",
       "name": "PT Cabinet",
-      "version": "2.6.10",
-      "date": "2026-11-21",
-      "file": "pt_cabinet-2.6.10.rbz",
+      "version": "2.6.8",
+      "date": "2026-11-24",
+      "file": "pt_cabinet-2.6.8.rbz",
       "page": "PT_Cabinet_v2.3_cap_nhat.md",
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)",
+      "notes": "Quét chọn nhiều mặt rồi đẩy cùng lúc\n\nBấm ở chỗ trống rồi kéo chuột để vẽ khung cam. Khung chọn được cả mặt nằm trong group và component.\nKéo từ trái sang phải (nét liền): chỉ lấy mặt nằm trọn trong khung.\nKéo từ phải sang trái (nét đứt): lấy cả mặt chạm vào khung.\nGiữ Ctrl khi quét để thêm vào các mặt đã chọn. Click ra chỗ trống để bỏ chọn.\nSau khi chọn xong, click vào một mặt bất kỳ trong số đã chọn, rồi rê chuột hoặc gõ số. Tất cả các mặt được đẩy cùng lúc, mỗi mặt theo hướng mặt trước của chính nó, và chỉ cần 1 lần Undo. Gõ số ngay sau khi quét hoặc click đúp cũng đẩy cả nhóm.\nNếu anh đã chọn sẵn các mặt trong SketchUp trước khi bật công cụ, công cụ nhận luôn các mặt đó. Riêng chọn sẵn cả group thì không tính, để tránh bấm nhầm mà đẩy cả tủ.\nHUD có thêm dòng \"Đã quét chọn N mặt\", bấm vào đó để bỏ chọn.\n\nƯu tiên đẩy ra mặt trước (mặt trắng)\n\nGõ số dương luôn đẩy ra phía mặt trắng, gõ số âm thì kéo vào, dù con trỏ đang hướng chiều nào. Áp dụng cho cả ô nhập số của SketchUp và ô khoảng đẩy trên HUD.\nKhi rê chuột thì vẫn kéo tự do hai chiều như cũ.",
       "loader_file": "pt_cabinet.rb",
       "folder": "pt_cabinet",
       "description_vi": "Dựng tủ bếp, tủ áo, cánh, hộc kéo, tay nắm theo tham số; thư viện mẫu tủ.",
@@ -18,11 +18,11 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "paid",
-      "sha256": "29f2306943047a9b68292551922bbc895b25e6b8e30ab92340bdb7bf41962a6b",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_cabinet-2.6.10.rbz",
+      "sha256": "381fbb7cf0522ace30ba212041dfb62616ada5639a8b9edef7bcea5f5d0d2813",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_cabinet-2.6.8.rbz",
       "tutorial_url": "",
       "icon": "icons/box2cab.svg",
-      "size": 2072362,
+      "size": 2077151,
       "price": 99000
     },
     {
