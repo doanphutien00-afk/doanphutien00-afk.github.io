@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-25 02:49:18",
+  "updated": "2026-11-25 17:08:22",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -87,11 +87,11 @@
         "PT Wall Panel",
         "PT Vách nan"
       ],
-      "version": "1.6.5",
-      "date": "2026-11-21",
-      "file": "pt_wallpanel-1.6.5.rbz",
+      "version": "1.7.0",
+      "date": "2026-11-25",
+      "file": "pt_wallpanel-1.7.0.rbz",
       "page": "PT_WallPanel_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)",
+      "notes": "- Thông tin: tên + phiên bản, bản quyền PT Plugin, giấy phép, máy kích hoạt, số máy n/2, SketchUp, hệ điều hành\n- Hướng nan: xoay theo góc (độ) và theo cạnh / 2 điểm chọn trên mô hình (sáng cam, bắt điểm tròn cam)\n- Lưu sẵn thiết lập riêng cho từng mẫu nan\n- Thư viện: 3 chế độ hiển thị, ảnh nan viền cam, chọn mẫu không còn nháy\n- Bấm ô kích thước -> sáng kích thước tương ứng trong hình xem trước\n- Icon toolbar mới, giao diện chia mục gọn trong 1 khung",
       "loader_file": "pt_wallpanel.rb",
       "folder": "pt_wallpanel",
       "description_vi": "Tạo vách ốp nan 1 click với 16 mẫu module.",
@@ -100,11 +100,11 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "paid",
-      "sha256": "6f9b03e432849bad54de30725073473ecc01d29eadab4fbb247059283a2bca0a",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.6.5.rbz",
+      "sha256": "c5dfe22f7c797e8f6d237dc0be11c6dae1125460a5bda23a2e3b3d08bc2f0bb1",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.0.rbz",
       "tutorial_url": "",
       "icon": "icons/dialog.svg",
-      "size": 206302,
+      "size": 234617,
       "price": 79000
     },
     {
