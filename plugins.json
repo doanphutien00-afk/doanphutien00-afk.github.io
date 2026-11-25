@@ -60,11 +60,11 @@
       "icon": "icons/smart_floor.svg",
       "name_en": "PT Smartfloor",
       "description_en": "Floor patterns on any face (Running Bond, Herringbone, Chevron, Hexagon…), beveled tiles, skirting, auto-detected door thresholds, true 3D mitre cuts at corners; tile schedule export to PDF/Excel/DXF.",
-      "download": "pt-hub/goi/smart_floor-2.11.0.rbz",
-      "version": "2.11.0",
-      "date": "2026-11-23T13:45:44Z",
-      "size": 312913,
-      "notes": "-cập nhật giao diện\n-sửa lỗi\n-cập nhật sàn mới\n-cập nhật tính năng"
+      "download": "pt-hub/goi/smart_floor-2.11.2.rbz",
+      "version": "2.11.2",
+      "date": "2026-11-25T02:49:18Z",
+      "size": 308723,
+      "notes": "Lỗi thiếu gạch ở mép cửa\n\nTrong mô phỏng mình dựng căn phòng 5 mặt có cửa, thì các mặt má cửa đều được lát. Mô phỏng này không sinh ra đúng lỗi của model bạn, nên mình chưa xác định được nguyên nhân thật. Mình không dám nói đã sửa dứt điểm.\nTừ ảnh, mình đoán mảnh trắng bên mép cửa là một mặt nhỏ ngoài 5 mặt bạn chọn: má cửa, hoặc một mảnh tường hẹp bị khung cửa tách ra. Bản này nới điều kiện tìm các mặt đó:\nmá cửa vuông góc với tường, sâu tới 1 m;\nthêm mảnh tường hẹp cùng mặt phẳng, rộng tối đa 400 mm.\nKhi tạo xong, thông báo sẽ ghi \"Đã lát thêm N mặt má cửa / mảnh tường hẹp\", để bạn biết plugin có tìm thấy mặt đó hay không.\nNếu vẫn còn thiếu: chọn 5 mặt rồi chạy lệnh \"Chẩn đoán tường\". Lệnh này đã thêm phần liệt kê mọi mặt kề các mặt đã chọn, kèm góc, bề rộng và diện tích. Bạn gửi mình nội dung đó, mình sẽ biết mặt thiếu là mặt nào và vì sao bị bỏ qua.\n\nĐồng bộ ron sàn và tường\n\nTrước đây mỗi mặt được xếp theo mặt kề nó, nên sàn chỉ khớp với một bức tường. Giờ mọi mặt dùng chung một điểm gốc.\nĐiểm gốc là điểm lát đầu tiên nếu bạn đã chọn, nếu không thì là góc lưới của mặt sàn.\nNhờ đó ron đứng trên tường thẳng hàng với ron trên sàn ở cả 4 tường, và ron ngang trên các tường cùng một độ cao.\nVới gạch vuông (600×600), ron trên sàn khớp ron trên cả 4 tường. Với gạch chữ nhật như 600×300, chỉ các tường song song với hướng dài của sàn khớp hoàn toàn.\nRon ở các góc tường chỉ khớp nếu kích thước phòng chia hết cho kích thước gạch.\n\nHướng lát sàn\n\nCông tắc gạt giờ chỉ nằm ở dòng \"Hướng lát sàn\" (đã đổi tên từ \"Hướng lát theo\"), cùng nút \"Mặc định\".\nCông tắc này chỉ bật/tắt các nút Chọn cạnh, Chọn 2 điểm, Bỏ hướng. Mục Căn hướng theo và Xoay thêm luôn hiện."
     },
     {
       "id": "pt_wallpanel",
