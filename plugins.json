@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.7.0.rbz",
-      "version": "2.7.0",
-      "date": "2026-11-22",
-      "size": 216403,
-      "notes": "- Chỉ dùng plugin & phiên bản đăng trên trang web: không còn tự nhận tệp .rbz trong Downloads (bản thử như PT StairBuilder không tự lên PT Hub), bản thử trong máy không được cài; plugin bạn tự \"Cài từ tệp .rbz\" vẫn hiện\n- Nút Khởi động lại: hỏi lại 1 lần → hỏi lưu bản vẽ → đóng & mở lại SketchUp → bảng Welcome to SketchUp"
+      "download": "pt-hub/goi/pt_hub-2.8.0.rbz",
+      "version": "2.8.0",
+      "date": "2026-11-26",
+      "size": 216099,
+      "notes": "- Xoá phiên bản trong kho: dòng biến mất ngay, không hỏi lại\n- Đăng nhập chỉ qua trang web: mở trang → chọn \"Kết nối PT Hub\" hoặc \"Đăng nhập bằng tài khoản khác\" → PT Hub tự chuyển sang tài khoản vừa kết nối\n- Bỏ nút Đăng xuất (dùng \"Đổi tài khoản\")"
     },
     {
       "id": "mai_viet",
