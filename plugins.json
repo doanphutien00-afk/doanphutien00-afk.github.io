@@ -40,11 +40,11 @@
     },
     {
       "id": "mai_viet",
-      "name": "PT SmartRoof (Mái Việt)",
+      "name": "PT SmartRoof",
       "category": "Kiến trúc",
       "description": "Dựng mái Nhật, mái Thái, Mansard từ mặt bằng; lợp ngói tự động theo mặt mái, ngói nóc/rìa, lớp vữa, kim thu lôi, đổi màu ngẫu nhiên và thống kê – dự toán vật tư.",
       "icon": "icons/mai_viet.svg",
-      "name_en": "PT SmartRoof (Mai Viet)",
+      "name_en": "PT SmartRoof",
       "description_en": "Build hip, Thai and Mansard roofs from a floor plan; auto-lay tiles on roof faces, ridge/edge tiles, mortar bed, lightning rods, random color variation and material take-off.",
       "download": "pt-hub/goi/mai_viet-3.0.5.rbz",
       "version": "3.0.5",
@@ -63,16 +63,16 @@
       "download": "pt-hub/goi/smart_floor-2.11.2.rbz",
       "version": "2.11.2",
       "date": "2026-11-25T02:49:18Z",
-      "size": 308723,
+      "size": 316260,
       "notes": "Lỗi thiếu gạch ở mép cửa\n\nTrong mô phỏng mình dựng căn phòng 5 mặt có cửa, thì các mặt má cửa đều được lát. Mô phỏng này không sinh ra đúng lỗi của model bạn, nên mình chưa xác định được nguyên nhân thật. Mình không dám nói đã sửa dứt điểm.\nTừ ảnh, mình đoán mảnh trắng bên mép cửa là một mặt nhỏ ngoài 5 mặt bạn chọn: má cửa, hoặc một mảnh tường hẹp bị khung cửa tách ra. Bản này nới điều kiện tìm các mặt đó:\nmá cửa vuông góc với tường, sâu tới 1 m;\nthêm mảnh tường hẹp cùng mặt phẳng, rộng tối đa 400 mm.\nKhi tạo xong, thông báo sẽ ghi \"Đã lát thêm N mặt má cửa / mảnh tường hẹp\", để bạn biết plugin có tìm thấy mặt đó hay không.\nNếu vẫn còn thiếu: chọn 5 mặt rồi chạy lệnh \"Chẩn đoán tường\". Lệnh này đã thêm phần liệt kê mọi mặt kề các mặt đã chọn, kèm góc, bề rộng và diện tích. Bạn gửi mình nội dung đó, mình sẽ biết mặt thiếu là mặt nào và vì sao bị bỏ qua.\n\nĐồng bộ ron sàn và tường\n\nTrước đây mỗi mặt được xếp theo mặt kề nó, nên sàn chỉ khớp với một bức tường. Giờ mọi mặt dùng chung một điểm gốc.\nĐiểm gốc là điểm lát đầu tiên nếu bạn đã chọn, nếu không thì là góc lưới của mặt sàn.\nNhờ đó ron đứng trên tường thẳng hàng với ron trên sàn ở cả 4 tường, và ron ngang trên các tường cùng một độ cao.\nVới gạch vuông (600×600), ron trên sàn khớp ron trên cả 4 tường. Với gạch chữ nhật như 600×300, chỉ các tường song song với hướng dài của sàn khớp hoàn toàn.\nRon ở các góc tường chỉ khớp nếu kích thước phòng chia hết cho kích thước gạch.\n\nHướng lát sàn\n\nCông tắc gạt giờ chỉ nằm ở dòng \"Hướng lát sàn\" (đã đổi tên từ \"Hướng lát theo\"), cùng nút \"Mặc định\".\nCông tắc này chỉ bật/tắt các nút Chọn cạnh, Chọn 2 điểm, Bỏ hướng. Mục Căn hướng theo và Xoay thêm luôn hiện."
     },
     {
       "id": "pt_wallpanel",
-      "name": "PT Wall Panel – Vách ốp nan",
+      "name": "Pt Wallpanel",
       "category": "Nội thất",
       "description": "Tạo vách ốp nan gỗ/lam 1 click trên mặt phẳng và mặt cong: chia nan đều, tránh lỗ cửa, uốn theo tường cong, cột tròn, trần; có tấm nền, vật liệu và chỉnh sửa lại được.",
       "icon": "icons/pt_wallpanel.svg",
-      "name_en": "PT Wall Panel – Slat Cladding",
+      "name_en": "Pt Wallpanel",
       "description_en": "One-click timber/louvre slat cladding on flat and curved faces: even spacing, avoids door openings, follows curved walls, round columns and ceilings; backing board, materials and re-editable.",
       "download": "pt-hub/goi/pt_wallpanel-1.7.1.rbz",
       "version": "1.7.1",
@@ -91,7 +91,7 @@
       "download": "pt-hub/goi/pt_cabinet-2.6.8.rbz",
       "version": "2.6.8",
       "date": "2026-11-24T04:58:50Z",
-      "size": 2077151,
+      "size": 2078096,
       "notes": "Quét chọn nhiều mặt rồi đẩy cùng lúc\n\nBấm ở chỗ trống rồi kéo chuột để vẽ khung cam. Khung chọn được cả mặt nằm trong group và component.\nKéo từ trái sang phải (nét liền): chỉ lấy mặt nằm trọn trong khung.\nKéo từ phải sang trái (nét đứt): lấy cả mặt chạm vào khung.\nGiữ Ctrl khi quét để thêm vào các mặt đã chọn. Click ra chỗ trống để bỏ chọn.\nSau khi chọn xong, click vào một mặt bất kỳ trong số đã chọn, rồi rê chuột hoặc gõ số. Tất cả các mặt được đẩy cùng lúc, mỗi mặt theo hướng mặt trước của chính nó, và chỉ cần 1 lần Undo. Gõ số ngay sau khi quét hoặc click đúp cũng đẩy cả nhóm.\nNếu anh đã chọn sẵn các mặt trong SketchUp trước khi bật công cụ, công cụ nhận luôn các mặt đó. Riêng chọn sẵn cả group thì không tính, để tránh bấm nhầm mà đẩy cả tủ.\nHUD có thêm dòng \"Đã quét chọn N mặt\", bấm vào đó để bỏ chọn.\n\nƯu tiên đẩy ra mặt trước (mặt trắng)\n\nGõ số dương luôn đẩy ra phía mặt trắng, gõ số âm thì kéo vào, dù con trỏ đang hướng chiều nào. Áp dụng cho cả ô nhập số của SketchUp và ô khoảng đẩy trên HUD.\nKhi rê chuột thì vẫn kéo tự do hai chiều như cũ."
     },
     {

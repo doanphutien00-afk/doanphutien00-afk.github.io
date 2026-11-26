@@ -580,7 +580,11 @@ async function load(){
   // Plugin chưa có Release nhưng có tệp đặt sẵn trên trang (trường "download" + "version" trong plugins.json)
   for(const p of (manifest.plugins||[])){ if(p.download&&p.version&&!(byId[p.id]||[]).some(x=>x.version===p.version))
     (byId[p.id]||=[]).push({version:p.version,date:p.date||null,notes:p.notes||"",url:p.download,size:p.size||0,downloads:0}); }
-  state.plugins=[...(manifest.plugins||[]),...extra].filter(p=>!p.hidden).map(p=>{const v=(byId[p.id]||[]).sort((a,b)=>cmpVer(b.version,a.version));return{...p,versions:v,latest:v[0],downloads:v.reduce((s,x)=>s+x.downloads,0)}});
+  // Phiên bản hiện hành = phiên bản đăng trên trang quản trị (plugins.json); bản có số lớn hơn nhưng đã bị thay thì ẩn khỏi lịch sử
+  state.plugins=[...(manifest.plugins||[]),...extra].filter(p=>!p.hidden).map(p=>{const all=(byId[p.id]||[]).sort((a,b)=>cmpVer(b.version,a.version));
+    const v=p.version?all.filter(x=>cmpVer(x.version,p.version)<=0):all;
+    if(p.version){const cur=v.find(x=>x.version===p.version);if(cur&&p.date)cur.date=p.date;if(cur&&p.notes)cur.notes=p.notes;}
+    return{...p,versions:v,latest:v[0],downloads:all.reduce((s,x)=>s+x.downloads,0)}});
   state.loaded=true; applyI18n();
 }
 

@@ -171,6 +171,59 @@ details pre{margin:0;padding:12px 14px;border-top:1px solid var(--line);max-heig
   .who span{display:none}
   .grid2{grid-template-columns:1fr}
 }
+/* plugin: nút, ảnh đại diện */
+.pacts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.row:not(.head){grid-template-columns:44px 1.5fr .7fr .8fr 120px minmax(250px,auto)}
+.row.head{grid-template-columns:44px 1.5fr .7fr .8fr 120px minmax(250px,auto)}
+.icopick{display:flex;gap:14px;align-items:center;padding:12px;border:1px dashed var(--line-2);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:12px}
+.icopick:hover,.icopick.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.icopick .pic{width:56px;height:56px;border-radius:14px}
+.icopick .pic img{width:38px;height:38px}
+.icopick small{display:block;color:var(--muted);font-size:12px}
+.warnbox{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn)}
+/* tài khoản bản quyền */
+.srch{position:relative;flex:1;min-width:220px;max-width:420px}
+.srch svg{position:absolute;left:11px;top:50%;translate:0 -50%;color:var(--muted)}
+.srch input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);transition:border-color .2s,box-shadow .2s}
+.srch input:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.grp{margin:22px 0 10px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.grp b{font-family:var(--sans);font-size:12px;letter-spacing:0;text-transform:none;padding:1px 8px;border-radius:10px;background:var(--surface-2);color:var(--ink-2)}
+.grp .dotc{width:8px;height:8px;border-radius:50%}
+.acc{border:1px solid var(--line);background:var(--surface);border-radius:12px;margin-bottom:8px;overflow:hidden;transition:border-color .25s,box-shadow .25s;animation:vin .35s var(--ease) both}
+.acc:hover{border-color:var(--line-2)}
+.acc.open{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:var(--shadow)}
+.acc>button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:36px 1fr auto auto 18px;gap:14px;align-items:center;padding:12px 16px;cursor:pointer}
+.acc>button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.av2{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:600;background:var(--surface-2);color:var(--ink-2)}
+.acc.on .av2{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.acc .em{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc .em small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.pill{font-size:11.5px;padding:2px 9px;border-radius:10px;border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap}
+.pill.ok{border-color:color-mix(in srgb,var(--ok) 50%,transparent);color:var(--ok)}
+.pill.w{border-color:color-mix(in srgb,var(--warn) 50%,transparent);color:var(--warn)}
+.pill.e{border-color:color-mix(in srgb,var(--err) 50%,transparent);color:var(--err)}
+.acc .amt{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:90px;text-align:right}
+.acc .chev{color:var(--muted);transition:transform .3s var(--ease)}
+.acc.open .chev{transform:rotate(90deg);color:var(--accent)}
+.accb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.acc.open .accb{grid-template-rows:1fr}
+.accb>div{overflow:hidden}
+.accin{padding:4px 16px 16px;border-top:1px solid var(--line);display:grid;gap:12px}
+.lic{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.lic.rv{opacity:.6}
+.lic h4{margin:0;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lic h4 small{font-weight:400;color:var(--muted);font-size:12px}
+.lic .sp{flex:1}
+.devs{display:grid;gap:6px;margin-top:10px}
+.dev{display:grid;grid-template-columns:18px 1fr auto auto;gap:10px;align-items:center;font-size:13px;padding:7px 10px;border-radius:8px;background:var(--surface)}
+.dev small{color:var(--muted);font-family:var(--mono);font-size:11px}
+.ords{display:grid;gap:4px}
+.ord{display:grid;grid-template-columns:100px 1fr 100px 130px auto;gap:10px;align-items:center;font-size:13px;padding:7px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+.ord code{font-family:var(--mono);font-size:12px}
+.sec{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+mark{background:color-mix(in srgb,var(--accent) 30%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+@media (max-width:900px){.acc>button{grid-template-columns:36px 1fr 18px}.acc .pills,.acc .amt{display:none}.ord{grid-template-columns:1fr 1fr}.row:not(.head){grid-template-columns:40px 1fr}.pacts{grid-column:1/-1;justify-content:flex-start}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -181,6 +234,11 @@ details pre{margin:0;padding:12px 14px;border-top:1px solid var(--line);max-heig
   <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></symbol>
   <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9m-4 4 3 3m-6 0 2 2"/></symbol>
   <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 20h16"/></symbol>
+  <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></symbol>
+  <symbol id="i-del" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-pc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
   <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></symbol>
@@ -200,6 +258,7 @@ details pre{margin:0;padding:12px 14px;border-top:1px solid var(--line);max-heig
 <div class="lb" id="lb"><img alt=""></div>
 <div class="toast" id="toast"></div>
 
+<script src="/rbz-gate.js"></script>
 <script type="module">
 import { api as licApi, money } from "/lic.js";
 const SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
@@ -388,6 +447,15 @@ async function readJson(path) {
   if (!r.ok) throw new Error(`Không đọc được ${path} (${r.status})`);
   return JSON.parse(await r.text());
 }
+async function readText(path) {
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=main&t=${Date.now()}`, { headers: { Accept: "application/vnd.github.raw+json", ...(token() ? { Authorization: `Bearer ${token()}` } : {}) } });
+  if (!r.ok) throw new Error(`Không đọc được ${path} (${r.status})`);
+  return r.text();
+}
+async function allReleases() {
+  const out = []; for (let pg = 1; pg < 10; pg++) { const a = await gh(`/releases?per_page=100&page=${pg}`); out.push(...a); if (a.length < 100) break; } return out;
+}
+const cmpVer = (a, b) => { const pa = String(a).split(".").map(Number), pb = String(b).split(".").map(Number); for (let i = 0; i < Math.max(pa.length, pb.length); i++) { const d = (pa[i] || 0) - (pb[i] || 0); if (d) return d; } return 0; };
 const b64 = buf => { let s = "", a = new Uint8Array(buf); for (let i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); };
 const jsonText = o => JSON.stringify(o, null, 2) + "\n";
 
@@ -397,6 +465,7 @@ async function commitFiles(files, message, onStep = () => {}) {
   const head = ref.object.sha; const base = await gh(`/git/commits/${head}`);
   const tree = [];
   for (const f of files) {
+    if (f.delete) { tree.push({ path: f.path, mode: "100644", type: "blob", sha: null }); continue; }
     if (f.base64 != null) { onStep("blob", f.path); const b = await gh("/git/blobs", { method: "POST", body: JSON.stringify({ content: f.base64, encoding: "base64" }) }); tree.push({ path: f.path, mode: "100644", type: "blob", sha: b.sha }); }
     else tree.push({ path: f.path, mode: "100644", type: "blob", content: f.text });
   }
@@ -463,19 +532,21 @@ function plist() {
   const ids = [...new Set([...S.cat.plugins.map(p => p.id), ...S.site.plugins.map(p => p.id)])];
   return ids.map(id => {
     const c = S.cat.plugins.find(p => p.id === id) || {}, s = S.site.plugins.find(p => p.id === id) || {};
-    return { id, name: c.name || s.name || id, version: c.version || s.version || "", date: c.date || (s.date || "").slice(0, 10), size: c.size || s.size, icon: s.icon || "", hidden: !!(s.hidden || c.hidden), file: c.file };
+    return { id, name: c.name || s.name || id, version: c.version || s.version || "", date: c.date || (s.date || "").slice(0, 10), size: c.size || s.size, icon: s.icon || "", hidden: !!(s.hidden || c.hidden), file: c.file, paid: c.type === "paid" };
   });
 }
 function renderPlugins() {
   $("#pl").innerHTML = `<div class="tbl"><div class="row head"><span></span><span>Plugin</span><span>Phiên bản</span><span>Cập nhật</span><span>Hiển thị</span><span></span></div>
     ${plist().map(p => `<div class="row ${p.hidden ? "off" : ""}">
       <div class="pic">${p.icon ? `<img src="${esc(p.icon)}" alt="">` : esc(p.name.slice(0, 2).toUpperCase())}</div>
-      <div><b>${esc(p.name)}</b><small>${esc(p.id)}</small></div>
+      <div><b>${esc(p.name)}</b><small>${esc(p.id)}${p.paid ? " · có bản quyền" : ""}</small></div>
       <div>${p.version ? "v" + esc(p.version) : "–"}<br><small>${fmtSize(p.size)}</small></div>
       <div>${esc(p.date || "–")}</div>
       <div class="swl"><button class="sw" role="switch" aria-checked="${!p.hidden}" data-vis="${esc(p.id)}" title="${p.hidden ? "Đang ẩn – bấm để hiện lại" : "Đang hiện – bấm để gỡ khỏi trang"}"></button>${p.hidden ? "Đã gỡ" : "Đang hiện"}</div>
-      <div><button class="btn sm" data-up="${esc(p.id)}"><svg class="i"><use href="#i-up"/></svg>Đăng bản mới</button></div>
+      <div class="pacts"><button class="btn sm" data-up="${esc(p.id)}"><svg class="i"><use href="#i-up"/></svg>Đăng bản mới</button><button class="btn sm" data-edit="${esc(p.id)}" title="Đổi tên, ảnh đại diện"><svg class="i"><use href="#i-img"/></svg>Tên & ảnh</button>${p.id === "pt_hub" ? "" : `<button class="btn sm dan" data-del="${esc(p.id)}" title="Xoá hẳn plugin"><svg class="i"><use href="#i-del"/></svg>Xoá</button>`}</div>
     </div>`).join("")}</div>`;
+  document.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openEdit(b.dataset.edit));
+  document.querySelectorAll("[data-del]").forEach(b => b.onclick = () => openDelete(b.dataset.del));
   document.querySelectorAll("[data-up]").forEach(b => b.onclick = () => openUpload(b.dataset.up));
   document.querySelectorAll("[data-vis]").forEach(b => b.onclick = () => openToggle(b.dataset.vis));
 }
@@ -506,6 +577,103 @@ function openToggle(id) {
       await commitFiles([{ path: "plugins.json", text: jsonText(S.site) }, { path: CATALOG, text: jsonText(S.cat) }], `${hide ? "Gỡ" : "Hiện lại"} plugin ${id} (trang quản trị)`);
       S.busy = false; closeModal(); toast(hide ? "Đã gỡ – trang web cập nhật sau khoảng 1 phút" : "Đã hiện lại – trang web cập nhật sau khoảng 1 phút"); renderPlugins();
     } catch (e) { S.busy = false; $("#go").disabled = false; $("#tgMsg").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; }
+  };
+}
+
+/* ---------- Ảnh đại diện ---------- */
+const ICON_EXT = { "image/svg+xml": "svg", "image/png": "png", "image/jpeg": "jpg", "image/webp": "webp", "image/gif": "gif" };
+function iconPicker(el, current) {
+  const st = { file: null, buf: null, ext: "" };
+  el.innerHTML = `<label class="icopick" id="icp"><input type="file" accept=".svg,.png,.jpg,.jpeg,.webp,.gif,image/*" hidden>
+    <div class="pic">${current ? `<img src="${esc(current)}" alt="">` : `<svg class="i"><use href="#i-img"/></svg>`}</div>
+    <div><b>${current ? "Đổi ảnh đại diện" : "Chọn ảnh đại diện"}</b><small>SVG, PNG, JPG, WEBP · tối đa 1 MB · nên là ảnh vuông, nền trong suốt</small><small id="icn"></small></div></label>`;
+  const lab = el.querySelector("label"), inp = el.querySelector("input");
+  ["dragenter", "dragover"].forEach(ev => lab.addEventListener(ev, e => { e.preventDefault(); lab.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(ev => lab.addEventListener(ev, e => { e.preventDefault(); lab.classList.remove("over"); }));
+  lab.addEventListener("drop", e => e.dataTransfer.files[0] && take(e.dataTransfer.files[0]));
+  inp.onchange = () => inp.files[0] && take(inp.files[0]);
+  async function take(f) {
+    const ext = ICON_EXT[f.type] || (f.name.match(/\.(svg|png|jpe?g|webp|gif)$/i) || [])[1]?.toLowerCase().replace("jpeg", "jpg");
+    if (!ext) return el.querySelector("#icn").textContent = "Định dạng ảnh không hỗ trợ";
+    if (f.size > 1048576) return el.querySelector("#icn").textContent = "Ảnh lớn hơn 1 MB – hãy thu nhỏ ảnh";
+    st.file = f; st.ext = ext; st.buf = await f.arrayBuffer();
+    el.querySelector(".pic").innerHTML = `<img src="${URL.createObjectURL(f)}" alt="">`;
+    el.querySelector("#icn").textContent = `${f.name} · ${fmtSize(f.size)}`;
+  }
+  return st;
+}
+/* tệp cần ghi khi đổi ảnh: ảnh mới + xoá ảnh cũ cùng mã (khác đuôi) */
+function iconFiles(id, ic, oldIcon) {
+  if (!ic?.buf) return { files: [], path: null };
+  const path = `icons/${id}.${ic.ext}`, files = [{ path, base64: b64(ic.buf) }];
+  const old = (oldIcon || "").split("?")[0];
+  if (old && old !== path && old.startsWith(`icons/${id}.`)) files.push({ path: old, delete: true });
+  return { files, path: `${path}?v=${Date.now().toString(36)}` };
+}
+
+/* ---------- Đổi tên & ảnh đại diện ---------- */
+function openEdit(id) {
+  if (needToken()) return;
+  const p = plist().find(x => x.id === id), s0 = S.site.plugins.find(x => x.id === id) || {};
+  modal(`<h3>Tên & ảnh · ${esc(p.name)}</h3><p class="sub">Tên và ảnh hiển thị trên trang web và trong PT Hub.</p>
+    <div id="icBox"></div>
+    <div class="grid2"><div class="f"><label>Tên hiển thị</label><input id="e_name" value="${esc(p.name)}" required></div>
+    <div class="f"><label>Tên tiếng Anh – tuỳ chọn</label><input id="e_en" value="${esc(s0.name_en && s0.name_en !== s0.name ? s0.name_en : "")}" placeholder="để trống = giống tên hiển thị"></div></div>
+    <div class="bar"><button class="btn pri" id="eSave">Lưu</button><button class="btn" data-c>Huỷ</button></div><div id="eMsg"></div>`);
+  $("#modal [data-c]").onclick = closeModal;
+  const ic = iconPicker($("#icBox"), p.icon);
+  $("#eSave").onclick = async () => {
+    const name = $("#e_name").value.trim(); if (!name) return $("#eMsg").innerHTML = `<div class="msgbox err">Nhập tên plugin</div>`;
+    S.busy = true; $("#eSave").disabled = true; $("#eMsg").innerHTML = `<div class="msgbox info">Đang lưu…</div>`;
+    try {
+      await loadCatalog();
+      const c = S.cat.plugins.find(x => x.id === id), s = S.site.plugins.find(x => x.id === id);
+      const icf = iconFiles(id, ic, s?.icon);
+      if (c) c.name = name;
+      if (s) { s.name = name; s.name_en = $("#e_en").value.trim() || name; if (icf.path) s.icon = icf.path; }
+      S.cat.updated = new Date().toISOString().slice(0, 19).replace("T", " ");
+      await commitFiles([...icf.files, { path: "plugins.json", text: jsonText(S.site) }, { path: CATALOG, text: jsonText(S.cat) }], `Đổi tên / ảnh ${id} (trang quản trị)`);
+      S.busy = false; closeModal(); toast("Đã lưu – trang web cập nhật sau khoảng 1 phút"); renderPlugins();
+    } catch (e) { S.busy = false; $("#eSave").disabled = false; $("#eMsg").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; }
+  };
+}
+
+/* ---------- Xoá hẳn plugin ---------- */
+function openDelete(id) {
+  if (needToken()) return;
+  const p = plist().find(x => x.id === id);
+  modal(`<h3>Xoá hẳn ${esc(p.name)}?</h3>
+    <p class="sub">Khác với “Gỡ” (chỉ ẩn), xoá sẽ <b>không khôi phục được</b>:</p>
+    <ul class="sub" style="margin-top:-8px;padding-left:20px">
+      <li>Xoá plugin khỏi trang web và danh mục PT Hub</li>
+      <li>Xoá mọi tệp .rbz và ảnh đại diện của plugin trong kho</li>
+      <li>Xoá mọi bản phát hành (Release) <code>${esc(id)}-v…</code> trên GitHub cùng số lượt tải</li>
+    </ul>
+    <p class="sub">Người đã cài plugin không bị gỡ khỏi máy.${p.paid ? " Bản quyền khách đã mua vẫn được giữ trên máy chủ bản quyền." : ""}</p>
+    <div class="f"><label>Gõ mã plugin <b>${esc(id)}</b> để xác nhận</label><input id="dConf" autocomplete="off"></div>
+    <div class="bar"><button class="btn dan armed" id="dGo" disabled><svg class="i"><use href="#i-del"/></svg>Xoá vĩnh viễn</button><button class="btn" data-c>Huỷ</button></div><ul class="steps" id="dSteps"></ul><div id="dMsg"></div>`);
+  $("#modal [data-c]").onclick = closeModal;
+  $("#dConf").oninput = e => $("#dGo").disabled = e.target.value.trim() !== id;
+  $("#dGo").onclick = async () => {
+    S.busy = true; $("#dGo").disabled = true; $("#dMsg").innerHTML = "";
+    const step = (t, cls = "run") => { $("#dSteps").querySelectorAll("li.run").forEach(li => li.className = "ok"); $("#dSteps").insertAdjacentHTML("beforeend", `<li class="${cls}"><span class="dot"></span>${t}</li>`); };
+    try {
+      step("Đọc danh mục & danh sách tệp");
+      await loadCatalog();
+      const tree = await gh("/git/trees/main?recursive=1");
+      const s = S.site.plugins.find(x => x.id === id), icon = (s?.icon || "").split("?")[0];
+      const used = new Set(S.site.plugins.filter(x => x.id !== id).map(x => (x.icon || "").split("?")[0]));
+      const files = tree.tree.filter(t => t.type === "blob" && (t.path.startsWith(`pt-hub/goi/${id}-`) && t.path.endsWith(".rbz") || t.path === icon && !used.has(icon) && icon.startsWith("icons/"))).map(t => ({ path: t.path, delete: true }));
+      S.site.plugins = S.site.plugins.filter(x => x.id !== id); S.cat.plugins = S.cat.plugins.filter(x => x.id !== id);
+      S.cat.updated = new Date().toISOString().slice(0, 19).replace("T", " ");
+      step(`Xoá khỏi danh mục và ${files.length} tệp`);
+      await commitFiles([...files, { path: "plugins.json", text: jsonText(S.site) }, { path: CATALOG, text: jsonText(S.cat) }], `Xoá plugin ${id} (trang quản trị)`);
+      const rels = (await allReleases()).filter(r => (r.tag_name || "").startsWith(id + "-v"));
+      step(`Xoá ${rels.length} bản phát hành trên GitHub`);
+      for (const r of rels) { await gh(`/releases/${r.id}`, { method: "DELETE" }); try { await gh(`/git/refs/tags/${encodeURIComponent(r.tag_name)}`, { method: "DELETE" }); } catch (e) {} }
+      step("Hoàn tất", "ok");
+      S.busy = false; $("#dMsg").innerHTML = `<div class="msgbox ok">Đã xoá ${esc(p.name)}. Trang web cập nhật sau khoảng 1 phút.</div>`; renderPlugins();
+    } catch (e) { S.busy = false; $("#dSteps").querySelectorAll("li.run").forEach(li => li.className = "err"); $("#dMsg").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; }
   };
 }
 
@@ -547,15 +715,21 @@ function openUpload(id) {
         <div class="f"><label>Mã plugin</label><input id="u_id" value="${esc(id || "")}" ${id ? "readonly" : ""} pattern="[a-z0-9_]+" required placeholder="vd: pt_stair"></div>
         <div class="f"><label>Phiên bản</label><input id="u_ver" required pattern="\\d+(\\.\\d+)+" placeholder="vd: 1.2.0"></div>
       </div>
-      ${isNew ? `<div class="grid2">
-        <div class="f"><label>Tên hiển thị</label><input id="u_name" required></div>
-        <div class="f"><label>Nhóm</label><select id="u_cat"><option>Kiến trúc</option><option>Nội thất</option><option>Tiện ích</option></select></div></div>
+      <div class="grid2">
+        <div class="f"><label>Tên hiển thị (trang web & PT Hub)</label><input id="u_name" required value="${esc(p?.name || "")}"></div>
+        ${isNew ? `<div class="f"><label>Nhóm</label><select id="u_cat"><option>Kiến trúc</option><option>Nội thất</option><option>Tiện ích</option></select></div>` : `<div class="f"><label>Tên tiếng Anh – tuỳ chọn</label><input id="u_en" placeholder="để trống = giống tên hiển thị"></div>`}</div>
+      <div id="u_ic"></div>
+      ${isNew ? `
         <div class="f"><label>Mô tả (tiếng Việt)</label><input id="u_dvi" required></div>
         <div class="f"><label>Mô tả (tiếng Anh) – tuỳ chọn</label><input id="u_den"></div>` : ""}
+      ${p?.paid ? `<div class="msgbox info" style="margin:0 0 12px">🔒 Plugin có bản quyền – nếu gói chưa có khoá bản quyền, trang quản trị sẽ tự gắn trước khi phát hành.</div>` : ""}
       <div class="f"><label>Ghi chú thay đổi (mỗi dòng bắt đầu bằng "- ")</label><textarea id="u_notes" required placeholder="- Thêm tính năng …&#10;- Sửa lỗi …"></textarea></div>
       <div class="bar"><button class="btn pri" id="pub" disabled><svg class="i"><use href="#i-up"/></svg>Phát hành</button><button class="btn" type="button" data-c>Huỷ</button></div>
     </form><ul class="steps" id="steps"></ul><div id="upMsg"></div>`);
   $("#modal [data-c]").onclick = closeModal;
+  const ic = iconPicker($("#u_ic"), p?.icon || "");
+  let relVers = null; // các phiên bản đã có Release trên GitHub
+  allReleases().then(rs => relVers = rs.map(r => (r.tag_name || "")).filter(t => t.startsWith((id || "") + "-v")).map(t => t.slice(t.lastIndexOf("-v") + 2))).catch(() => relVers = []);
   const drop = $("#drop"), fi = $("#fi");
   ["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
   ["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
@@ -566,7 +740,8 @@ function openUpload(id) {
     try {
       buf = await f.arrayBuffer(); info = await inspectRbz(buf); info.sha = await sha256(buf);
       if (id && info.id !== id) throw new Error(`Gói này là plugin "${info.id}", không phải "${id}".`);
-      if (!id) { $("#u_id").value = info.id; if (info.name && $("#u_name") && !$("#u_name").value) $("#u_name").value = info.name; }
+      if (!id) $("#u_id").value = info.id;
+      if (info.name) $("#u_name").value = info.name;
       if (info.version) $("#u_ver").value = info.version;
       $("#fiInfo").innerHTML = `<div class="fileinfo"><svg class="i" style="color:var(--ok)"><use href="#i-box"/></svg><div><b>${esc(f.name)}</b> · ${fmtSize(f.size)}<br><span class="mono">mã ${esc(info.id)} · v${esc(info.version || "?")} · sha256 ${info.sha.slice(0, 16)}…</span></div></div>`;
       $("#pub").disabled = false;
@@ -578,34 +753,46 @@ function openUpload(id) {
     if (!/^[a-z0-9_]+$/.test(pid)) return $("#upMsg").innerHTML = `<div class="msgbox err">Mã plugin chỉ gồm chữ thường, số và dấu _</div>`;
     if (isNew && plist().some(x => x.id === pid)) return $("#upMsg").innerHTML = `<div class="msgbox err">Plugin "${esc(pid)}" đã có – hãy dùng "Đăng bản mới".</div>`;
     if (!isNew && p.version && ver === p.version) return $("#upMsg").innerHTML = `<div class="msgbox err">Phiên bản ${esc(ver)} đã phát hành. Hãy tăng số phiên bản.</div>`;
+    const top = [...(relVers || []), p?.version || "0"].filter(v => /^\d+(\.\d+)*$/.test(v)).sort((a, b) => cmpVer(b, a))[0];
+    if (!isNew && top && cmpVer(ver, top) <= 0) return $("#upMsg").innerHTML = `<div class="msgbox err">Phiên bản ${esc(ver)} không lớn hơn bản đã phát hành gần nhất (v${esc(top)}). PT Hub chỉ cập nhật khi số phiên bản lớn hơn – hãy đặt từ v${esc(top.replace(/\d+$/, n => +n + 1))} trở lên (sửa VERSION trong tệp nạp .rb).</div>`;
+    const uname = $("#u_name").value.trim(); if (!uname) return $("#upMsg").innerHTML = `<div class="msgbox err">Nhập tên hiển thị</div>`;
     const fname = `${pid}-${ver}.rbz`;
-    const steps = [["read", "Đọc danh mục mới nhất"], ["blob", `Tải lên ${fname} (${fmtSize(file.size)})`], ["commit", "Cập nhật danh mục PT Hub + trang web"], ["push", "Đẩy lên kho GitHub"]];
+    const steps = [["read", "Đọc danh mục mới nhất"], ...(p?.paid ? [["gate", "Kiểm tra / gắn khoá bản quyền"]] : []), ["blob", `Tải lên ${fname} (${fmtSize(file.size)})`], ["commit", "Cập nhật danh mục PT Hub + trang web"], ["push", "Đẩy lên kho GitHub"]];
     $("#steps").innerHTML = steps.map(([k, t]) => `<li data-k="${k}"><span class="dot"></span>${t}</li>`).join("");
     const mark = k => { let hit = false; steps.forEach(([s]) => { const li = $(`#steps [data-k="${s}"]`); if (s === k) { li.className = "run"; hit = true; } else if (!hit) li.className = "ok"; }); };
     S.busy = true; $("#pub").disabled = true; $("#upMsg").innerHTML = "";
     try {
       mark("read"); await loadCatalog();
+      let data = buf, gated = false;
+      if (p?.paid) {
+        mark("gate");
+        const r = await RbzGate.gate(buf, pid, uname, await readText("pt-hub/ban-quyen/pt_license.rb"));
+        if (!r.already) { data = r.buf.buffer.slice(r.buf.byteOffset, r.buf.byteOffset + r.buf.byteLength); gated = true; }
+      }
+      const size = data.byteLength, sha = gated ? await sha256(data) : info.sha;
+      const icf = iconFiles(pid, ic, (S.site.plugins.find(x => x.id === pid) || {}).icon);
       const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, "Z");
       // danh mục PT Hub
       let c = S.cat.plugins.find(x => x.id === pid);
       if (!c) {
         const tpl = S.cat.plugins.find(x => x.type) || {};
-        c = { id: pid, name: $("#u_name").value.trim(), version: ver, date: today(), file: fname, page: "", notes, loader_file: `${pid}.rb`, folder: pid,
+        c = { id: pid, name: uname, version: ver, date: today(), file: fname, page: "", notes, loader_file: `${pid}.rb`, folder: pid,
           description_vi: $("#u_dvi").value.trim(), description_en: $("#u_den").value.trim(), min_sketchup_version: tpl.min_sketchup_version || 2021,
           max_sketchup_version: tpl.max_sketchup_version || 2027, requires_restart: true, type: tpl.type || "plugin", sha256: "", download_url: "", tutorial_url: "", icon: "", size: 0 };
         S.cat.plugins.push(c);
       }
-      Object.assign(c, { version: ver, date: today(), file: fname, notes, sha256: info.sha, size: file.size, download_url: `${SITE}pt-hub/goi/${fname}` });
+      Object.assign(c, { name: uname, version: ver, date: today(), file: fname, notes, sha256: sha, size, download_url: `${SITE}pt-hub/goi/${fname}` });
       S.cat.updated = iso.slice(0, 19).replace("T", " ");
       // trang web
       let s = S.site.plugins.find(x => x.id === pid);
       if (!s) { s = { id: pid, name: c.name, category: $("#u_cat").value, description: c.description_vi, icon: "", name_en: c.name, description_en: c.description_en || c.description_vi }; S.site.plugins.push(s); }
-      Object.assign(s, { download: `pt-hub/goi/${fname}`, version: ver, date: iso, size: file.size, notes });
-      await commitFiles([{ path: `pt-hub/goi/${fname}`, base64: b64(buf) }, { path: CATALOG, text: jsonText(S.cat) }, { path: "plugins.json", text: jsonText(S.site) }],
+      Object.assign(s, { name: uname, name_en: ($("#u_en")?.value.trim()) || (isNew ? s.name_en : uname), download: `pt-hub/goi/${fname}`, version: ver, date: iso, size, notes });
+      if (icf.path) { s.icon = icf.path; }
+      await commitFiles([{ path: `pt-hub/goi/${fname}`, base64: b64(data) }, ...icf.files, { path: CATALOG, text: jsonText(S.cat) }, { path: "plugins.json", text: jsonText(S.site) }],
         `Phát hành ${c.name} ${ver} (trang quản trị)`, k => mark(k === "ref" ? "read" : k));
       document.querySelectorAll("#steps li").forEach(li => li.className = "ok");
       S.busy = false;
-      $("#upMsg").innerHTML = `<div class="msgbox ok"><b>Đã phát hành ${esc(c.name)} v${esc(ver)}.</b><br>GitHub đang tự tạo bản phát hành (khoảng 1 phút) – sau đó trang web và PT Hub của người dùng sẽ nhận bản mới.
+      $("#upMsg").innerHTML = `<div class="msgbox ok"><b>Đã phát hành ${esc(c.name)} v${esc(ver)}.</b>${gated ? "<br>🔒 Đã tự gắn khoá bản quyền vào gói." : ""}<br>GitHub đang tự tạo bản phát hành (khoảng 1 phút) – sau đó trang web và PT Hub của người dùng sẽ nhận bản mới.
         <br><a href="https://github.com/${OWNER}/${REPO}/actions" target="_blank" rel="noopener">Xem tiến trình ↗</a></div>`;
       $("#upf").style.display = "none"; $("#drop").style.display = "none";
       renderPlugins();
@@ -622,52 +809,117 @@ function openUpload(id) {
    ========================================================= */
 const day = t => t ? new Date(t * 1000).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" }) : "–";
 const OST = { pending: "Chờ thanh toán", paid: "Đã thanh toán", expired: "Hết hạn", cancelled: "Huỷ" };
-S.lq = ""; S.lv = "licenses";
+S.lq = ""; S.lv = "accounts"; S.lopen = new Set();
 async function viewLicenses() {
   $("#main").innerHTML = `<div class="view"><h1>Bản quyền & đơn hàng</h1><p class="sub">Đơn thanh toán qua SePay tự xác nhận. Reset máy khi khách hỏng máy / cài lại Windows.</p>
-    <div class="bar">${[["licenses", "Bản quyền"], ["orders", "Đơn hàng"], ["grant", "+ Cấp bản quyền tay"]].map(([k, t]) => `<button class="chip" data-lv="${k}" aria-pressed="${S.lv === k}">${t}</button>`).join("")}
-      <input class="search" id="lq" placeholder="Tìm email / mã đơn…" value="${esc(S.lq)}"><span style="flex:1"></span><span id="lstat" class="sub" style="margin:0"></span></div>
+    <div class="bar">${[["accounts", "Tài khoản"], ["orders", "Đơn hàng"], ["grant", "+ Cấp bản quyền tay"]].map(([k, t]) => `<button class="chip" data-lv="${k}" aria-pressed="${S.lv === k}">${t}</button>`).join("")}
+      ${S.lv === "grant" ? "" : `<div class="srch"><svg class="i"><use href="#i-search"/></svg><input id="lq" type="search" placeholder="Tìm email, plugin, mã đơn, tên máy…" value="${esc(S.lq)}" autocomplete="off"></div>`}
+      <span style="flex:1"></span><span id="lstat" class="sub" style="margin:0"></span></div>
     <div id="lb2"><div class="spin"></div></div></div>`;
   document.querySelectorAll("[data-lv]").forEach(b => b.onclick = () => { S.lv = b.dataset.lv; viewLicenses(); });
-  let tmo; $("#lq").oninput = e => { S.lq = e.target.value; clearTimeout(tmo); tmo = setTimeout(loadLic, 350); };
+  $("#lq")?.addEventListener("input", e => { S.lq = e.target.value; drawLicView(); });
   loadLic();
 }
 async function loadLic() {
   const box = $("#lb2"); if (!box) return;
   if (S.lv === "grant") return grantForm(box);
-  try { S.lic = await licApi(fb, "/api/admin/overview?q=" + encodeURIComponent(S.lq.trim())); }
+  try { S.lic = await licApi(fb, "/api/admin/overview"); }
   catch (e) { box.innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; return; }
   $("#lstat").textContent = `${S.lic.stats.n} đơn đã thanh toán · ${money(S.lic.stats.s)}`;
-  S.lv === "orders" ? drawOrders(box) : drawLic(box);
+  drawLicView();
 }
-function drawLic(box) {
-  const L = S.lic.licenses;
-  if (!L.length) { box.innerHTML = `<div class="empty">Chưa có bản quyền nào${S.lq ? " khớp tìm kiếm" : ""}.</div>`; return; }
-  box.innerHTML = `<div class="tbl">${L.map(l => `<div class="row lrow ${l.revoked ? "off" : ""}" data-id="${l.id}" style="grid-template-columns:1.4fr 1fr 1.6fr auto">
-      <div><b>${esc(l.email)}</b><small>${esc(l.product_name)} · ${day(l.created)}${l.order_code ? " · " + esc(l.order_code) : ""}${l.note ? " · " + esc(l.note) : ""}</small></div>
-      <div>${l.revoked ? `<span class="st" style="color:var(--err)">Đã thu hồi</span>` : `${l.devices.length}/2 máy`}</div>
-      <div>${l.devices.map(d => `<div class="swl" style="margin:2px 0">🖥 ${esc(d.name || "Máy")} <small>${esc(d.device_id.slice(0, 8))} · ${day(d.last_seen)}</small><button class="btn sm" data-rmdev="${esc(d.device_id)}" title="Gỡ máy này">×</button></div>`).join("") || "<small>Chưa kích hoạt máy nào</small>"}</div>
-      <div class="bar" style="margin:0">${l.devices.length ? `<button class="btn sm" data-lreset>Reset máy</button>` : ""}<button class="btn sm ${l.revoked ? "" : "dan"}" data-revoke="${l.revoked ? 0 : 1}">${l.revoked ? "Khôi phục" : "Thu hồi"}</button></div>
-    </div>`).join("")}</div>`;
-  box.onclick = async e => {
-    const row = e.target.closest(".lrow"); if (!row) return;
-    const id = +row.dataset.id, b = e.target.closest("button"); if (!b) return;
-    if (b.classList.contains("dan") && !b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = "Bấm lần nữa"; setTimeout(() => { b.classList.remove("armed"); b.textContent = "Thu hồi"; }, 4000); return; }
+function drawLicView() { const box = $("#lb2"); if (!box || !S.lic) return; S.lv === "orders" ? drawOrders(box) : drawAccounts(box); }
+/* tô sáng từ khoá */
+const hl = (t, q) => { const s = esc(t); if (!q) return s; const i = String(t).toLowerCase().indexOf(q); return i < 0 ? s : esc(String(t).slice(0, i)) + "<mark>" + esc(String(t).slice(i, i + q.length)) + "</mark>" + esc(String(t).slice(i + q.length)); };
+function accounts() {
+  const m = new Map(), get = e => { const k = (e || "").toLowerCase(); if (!m.has(k)) m.set(k, { email: e, lic: [], ord: [] }); return m.get(k); };
+  S.lic.licenses.forEach(l => get(l.email).lic.push(l));
+  S.lic.orders.forEach(o => get(o.email).ord.push(o));
+  return [...m.values()].map(a => {
+    const live = a.lic.filter(l => !l.revoked);
+    a.devices = live.reduce((n, l) => n + l.devices.length, 0);
+    a.active = a.devices > 0;
+    a.paid = a.ord.filter(o => o.status === "paid").reduce((s, o) => s + (o.paid_amount || o.amount || 0), 0);
+    a.pending = a.ord.filter(o => o.status === "pending").length;
+    a.last = Math.max(0, ...a.lic.map(l => l.created || 0), ...a.ord.map(o => o.created || 0), ...a.lic.flatMap(l => l.devices.map(d => d.last_seen || 0)));
+    a.hay = [a.email, ...a.lic.flatMap(l => [l.product, l.product_name, l.order_code, l.note, ...l.devices.flatMap(d => [d.name, d.device_id])]), ...a.ord.flatMap(o => [o.code, o.product, o.product_name])].filter(Boolean).join(" ").toLowerCase();
+    return a;
+  }).sort((x, y) => y.last - x.last);
+}
+function drawAccounts(box) {
+  const q = S.lq.trim().toLowerCase(), all = accounts(), A = q ? all.filter(a => a.hay.includes(q)) : all;
+  if (!all.length) { box.innerHTML = `<div class="empty">Chưa có tài khoản nào mua hoặc được cấp bản quyền.</div>`; return; }
+  if (!A.length) { box.innerHTML = `<div class="empty">Không có tài khoản nào khớp “${esc(S.lq)}”.</div>`; return; }
+  const on = A.filter(a => a.active), off = A.filter(a => !a.active);
+  const grp = (t, c, L) => !L.length ? "" : `<div class="grp"><span class="dotc" style="background:${c}"></span>${t}<b>${L.length}</b></div>${L.map((a, i) => accRow(a, q, i)).join("")}`;
+  box.innerHTML = grp("Đã kích hoạt", "var(--ok)", on) + grp("Chưa kích hoạt", "var(--warn)", off);
+  if (q && A.length === 1) S.lopen.add(A[0].email.toLowerCase());
+  box.querySelectorAll(".acc").forEach(el => { if (S.lopen.has(el.dataset.k)) el.classList.add("open"); });
+  box.onclick = accClick;
+}
+function accRow(a, q, i) {
+  const live = a.lic.filter(l => !l.revoked);
+  const pills = live.map(l => `<span class="pill ${l.devices.length ? "ok" : ""}">${esc(l.product_name)} · ${l.devices.length}/2</span>`).join("")
+    + (a.lic.length > live.length ? `<span class="pill e">${a.lic.length - live.length} thu hồi</span>` : "")
+    + (a.pending ? `<span class="pill w">${a.pending} đơn chờ</span>` : "")
+    + (!a.lic.length && !a.pending ? `<span class="pill">chưa có bản quyền</span>` : "");
+  return `<div class="acc ${a.active ? "on" : ""}" data-k="${esc(a.email.toLowerCase())}" style="animation-delay:${Math.min(i, 12) * 25}ms">
+    <button aria-expanded="false"><span class="av2">${esc((a.email[0] || "?").toUpperCase())}</span>
+      <span class="em">${hl(a.email, q)}<small>${live.length} bản quyền · ${a.devices} máy · hoạt động ${day(a.last)}</small></span>
+      <span class="pills">${pills}</span><span class="amt">${a.paid ? money(a.paid) : "–"}</span><svg class="i chev"><use href="#i-chev"/></svg></button>
+    <div class="accb"><div><div class="accin">${accBody(a, q)}</div></div></div></div>`;
+}
+function accBody(a, q) {
+  const lic = a.lic.map(l => `<div class="lic ${l.revoked ? "rv" : ""}" data-id="${l.id}">
+      <h4>${hl(l.product_name, q)} <small>cấp ${day(l.created)}${l.order_code ? " · đơn " + hl(l.order_code, q) : ""}${l.note ? " · " + hl(l.note, q) : ""}</small><span class="sp"></span>
+        ${l.revoked ? `<span class="pill e">Đã thu hồi</span>` : `<span class="pill ${l.devices.length ? "ok" : "w"}">${l.devices.length ? `${l.devices.length}/2 máy` : "Chưa kích hoạt máy nào"}</span>`}
+        ${l.devices.length && !l.revoked ? `<button class="btn sm" data-lreset>Reset máy</button>` : ""}
+        <button class="btn sm ${l.revoked ? "" : "dan"}" data-revoke="${l.revoked ? 0 : 1}">${l.revoked ? "Khôi phục" : "Thu hồi"}</button></h4>
+      ${l.devices.length ? `<div class="devs">${l.devices.map(d => `<div class="dev"><svg class="i"><use href="#i-pc"/></svg>
+        <div>${hl(d.name || "Máy tính", q)}<br><small>mã ${hl(d.device_id.slice(0, 12), q)}…</small></div>
+        <small>kích hoạt ${day(d.activated)}<br>dùng gần nhất ${day(d.last_seen)}</small>
+        <button class="btn sm" data-rmdev="${esc(d.device_id)}" title="Gỡ máy này để khách kích hoạt máy khác">Gỡ máy</button></div>`).join("")}</div>` : ""}
+    </div>`).join("");
+  const ord = a.ord.length ? `<div class="sec">Đơn hàng</div><div class="ords">${a.ord.map(o => `<div class="ord"><code>${hl(o.code, q)}</code><span>${hl(o.product_name || o.product, q)}<br><small class="sub">${day(o.created)}</small></span>
+      <span>${money(o.amount)}${o.paid_amount && o.paid_amount !== o.amount ? `<br><small class="sub">nhận ${money(o.paid_amount)}</small>` : ""}</span>
+      <span class="st ${o.status === "paid" ? "done" : o.status === "pending" ? "new" : ""}" style="margin:0">● ${OST[o.status] || o.status}</span>
+      <span>${o.status !== "paid" ? `<button class="btn sm" data-paid="${esc(o.code)}">Xác nhận đã nhận tiền</button>` : `<small class="sub">${day(o.paid_at)}</small>`}</span></div>`).join("")}</div>` : "";
+  return (lic ? `<div class="sec">Bản quyền</div>${lic}` : "") + ord
+    + `<div class="bar" style="margin:4px 0 0"><button class="btn sm" data-grant="${esc(a.email)}"><svg class="i"><use href="#i-plus"/></svg>Cấp thêm plugin</button><button class="btn sm" data-copy="${esc(a.email)}">Sao chép email</button></div>`;
+}
+async function accClick(e) {
+  const acc = e.target.closest(".acc"); if (!acc) return;
+  const b = e.target.closest("button");
+  if (b && b.parentElement === acc) { // bấm vào hàng tài khoản → sổ ra / thu lại
+    const k = acc.dataset.k, open = !acc.classList.contains("open");
+    acc.classList.toggle("open", open); b.setAttribute("aria-expanded", open); open ? S.lopen.add(k) : S.lopen.delete(k); return;
+  }
+  if (!b) return;
+  if (b.dataset.copy) { navigator.clipboard?.writeText(b.dataset.copy); toast("Đã sao chép email"); return; }
+  if (b.dataset.grant) { S.lv = "grant"; S.grantEmail = b.dataset.grant; viewLicenses(); return; }
+  if (b.dataset.paid) {
+    if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = "Bấm lần nữa để cấp bản quyền"; return; }
     b.disabled = true;
-    try {
-      if (b.dataset.rmdev) await licApi(fb, "/api/admin/remove-device", { method: "POST", body: { license_id: id, device_id: b.dataset.rmdev } });
-      else if (b.hasAttribute("data-lreset")) await licApi(fb, "/api/admin/reset", { method: "POST", body: { license_id: id } });
-      else if (b.dataset.revoke) await licApi(fb, "/api/admin/revoke", { method: "POST", body: { license_id: id, revoked: b.dataset.revoke === "1" } });
-      toast("Đã cập nhật"); loadLic();
-    } catch (er) { toast(er.message); b.disabled = false; }
-  };
+    try { await licApi(fb, "/api/admin/mark-paid", { method: "POST", body: { code: b.dataset.paid } }); toast("Đã xác nhận & cấp bản quyền"); loadLic(); }
+    catch (er) { toast(er.message); b.disabled = false; } return;
+  }
+  const lic = e.target.closest(".lic"); if (!lic) return;
+  const id = +lic.dataset.id;
+  if (b.classList.contains("dan") && !b.classList.contains("armed")) { const t0 = b.textContent; b.classList.add("armed"); b.textContent = "Bấm lần nữa"; setTimeout(() => { b.classList.remove("armed"); b.textContent = t0; }, 4000); return; }
+  b.disabled = true;
+  try {
+    if (b.dataset.rmdev) await licApi(fb, "/api/admin/remove-device", { method: "POST", body: { license_id: id, device_id: b.dataset.rmdev } });
+    else if (b.hasAttribute("data-lreset")) await licApi(fb, "/api/admin/reset", { method: "POST", body: { license_id: id } });
+    else if (b.dataset.revoke) await licApi(fb, "/api/admin/revoke", { method: "POST", body: { license_id: id, revoked: b.dataset.revoke === "1" } });
+    toast("Đã cập nhật"); loadLic();
+  } catch (er) { toast(er.message); b.disabled = false; }
 }
 function drawOrders(box) {
-  const O = S.lic.orders;
-  if (!O.length) { box.innerHTML = `<div class="empty">Chưa có đơn hàng.</div>`; return; }
+  const q = S.lq.trim().toLowerCase(), O = S.lic.orders.filter(o => !q || [o.code, o.email, o.product, o.product_name, OST[o.status]].join(" ").toLowerCase().includes(q));
+  if (!O.length) { box.innerHTML = `<div class="empty">${q ? `Không có đơn nào khớp “${esc(S.lq)}”.` : "Chưa có đơn hàng."}</div>`; return; }
   box.innerHTML = `<div class="tbl"><div class="row head" style="grid-template-columns:110px 1.4fr 1fr 110px 140px auto"><span>Mã</span><span>Email</span><span>Plugin</span><span>Số tiền</span><span>Trạng thái</span><span></span></div>
     ${O.map(o => `<div class="row" style="grid-template-columns:110px 1.4fr 1fr 110px 140px auto">
-      <b class="mono" style="font-family:var(--mono)">${esc(o.code)}</b><div>${esc(o.email)}<small>${day(o.created)}</small></div><div>${esc(o.product_name || o.product)}</div>
+      <b class="mono" style="font-family:var(--mono)">${hl(o.code, q)}</b><div>${hl(o.email, q)}<small>${day(o.created)}</small></div><div>${esc(o.product_name || o.product)}</div>
       <div>${money(o.amount)}${o.paid_amount && o.paid_amount !== o.amount ? `<small>nhận ${money(o.paid_amount)}</small>` : ""}</div>
       <div><span class="st ${o.status === "paid" ? "done" : o.status === "pending" ? "new" : ""}">● ${OST[o.status] || o.status}</span>${o.note ? `<small>${esc(o.note)}</small>` : ""}</div>
       <div>${o.status !== "paid" ? `<button class="btn sm" data-paid="${esc(o.code)}" title="Đã nhận tiền nhưng hệ thống chưa tự xác nhận">Xác nhận đã nhận tiền</button>` : `<small>${day(o.paid_at)}</small>`}</div>
@@ -683,7 +935,7 @@ function drawOrders(box) {
 function grantForm(box) {
   const P = { mai_viet: "PT SmartRoof", smart_floor: "PT Smartfloor", pt_wallpanel: "PT Wall Panel", pt_smartlight: "PT Smart Light", pt_cabinet: "PT Cabinet" };
   box.innerHTML = `<div class="card"><h3 style="margin-top:0">Cấp bản quyền tay</h3><p class="sub">Dùng khi tặng, đổi tài khoản cho khách, hoặc khách chuyển khoản sai nội dung.</p>
-    <div class="grid2"><div class="f"><label>Email Google của khách</label><input id="gEmail" type="email" placeholder="khach@gmail.com"></div>
+    <div class="grid2"><div class="f"><label>Email Google của khách</label><input id="gEmail" type="email" placeholder="khach@gmail.com" value="${esc(S.grantEmail || "")}"></div>
     <div class="f"><label>Plugin</label><select id="gProd">${Object.entries(P).map(([k, v]) => `<option value="${k}">${v}</option>`).join("")}</select></div></div>
     <div class="f"><label>Ghi chú</label><input id="gNote" placeholder="vd. Tặng / chuyển khoản sai nội dung ngày …"></div>
     <button class="btn pri" id="gGo">Cấp bản quyền</button><div id="gMsg"></div></div>`;
