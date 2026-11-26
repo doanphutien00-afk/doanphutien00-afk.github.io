@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-25 17:08:22",
+  "updated": "2026-11-26 12:31:22",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -87,11 +87,11 @@
         "PT Wall Panel",
         "PT Vách nan"
       ],
-      "version": "1.7.0",
-      "date": "2026-11-25",
-      "file": "pt_wallpanel-1.7.0.rbz",
+      "version": "1.7.1",
+      "date": "2026-11-26",
+      "file": "pt_wallpanel-1.7.1.rbz",
       "page": "PT_WallPanel_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Thông tin: tên + phiên bản, bản quyền PT Plugin, giấy phép, máy kích hoạt, số máy n/2, SketchUp, hệ điều hành\n- Hướng nan: xoay theo góc (độ) và theo cạnh / 2 điểm chọn trên mô hình (sáng cam, bắt điểm tròn cam)\n- Lưu sẵn thiết lập riêng cho từng mẫu nan\n- Thư viện: 3 chế độ hiển thị, ảnh nan viền cam, chọn mẫu không còn nháy\n- Bấm ô kích thước -> sáng kích thước tương ứng trong hình xem trước\n- Icon toolbar mới, giao diện chia mục gọn trong 1 khung",
+      "notes": "- Xoay theo góc: nhập số độ rồi Cập nhật / Tạo (Enter) là nan xoay; áp dụng cả tường chia nhiều mặt và nhiều tường\n- Hướng theo cạnh: bật là vào ngay chế độ chọn cạnh (sáng cam); chọn mặt -> chọn cạnh -> chọn mẫu -> Tạo vách nan\n- Thư viện trở lại giao diện như trước\n- Thông tin giấy phép gộp 1 mục: trạng thái, tên máy kích hoạt, số máy n/2 (tự cập nhật từ PT Hub)\n- Icon toolbar viền đen đầy ô",
       "loader_file": "pt_wallpanel.rb",
       "folder": "pt_wallpanel",
       "description_vi": "Tạo vách ốp nan 1 click với 16 mẫu module.",
@@ -100,11 +100,11 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "paid",
-      "sha256": "c5dfe22f7c797e8f6d237dc0be11c6dae1125460a5bda23a2e3b3d08bc2f0bb1",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.0.rbz",
+      "sha256": "ee4a73f80fd7aad95a656c210e5312bc121af5d0f3287f80276c4c139322d79e",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.1.rbz",
       "tutorial_url": "",
       "icon": "icons/dialog.svg",
-      "size": 234617,
+      "size": 228496,
       "price": 79000
     },
     {
