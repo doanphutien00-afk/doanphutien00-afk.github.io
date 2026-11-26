@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-26 12:31:22",
+  "updated": "2026-11-26 12:40:47",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -158,11 +158,11 @@
     {
       "id": "pt_hub",
       "name": "PT Hub",
-      "version": "2.7.0",
-      "date": "2026-11-22",
-      "file": "pt_hub-2.7.0.rbz",
+      "version": "2.8.0",
+      "date": "2026-11-26",
+      "file": "pt_hub-2.8.0.rbz",
       "page": "PT_Hub_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Chỉ dùng plugin & phiên bản đăng trên trang web: không còn tự nhận tệp .rbz trong Downloads (bản thử như PT StairBuilder không tự lên PT Hub), bản thử trong máy không được cài; plugin bạn tự \"Cài từ tệp .rbz\" vẫn hiện\n- Nút Khởi động lại: hỏi lại 1 lần → hỏi lưu bản vẽ → đóng & mở lại SketchUp → bảng Welcome to SketchUp",
+      "notes": "- Xoá phiên bản trong kho: dòng biến mất ngay, không hỏi lại\n- Đăng nhập chỉ qua trang web: mở trang → chọn \"Kết nối PT Hub\" hoặc \"Đăng nhập bằng tài khoản khác\" → PT Hub tự chuyển sang tài khoản vừa kết nối\n- Bỏ nút Đăng xuất (dùng \"Đổi tài khoản\")",
       "loader_file": "pt_hub.rb",
       "folder": "pt_hub",
       "description_vi": "Quản lý, cài đặt, cập nhật plugin PT; thanh công cụ tuỳ chỉnh; góp ý.",
@@ -171,10 +171,10 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "713a6a189ef6047baa7360c329bc778c1e7840479e81856e25c462e6cd2443e8",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.7.0.rbz",
+      "sha256": "b43f110325e6865335e9d43644863b62cf7389c867b6c5b3a00f3b5712dc9146",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.8.0.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
-      "size": 216403
+      "size": 216099
     },
     {
       "id": "pt_kitchen",
