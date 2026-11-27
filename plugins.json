@@ -109,23 +109,6 @@
       "gated": true
     },
     {
-      "id": "pt_smartlight",
-      "name": "PT Smart Light",
-      "category": "Nội thất",
-      "icon": "icons/pt_smartlight.svg",
-      "name_en": "PT Smart Light",
-      "description": "Đặt đèn âm trần, spot, đèn tường, dải LED và tự đục lỗ trần; đặt đơn hoặc theo lưới, tự liền trần khi xoá đèn, thống kê đèn.",
-      "description_en": "Place downlights, spots, wall lights and LED strips with automatic ceiling cut-outs; single or grid placement, auto-heal on delete, lighting schedule.",
-      "download": "pt-hub/goi/pt_smartlight-1.8.6.rbz",
-      "version": "1.8.6",
-      "date": "2026-11-21T08:58:53Z",
-      "size": 994799,
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)",
-      "type": "paid",
-      "price": 79000,
-      "gated": true
-    },
-    {
       "id": "pt_moulding",
       "name": "PT Moulding",
       "category": "Kiến trúc",

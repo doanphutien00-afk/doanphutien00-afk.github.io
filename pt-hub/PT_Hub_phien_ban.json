@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 16:30:17",
+  "updated": "2026-11-27 17:29:02",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -24,33 +24,6 @@
       "icon": "icons/box2cab.svg",
       "size": 2078096,
       "price": 99000,
-      "gated": true
-    },
-    {
-      "id": "pt_smartlight",
-      "name": "PT Smart Light",
-      "aliases": [
-        "PT SmartLight"
-      ],
-      "version": "1.8.6",
-      "date": "2026-11-21",
-      "file": "pt_smartlight-1.8.6.rbz",
-      "page": "PT_SmartLight_v1.8_cap_nhat.md",
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)",
-      "loader_file": "pt_smartlight.rb",
-      "folder": "pt_smartlight",
-      "description_vi": "Đặt đèn âm trần, LED và tự đục lỗ trần.",
-      "description_en": "Place downlights and LED strips with automatic ceiling cut-outs.",
-      "min_sketchup_version": 2021,
-      "max_sketchup_version": 2027,
-      "requires_restart": true,
-      "type": "paid",
-      "sha256": "32a86086c0d097eab12ca2ae312d2df7222d36789aaa3c20c3b2f3b7e4369db3",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_smartlight-1.8.6.rbz",
-      "tutorial_url": "",
-      "icon": "icons/panel.svg",
-      "size": 994799,
-      "price": 79000,
       "gated": true
     },
     {
