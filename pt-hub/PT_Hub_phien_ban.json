@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 17:45:36",
+  "updated": "2026-11-27 17:51:01",
   "plugins": [
     {
       "id": "mai_viet",
@@ -39,11 +39,11 @@
         "PT Wall Panel",
         "PT Vách nan"
       ],
-      "version": "1.7.1",
-      "date": "2026-11-26",
-      "file": "pt_wallpanel-1.7.1.rbz",
+      "version": "1.7.2",
+      "date": "2026-11-27",
+      "file": "pt_wallpanel-1.7.2.rbz",
       "page": "PT_WallPanel_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Xoay theo góc: nhập số độ rồi Cập nhật / Tạo (Enter) là nan xoay; áp dụng cả tường chia nhiều mặt và nhiều tường\n- Hướng theo cạnh: bật là vào ngay chế độ chọn cạnh (sáng cam); chọn mặt -> chọn cạnh -> chọn mẫu -> Tạo vách nan\n- Thư viện trở lại giao diện như trước\n- Thông tin giấy phép gộp 1 mục: trạng thái, tên máy kích hoạt, số máy n/2 (tự cập nhật từ PT Hub)\n- Icon toolbar viền đen đầy ô",
+      "notes": "- Icon toolbar mới (khung đen, nan cam)",
       "loader_file": "pt_wallpanel.rb",
       "folder": "pt_wallpanel",
       "description_vi": "Tạo vách ốp nan 1 click với 16 mẫu module.",
@@ -52,11 +52,11 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "paid",
-      "sha256": "ee4a73f80fd7aad95a656c210e5312bc121af5d0f3287f80276c4c139322d79e",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.1.rbz",
+      "sha256": "d3dfc9c1a4a71c8e86db23e91bf48f7351e4ab868c48b98f8226767738bed98c",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.2.rbz",
       "tutorial_url": "",
       "icon": "icons/dialog.svg",
-      "size": 228496,
+      "size": 227310,
       "price": 79000,
       "gated": true
     },
