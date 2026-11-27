@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 16:25:23",
+  "updated": "2026-11-27 16:30:17",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -207,13 +207,13 @@
       "min_sketchup_version": 2021,
       "max_sketchup_version": 2027,
       "requires_restart": true,
-      "type": "free",
+      "type": "paid",
       "sha256": "138c0ac69440c45c4afd2604531599d3f19036b8f100bd4ab95c49a17c9d4e78",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_moulding-1.2.3.rbz",
       "tutorial_url": "",
       "icon": "",
       "size": 505996,
-      "price": 0,
+      "price": 79000,
       "gated": true
     }
   ],

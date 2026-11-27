@@ -138,8 +138,8 @@
       "date": "2026-11-27T16:25:23Z",
       "size": 505996,
       "notes": "Theo sàn: chọn mặt sàn hoặc trần, phào chạy quanh cả phòng và quanh cột. Bấm vào cạnh nào thì cạnh đó được bỏ (chỗ cửa đi).\nTheo viền: chọn mặt tường, phào chạy quanh ô cửa và tự bỏ cạnh sát sàn.\nTheo đường: chọn cạnh hoặc đường cong có sẵn.\nVẽ đường: bấm từng điểm, có thể gõ số để nhập chiều dài.\nVẽ được đường cong, gấp khúc, uốn lượn, mặt cong, và cả đường dốc/xoắn kiểu tay vịn cầu thang. Các góc được cắt chéo kín khít.\n\nChỉnh phào sau khi vẽ\n\nVẽ xong, đoạn phào được chọn sẵn để chỉnh. Đổi mẫu, cao/dày, đổi phía, lật, xoay, điểm gốc hay vật liệu thì mô hình cập nhật ngay. Undo/Redo hoạt động bình thường.\nVật liệu có 3 kiểu như trong ảnh: Không dùng map / Tự chọn map / Đồng bộ với sàn.\n\nThư viện riêng và thống kê\n\nThư viện riêng: thêm mẫu từ một mặt cắt anh tự vẽ hoặc từ một thanh phào 3D; lưu, đổi tên, xoá. Xuất/nhập file .ptphao để chia sẻ hoặc sao lưu, và xuất mặt cắt ra DXF.\nThống kê: tổng mét dài, số thanh cần mua (tính cả cách cắt và hao hụt) và thành tiền theo đơn giá anh nhập. Xuất được PDF, Excel, PNG.",
-      "type": "free",
-      "price": 0,
+      "type": "paid",
+      "price": 79000,
       "gated": true,
       "features": []
     }
