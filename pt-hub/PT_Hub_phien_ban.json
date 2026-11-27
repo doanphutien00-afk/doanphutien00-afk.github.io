@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 15:40:19",
+  "updated": "2026-11-27 16:25:23",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -191,6 +191,30 @@
       "notes": "Tạm gỡ khỏi PT Hub – chờ phát hành",
       "download_url": "",
       "sha256": ""
+    },
+    {
+      "id": "pt_moulding",
+      "name": "PT Moulding",
+      "version": "1.2.3",
+      "date": "2026-11-27",
+      "file": "pt_moulding-1.2.3.rbz",
+      "page": "",
+      "notes": "Theo sàn: chọn mặt sàn hoặc trần, phào chạy quanh cả phòng và quanh cột. Bấm vào cạnh nào thì cạnh đó được bỏ (chỗ cửa đi).\nTheo viền: chọn mặt tường, phào chạy quanh ô cửa và tự bỏ cạnh sát sàn.\nTheo đường: chọn cạnh hoặc đường cong có sẵn.\nVẽ đường: bấm từng điểm, có thể gõ số để nhập chiều dài.\nVẽ được đường cong, gấp khúc, uốn lượn, mặt cong, và cả đường dốc/xoắn kiểu tay vịn cầu thang. Các góc được cắt chéo kín khít.\n\nChỉnh phào sau khi vẽ\n\nVẽ xong, đoạn phào được chọn sẵn để chỉnh. Đổi mẫu, cao/dày, đổi phía, lật, xoay, điểm gốc hay vật liệu thì mô hình cập nhật ngay. Undo/Redo hoạt động bình thường.\nVật liệu có 3 kiểu như trong ảnh: Không dùng map / Tự chọn map / Đồng bộ với sàn.\n\nThư viện riêng và thống kê\n\nThư viện riêng: thêm mẫu từ một mặt cắt anh tự vẽ hoặc từ một thanh phào 3D; lưu, đổi tên, xoá. Xuất/nhập file .ptphao để chia sẻ hoặc sao lưu, và xuất mặt cắt ra DXF.\nThống kê: tổng mét dài, số thanh cần mua (tính cả cách cắt và hao hụt) và thành tiền theo đơn giá anh nhập. Xuất được PDF, Excel, PNG.",
+      "loader_file": "pt_moulding.rb",
+      "folder": "pt_moulding",
+      "description_vi": "tạo phào chỉ trần,tường,sàn",
+      "description_en": "",
+      "min_sketchup_version": 2021,
+      "max_sketchup_version": 2027,
+      "requires_restart": true,
+      "type": "free",
+      "sha256": "138c0ac69440c45c4afd2604531599d3f19036b8f100bd4ab95c49a17c9d4e78",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_moulding-1.2.3.rbz",
+      "tutorial_url": "",
+      "icon": "",
+      "size": 505996,
+      "price": 0,
+      "gated": true
     }
   ],
   "schema_version": 2,
