@@ -97,7 +97,7 @@ module PTLicense
   def status(product)
     t = Time.now.to_i
     if (p = verify(read(product, 'lic'))) && p['t'] == 'lic' && p['p'] == product && p['d'] == device_id &&
-       (account.nil? || p['e'].to_s.downcase == account)
+       (account.nil? || p['e'].to_s == 'free' || p['e'].to_s.downcase == account)
       return { state: :licensed, email: p['e'], exp: p['exp'] } if p['exp'].to_i > t
       return { state: :refresh, email: p['e'], exp: p['exp'] }
     end
