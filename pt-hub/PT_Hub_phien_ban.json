@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 17:31:18",
+  "updated": "2026-11-27 17:32:30",
   "plugins": [
     {
       "id": "mai_viet",
@@ -108,17 +108,6 @@
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.11.1.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
       "size": 224943
-    },
-    {
-      "id": "pt_kitchen",
-      "name": "PT Kitchen Designer",
-      "version": "1.0.0",
-      "hidden": true,
-      "loader_file": "pt_kitchen.rb",
-      "folder": "pt_kitchen",
-      "notes": "Tạm gỡ khỏi PT Hub – chờ phát hành",
-      "download_url": "",
-      "sha256": ""
     },
     {
       "id": "pt_moulding",
