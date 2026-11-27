@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 17:30:06",
+  "updated": "2026-11-27 17:31:18",
   "plugins": [
     {
       "id": "mai_viet",
@@ -87,27 +87,6 @@
       "size": 316260,
       "price": 99000,
       "gated": true
-    },
-    {
-      "id": "pt_stair",
-      "name": "PT Stair",
-      "version": "1.7.2",
-      "date": "2026-11-08",
-      "file": "PT_Stair_v1.7.2.rbz",
-      "page": "PT_Stair_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "L rẽ quạt theo file mẫu: 3 bậc quạt chia theo trung điểm, bậc sàn, 21 tấm ốp; quy tắc tổng số bậc theo H.",
-      "loader_file": "pt_stair.rb",
-      "folder": "pt_stair",
-      "description_vi": "Dựng cầu thang, chiếu nghỉ, bậc quạt, lan can và hồ sơ bản vẽ theo tham số.",
-      "description_en": "Parametric stairs, landings, winders, railings and drawings.",
-      "min_sketchup_version": 2017,
-      "max_sketchup_version": 2027,
-      "requires_restart": true,
-      "type": "free",
-      "sha256": "",
-      "download_url": "",
-      "tutorial_url": "",
-      "hidden": true
     },
     {
       "id": "pt_hub",
