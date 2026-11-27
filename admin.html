@@ -337,7 +337,7 @@ function renderDenied() {
 }
 
 /* ---------- Khung chính ---------- */
-const TABS = [["feedback", "i-msg", "Góp ý & báo lỗi"], ["licenses", "i-lic", "Bản quyền & đơn hàng"], ["plugins", "i-box", "Plugin"], ["github", "i-key", "Kết nối GitHub"]];
+const TABS = [["feedback", "i-msg", "Góp ý & báo lỗi"], ["licenses", "i-lic", "Bản quyền & đơn hàng"], ["plugins", "i-box", "Plugin"], ["announce", "i-msg", "Thông báo PT Hub"], ["github", "i-key", "Kết nối GitHub"]];
 function renderShell() {
   $("#app").innerHTML = `<div class="shell">
     <nav class="side">${TABS.map(([id, ic, t]) => `<button class="nav" data-tab="${id}"><svg class="i"><use href="#${ic}"/></svg>${t}${id === "feedback" ? `<span class="badge" id="nb" hidden></span>` : ""}</button>`).join("")}
@@ -349,7 +349,7 @@ function renderShell() {
 function go(tab) {
   S.tab = tab; history.replaceState(null, "", "#" + tab);
   document.querySelectorAll("[data-tab]").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab));
-  ({ feedback: viewFeedback, licenses: viewLicenses, plugins: viewPlugins, github: viewGitHub })[tab]?.();
+  ({ feedback: viewFeedback, licenses: viewLicenses, plugins: viewPlugins, announce: viewAnnounce, github: viewGitHub })[tab]?.();
 }
 
 /* =========================================================
@@ -474,6 +474,35 @@ async function commitFiles(files, message, onStep = () => {}) {
   const c = await gh("/git/commits", { method: "POST", body: JSON.stringify({ message, tree: t.sha, parents: [head] }) });
   onStep("push"); await gh("/git/refs/heads/main", { method: "PATCH", body: JSON.stringify({ sha: c.sha }) });
   return c;
+}
+
+/* =========================================================
+   THÔNG BÁO PT HUB (file pt-hub/thong-bao.json, hiện trong Cập nhật > Thông báo)
+   ========================================================= */
+const ANN = "pt-hub/thong-bao.json";
+async function viewAnnounce() {
+  $("#main").innerHTML = `<div class="view"><h1>Thông báo PT Hub</h1><p class="sub">Nội dung viết ở đây sẽ hiện trong PT Hub, mục Cập nhật → Thông báo.</p><div id="annBody"><div class="card">Đang tải…</div></div></div>`;
+  if (!token()) { $("#annBody").innerHTML = `<div class="msgbox info">Cần kết nối GitHub trước (tab “Kết nối GitHub”).</div>`; return; }
+  let data; try { data = await readJson(ANN); } catch (e) { data = { items: [] }; }
+  data.items = data.items || [];
+  const save = async (msg) => { try { await commitFiles([{ path: ANN, text: JSON.stringify(data, null, 2) + "\n" }], msg); toast("Đã lưu, PT Hub sẽ thấy sau ít phút"); } catch (e) { toast(e.message); } draw(); };
+  const draw = () => {
+    const list = data.items.slice().sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || String(b.date).localeCompare(String(a.date)));
+    $("#annBody").innerHTML = `<div class="card">
+      <div class="f"><label>Tiêu đề</label><input id="aT" placeholder="VD: Bảo trì máy chủ bản quyền"></div>
+      <div class="f"><label>Nội dung</label><textarea id="aB" rows="4" placeholder="Nội dung thông báo"></textarea></div>
+      <div class="bar"><label><input type="checkbox" id="aP"> Ghim lên đầu</label> <label><input type="checkbox" id="aI"> Quan trọng</label>
+      <button class="btn pri" id="aAdd">Đăng thông báo</button></div></div>
+      ${list.map(x => `<div class="card"><b>${x.pinned ? "📌 " : ""}${x.important ? "❗ " : ""}${esc(x.title)}</b> <span class="sub">${esc(x.date)}</span>
+        <p style="white-space:pre-wrap">${esc(x.body || "")}</p><div class="bar"><button class="btn dan" data-del="${esc(x.id)}">Xoá</button></div></div>`).join("") || `<div class="card sub">Chưa có thông báo nào.</div>`}`;
+    $("#aAdd").onclick = () => {
+      const t = $("#aT").value.trim(); if (!t) return toast("Nhập tiêu đề");
+      data.items.push({ id: "n" + Date.now().toString(36), title: t, body: $("#aB").value.trim(), pinned: $("#aP").checked, important: $("#aI").checked, date: new Date().toISOString().slice(0, 10) });
+      save("Thông báo: " + t);
+    };
+    document.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { data.items = data.items.filter(x => x.id !== b.dataset.del); save("Xoá thông báo"); });
+  };
+  draw();
 }
 
 function viewGitHub() {

@@ -158,11 +158,11 @@
     {
       "id": "pt_hub",
       "name": "PT Hub",
-      "version": "2.9.0",
+      "version": "2.10.0",
       "date": "2026-11-27",
-      "file": "pt_hub-2.9.0.rbz",
+      "file": "pt_hub-2.10.0.rbz",
       "page": "PT_Hub_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Plugin hiện tên và ảnh theo trang web; chỉ báo bản mới nhất trên web; \"Tự cập nhật plugin\" tắt mặc định\n- Icon toolbar mới phóng to hết cỡ\n- Thanh công cụ: kéo thả nút, dải nút ngang, bấm X trên nút để xoá, tự lưu & áp dụng tức thì lên thanh trong SketchUp, nút Hiện thanh, tìm theo tên/tác giả/plugin, bộ đếm công cụ; sửa nút Xoá thanh\n- Kho công cụ chỉ liệt kê nút trên thanh công cụ (plugin + SketchUp)\n- Cài đặt → Kho & sao lưu: thư mục lưu file mặc định (mở / đổi / nạp lại)",
+      "notes": "- Bản quyền theo tài khoản: chỉ mở được plugin đã mua và kích hoạt; báo rõ khi tài khoản chưa có bản quyền, máy mới chưa kích hoạt, hoặc máy đã gỡ bản quyền (hỏi dùng 1 suất còn trống); hết 3 ngày dùng thử thì không mở được\n- Chi tiết plugin (nút 3 chấm): Bản đang cài, Bản mới nhất, Quyền sử dụng, SketchUp, Trang plugin, kèm nút Mua / Kích hoạt ở máy này\n- Bỏ mục Lịch sử cập nhật",
       "loader_file": "pt_hub.rb",
       "folder": "pt_hub",
       "description_vi": "Quản lý, cài đặt, cập nhật plugin PT; thanh công cụ tuỳ chỉnh; góp ý.",
@@ -174,7 +174,7 @@
       "sha256": "2ea94c9129ffce3b73a605818034c5293a7823262c4eef5bcaaab689d73a3dd8",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.9.0.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
-      "size": 219775
+      "size": 223306
     },
     {
       "id": "pt_kitchen",

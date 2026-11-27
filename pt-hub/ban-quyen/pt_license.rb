@@ -10,7 +10,7 @@ require 'digest'
 require 'openssl'
 
 module PTLicense
-  GATE_VERSION = 1 unless defined?(GATE_VERSION)
+  GATE_VERSION = 2 unless defined?(GATE_VERSION)
   unless defined?(PUBLIC_KEY)
     PUBLIC_KEY = <<~PEM.freeze
       -----BEGIN PUBLIC KEY-----
@@ -81,10 +81,23 @@ module PTLicense
     nil
   end
 
+  # Tài khoản PT Hub đang đăng nhập (PT Hub ghi vào _account). Token của tài khoản khác không có giá trị.
+  def account
+    a = read('_account', 'txt').to_s.strip.downcase
+    a.empty? ? nil : a
+  end
+
+  # Lý do chưa dùng được do tài khoản: 'unowned' (chưa mua) | 'inactive' (chưa kích hoạt máy này) | 'revoked' (máy đã bị gỡ)
+  def acct_mark(product)
+    m = read(product, 'acct').to_s.strip
+    %w[unowned inactive revoked].include?(m) ? m : nil
+  end
+
   # { state: :licensed | :trial | :expired | :none, email:, days_left:, exp: }
   def status(product)
     t = Time.now.to_i
-    if (p = verify(read(product, 'lic'))) && p['t'] == 'lic' && p['p'] == product && p['d'] == device_id
+    if (p = verify(read(product, 'lic'))) && p['t'] == 'lic' && p['p'] == product && p['d'] == device_id &&
+       (account.nil? || p['e'].to_s.downcase == account)
       return { state: :licensed, email: p['e'], exp: p['exp'] } if p['exp'].to_i > t
       return { state: :refresh, email: p['e'], exp: p['exp'] }
     end
@@ -141,7 +154,12 @@ module PTLicense
     end
   end
 
-  def message(name, st)
+  def message(name, st, product = nil)
+    case acct_mark(product || @msg_product || '')
+    when 'unowned' then return "Tài khoản này chưa có bản quyền #{name}.\nMua bản quyền để sử dụng."
+    when 'revoked' then return "Máy này đã gỡ bản quyền #{name}.\nBạn muốn dùng 1 suất còn trống để kích hoạt bản quyền #{name} cho máy này không?"
+    when 'inactive' then return "Tài khoản đã mua #{name} nhưng chưa kích hoạt ở máy này.\nBấm nút \"Kích hoạt ở máy này\" trong PT Hub."
+    end
     case st[:state]
     when :refresh then "Bản quyền #{name} cần được làm mới.\nMở PT Hub khi có mạng (đăng nhập đúng tài khoản đã mua) để tiếp tục sử dụng."
     when :expired then "Đã hết 3 ngày dùng thử #{name}.\nMua bản quyền (vĩnh viễn, dùng trên 2 máy) để tiếp tục sử dụng."
@@ -157,13 +175,24 @@ module PTLicense
       if gate(product, name, main_file)
         UI.messagebox("#{name} đã được kích hoạt và sẵn sàng sử dụng.")
       else
-        r = UI.messagebox("#{message(name, status(product))}\n\nCó = Mở PT Hub / mua bản quyền    Không = Để sau", MB_YESNO)
-        open_hub(product) if r == IDYES
+        @msg_product = product
+        mk = acct_mark(product)
+        r = UI.messagebox("#{message(name, status(product), product)}\n\nCó = #{mk == 'revoked' ? 'Kích hoạt cho máy này' : (mk == 'unowned' ? 'Mua bản quyền' : 'Mở PT Hub')}    Không = Để sau", MB_YESNO)
+        if r == IDYES
+          if mk == 'revoked' && defined?(PTHub) && PTHub.respond_to?(:activate_here)
+            PTHub.activate_here(product)
+          elsif mk == 'unowned'
+            UI.openURL(buy_url(product))
+          else
+            open_hub(product)
+          end
+        end
       end
     end
     cmd = UI::Command.new("#{name} – Kích hoạt bản quyền") { act.call }
     cmd.tooltip = "#{name} – Kích hoạt bản quyền"
-    cmd.status_bar_text = message(name, st).tr("\n", ' ')
+    @msg_product = product
+    cmd.status_bar_text = message(name, st, product).tr("\n", ' ')
     UI.menu('Extensions').add_item(cmd)
     tb = UI::Toolbar.new("#{name} (chưa kích hoạt)")
     tb.add_item(cmd)
