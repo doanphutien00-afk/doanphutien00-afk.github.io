@@ -32,11 +32,11 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.8.0.rbz",
-      "version": "2.8.0",
-      "date": "2026-11-26",
-      "size": 216099,
-      "notes": "- Xoá phiên bản trong kho: dòng biến mất ngay, không hỏi lại\n- Đăng nhập chỉ qua trang web: mở trang → chọn \"Kết nối PT Hub\" hoặc \"Đăng nhập bằng tài khoản khác\" → PT Hub tự chuyển sang tài khoản vừa kết nối\n- Bỏ nút Đăng xuất (dùng \"Đổi tài khoản\")"
+      "download": "pt-hub/goi/pt_hub-2.9.0.rbz",
+      "version": "2.9.0",
+      "date": "2026-11-27",
+      "size": 219775,
+      "notes": "- Plugin hiện tên và ảnh theo trang web; chỉ báo bản mới nhất trên web; \"Tự cập nhật plugin\" tắt mặc định\n- Icon toolbar mới phóng to hết cỡ\n- Thanh công cụ: kéo thả nút, dải nút ngang, bấm X trên nút để xoá, tự lưu & áp dụng tức thì lên thanh trong SketchUp, nút Hiện thanh, tìm theo tên/tác giả/plugin, bộ đếm công cụ; sửa nút Xoá thanh\n- Kho công cụ chỉ liệt kê nút trên thanh công cụ (plugin + SketchUp)\n- Cài đặt → Kho & sao lưu: thư mục lưu file mặc định (mở / đổi / nạp lại)"
     },
     {
       "id": "mai_viet",
