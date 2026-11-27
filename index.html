@@ -152,6 +152,7 @@ h3{font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.2; m
 .price span{font-size:12.5px;color:var(--muted)}
 .price em{margin-left:auto;font-style:normal;font-size:13px;font-weight:600;color:var(--accent);transition:transform .25s var(--ease)}
 .price:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);border-style:solid}
+.pcost{display:flex;align-items:baseline;gap:8px;margin:2px 0 12px}.pcost b{font-size:18px;letter-spacing:-.02em}.pcost.paid b{color:var(--accent)}.pcost.free b{color:var(--muted);font-weight:600}.pcost span{font-size:12px;color:var(--muted)}
 .price:hover em{transform:translateX(3px)}
 .actions{display:flex; gap:10px; margin-top:auto}
 .actions .btn{flex:1; justify-content:center; padding:11px 14px}
@@ -437,7 +438,7 @@ const I18N = {
     contact_sub:"Báo lỗi, đề xuất tính năng — hãy nhắn cho tôi.",
     zalo:"Zalo", email:"Email", copy:"SAO CHÉP", copied:"Đã sao chép", open:"MỞ",
     cats:{"Kiến trúc":"Kiến trúc","Nội thất":"Nội thất","Tiện ích":"Tiện ích","Khác":"Khác"},
-    all_releases:"Tất cả bản phát hành", details:"Xem chi tiết"
+    all_releases:"Tất cả bản phát hành", details:"Xem chi tiết", perm:"vĩnh viễn · 2 máy", freeL:"Miễn phí"
   },
   en:{
     nav_plugins:"Plugins", nav_install:"Install", nav_contact:"Contact", nav_buy:"Buy license", buy:"Buy license", owned_l:"lifetime · 2 PCs · 3-day trial", nav_stats:"Statistics", nav_fb:"Feedback",
@@ -462,7 +463,7 @@ const I18N = {
     contact_sub:"Bug reports or feature requests — just send me a message.",
     zalo:"Zalo", email:"Email", copy:"COPY", copied:"Copied", open:"OPEN",
     cats:{"Kiến trúc":"Architecture","Nội thất":"Interior","Tiện ích":"Utilities","Khác":"Other"},
-    all_releases:"All releases", details:"View details"
+    all_releases:"All releases", details:"View details", perm:"lifetime · 2 devices", freeL:"Free"
   }
 };
 
@@ -529,6 +530,7 @@ function render(){
     const L=p.latest, i=state.plugins.indexOf(p)+1;
     const isNew=L&&(Date.now()-new Date(L.date))<NEW_DAYS*864e5;
     const name=pick(p,"name");
+    const pr=(p.type==="paid"||(p.type==null&&PRICE[p.id]))?(Number(p.price)||PRICE[p.id]||0):0;
     const ini=name.split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
     return `<article class="card${state.revealed?" in":""}" style="--d:${(list.indexOf(p)%3)*0.1}s">
       <div class="card-top mono"><span>P.${String(i).padStart(2,"0")}</span><span class="tag">${esc(T("cats")[p.category]||p.category||"")}</span></div>
@@ -538,6 +540,7 @@ function render(){
           <h3>${esc(name)}${isNew?`<span class="new">${T("isnew")}</span>`:""}</h3>
         </div>
         <p class="desc">${esc(pick(p,"description"))}</p>
+        <div class="pcost ${pr?"paid":"free"}">${pr?`<b>${fmtNum(pr)}đ</b><span>${T("perm")}</span>`:`<b>${T("freeL")}</b>`}</div>
         <div class="actions"><a class="btn primary" href="chi-tiet.html?p=${encodeURIComponent(p.id)}"><svg><use href="#i-arrow"/></svg>${T("details")}</a></div>
       </div>
     </article>`}).join("");
