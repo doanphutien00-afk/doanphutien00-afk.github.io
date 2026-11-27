@@ -33,6 +33,20 @@ table{width:100%;border-collapse:collapse;font-size:13.5px}
 td,th{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
 th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
 .armed{background:var(--err)!important;border-color:var(--err)!important;color:#fff!important}
+.zalo{display:flex;align-items:center;gap:14px;margin-top:18px;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);text-decoration:none;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
+.zalo:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 10px 26px -16px rgba(0,0,0,.5)}
+.zalo img{width:42px;height:42px;border-radius:10px}
+.zalo b{display:block}.zalo small{color:var(--muted)}
+.guide{margin-top:28px}.guide h2{font-size:18px;margin:0 0 10px}
+.gd{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--surface);overflow:hidden}
+.gd summary{cursor:pointer;padding:12px 14px;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px;transition:background .2s}
+.gd summary::-webkit-details-marker{display:none}
+.gd summary::after{content:"+";margin-left:auto;color:var(--accent);font-size:20px;line-height:1;transition:transform .3s var(--ease)}
+.gd[open] summary::after{transform:rotate(45deg)}
+.gd summary:hover{background:var(--surface-2)}
+.gd .gb{padding:0 16px 14px;color:var(--ink-2);font-size:14px;animation:rise .3s var(--ease)}
+.gd ol{margin:6px 0 0;padding-left:20px}.gd li{margin:5px 0}
+.gd code{background:var(--surface-2);padding:1px 6px;border-radius:5px;font-size:12.5px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:50;animation:rise .25s var(--ease)}
 </style>
 </head>
@@ -56,11 +70,26 @@ let fb, user, data = null, icons = {};
 const man = await fetch("/plugins.json", { cache: "no-store" }).then(r => r.json());
 man.plugins.forEach(p => icons[p.id] = p.icon);
 
+const GUIDE = `<div class="guide"><h2>Cách cài đặt</h2>
+  <details class="gd" open><summary>1. Cài PT Hub (làm 1 lần)</summary><div class="gb"><ol>
+    <li>Tải <b>PT Hub</b> ở trang chủ: <a href="/#install">ptplugin.pages.dev</a> (tệp <code>.rbz</code>).</li>
+    <li>Trong SketchUp: <code>Extensions → Extension Manager → Install Extension</code>, chọn tệp .rbz vừa tải.</li>
+    <li>Khởi động lại SketchUp, mở <b>PT Hub</b> trong menu Extensions.</li></ol></div></details>
+  <details class="gd"><summary>2. Đăng nhập & kích hoạt bản quyền</summary><div class="gb"><ol>
+    <li>Trong PT Hub mở tab <b>Tài khoản</b> → đăng nhập đúng tài khoản đã mua.</li>
+    <li>Tab <b>Plugin</b> → chọn plugin → <b>Cài đặt</b>, sau đó bấm <b>Kích hoạt</b> (mỗi bản quyền dùng được trên 2 máy).</li>
+    <li>Chưa mua? Bấm <b>Dùng thử 3 ngày</b> ngay trong PT Hub, đầy đủ tính năng.</li></ol></div></details>
+  <details class="gd"><summary>3. Cập nhật & chuyển sang máy khác</summary><div class="gb"><ol>
+    <li>Bản mới sẽ hiện ở tab <b>Cập nhật</b> của PT Hub – bấm 1 lần là xong.</li>
+    <li>Đổi máy: ở trang này bấm <b>Huỷ kích hoạt</b> máy cũ (PT Hub trên máy đó tự chuyển về chưa kích hoạt trong vài phút), rồi kích hoạt trên máy mới.</li>
+    <li>Máy hỏng / cài lại Windows: dùng <b>Reset thiết bị</b> (30 ngày 1 lần).</li></ol></div></details></div>`;
+const ZALO = `<a class="zalo" href="https://zalo.me/g/pgdnbeqnorjlwjgag7zi" target="_blank" rel="noopener"><img src="/icons/zalo.webp" alt="Zalo"><div><b>Tham gia nhóm Zalo khách hàng PT Plugins</b><small>Hỗ trợ, cập nhật tính năng mới, trao đổi cùng người dùng – dành riêng cho tài khoản đã mua bản quyền.</small></div></a>`;
+
 function draw() {
   if (!data.licenses.length) {
     root.innerHTML = `<div class="card empty"><h3 style="margin-top:0">Tài khoản ${esc(user.email)} chưa có bản quyền nào</h3>
       <p class="muted">Nếu đã mua bằng tài khoản Google khác, hãy đăng xuất và đăng nhập đúng tài khoản đó.</p>
-      <a class="tk-btn primary" href="/mua.html">Mua bản quyền</a></div>${orders()}`;
+      <a class="tk-btn primary" href="/mua.html">Mua bản quyền</a></div>${orders()}${GUIDE}`;
     return;
   }
   root.innerHTML = data.licenses.map(l => {
@@ -76,7 +105,7 @@ function draw() {
         <div class="bar"><button class="tk-btn sm" data-reset ${canReset && l.devices.length ? "" : "disabled"} title="${canReset ? "Xoá toàn bộ máy đã kích hoạt" : "Lần tự reset tiếp theo: " + day(l.can_self_reset_at)}">Reset thiết bị (máy hỏng / cài lại Windows)</button>
           ${!canReset ? `<span class="muted" style="font-size:12.5px;align-self:center">Tự reset lại được từ ${day(l.can_self_reset_at)} – cần gấp hãy liên hệ tác giả.</span>` : ""}</div>
       </div></div>`;
-  }).join("") + orders();
+  }).join("") + ZALO + orders() + GUIDE;
 }
 function orders() {
   const o = data.orders.filter(x => x.status !== "expired" || x.paid_at);
@@ -94,7 +123,7 @@ root.addEventListener("click", async e => {
     if (b.hasAttribute("data-deact")) {
       const row = b.closest(".dev");
       await api(fb, "/api/license/deactivate", { method: "POST", body: { product, device_id: row.dataset.d } });
-      row.classList.add("gone"); toast("Đã huỷ kích hoạt máy. Có thể kích hoạt trên máy khác.");
+      row.classList.add("gone"); toast("Đã huỷ kích hoạt máy. PT Hub trên máy đó sẽ chuyển về chưa kích hoạt trong vài phút.");
     } else {
       await api(fb, "/api/license/self-reset", { method: "POST", body: { product } });
       toast("Đã reset thiết bị. Kích hoạt lại trên máy của bạn trong PT Hub.");

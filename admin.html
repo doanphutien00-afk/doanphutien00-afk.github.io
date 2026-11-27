@@ -561,18 +561,18 @@ function plist() {
   const ids = [...new Set([...S.cat.plugins.map(p => p.id), ...S.site.plugins.map(p => p.id)])];
   return ids.map(id => {
     const c = S.cat.plugins.find(p => p.id === id) || {}, s = S.site.plugins.find(p => p.id === id) || {};
-    return { id, name: c.name || s.name || id, version: c.version || s.version || "", date: c.date || (s.date || "").slice(0, 10), size: c.size || s.size, icon: s.icon || "", hidden: !!(s.hidden || c.hidden), file: c.file, paid: c.type === "paid" };
+    return { id, name: c.name || s.name || id, version: c.version || s.version || "", date: c.date || (s.date || "").slice(0, 10), size: c.size || s.size, icon: s.icon || "", hidden: !!(s.hidden || c.hidden), file: c.file, paid: (c.type || s.type) === "paid", price: Number(c.price ?? s.price ?? 0), video: s.video || "", features: s.features || [], gated: !!c.gated };
   });
 }
 function renderPlugins() {
   $("#pl").innerHTML = `<div class="tbl"><div class="row head"><span></span><span>Plugin</span><span>Phiên bản</span><span>Cập nhật</span><span>Hiển thị</span><span></span></div>
     ${plist().map(p => `<div class="row ${p.hidden ? "off" : ""}">
       <div class="pic">${p.icon ? `<img src="${esc(p.icon)}" alt="">` : esc(p.name.slice(0, 2).toUpperCase())}</div>
-      <div><b>${esc(p.name)}</b><small>${esc(p.id)}${p.paid ? " · có bản quyền" : ""}</small></div>
+      <div><b>${esc(p.name)}</b><small>${esc(p.id)}${p.paid ? ` · bản quyền ${money(p.price)}` : " · miễn phí"}</small></div>
       <div>${p.version ? "v" + esc(p.version) : "–"}<br><small>${fmtSize(p.size)}</small></div>
       <div>${esc(p.date || "–")}</div>
       <div class="swl"><button class="sw" role="switch" aria-checked="${!p.hidden}" data-vis="${esc(p.id)}" title="${p.hidden ? "Đang ẩn – bấm để hiện lại" : "Đang hiện – bấm để gỡ khỏi trang"}"></button>${p.hidden ? "Đã gỡ" : "Đang hiện"}</div>
-      <div class="pacts"><button class="btn sm" data-up="${esc(p.id)}"><svg class="i"><use href="#i-up"/></svg>Đăng bản mới</button><button class="btn sm" data-edit="${esc(p.id)}" title="Đổi tên, ảnh đại diện"><svg class="i"><use href="#i-img"/></svg>Tên & ảnh</button>${p.id === "pt_hub" ? "" : `<button class="btn sm dan" data-del="${esc(p.id)}" title="Xoá hẳn plugin"><svg class="i"><use href="#i-del"/></svg>Xoá</button>`}</div>
+      <div class="pacts"><button class="btn sm" data-up="${esc(p.id)}"><svg class="i"><use href="#i-up"/></svg>Đăng bản mới</button><button class="btn sm" data-edit="${esc(p.id)}" title="Tên, ảnh, giá, miễn phí/bản quyền, video"><svg class="i"><use href="#i-img"/></svg>Thông tin</button>${p.id === "pt_hub" ? "" : `<button class="btn sm dan" data-del="${esc(p.id)}" title="Xoá hẳn plugin"><svg class="i"><use href="#i-del"/></svg>Xoá</button>`}</div>
     </div>`).join("")}</div>`;
   document.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openEdit(b.dataset.edit));
   document.querySelectorAll("[data-del]").forEach(b => b.onclick = () => openDelete(b.dataset.del));
@@ -641,18 +641,63 @@ function iconFiles(id, ic, oldIcon) {
 }
 
 /* ---------- Đổi tên & ảnh đại diện ---------- */
+
+/* ---------- Giá / miễn phí / video / tính năng (dùng ở “Thêm plugin” và “Thông tin”) ---------- */
+const WEB = "https://ptplugin.pages.dev/";
+function infoFields(cur) {
+  const v = cur.video || "";
+  return `<div class="f"><label>Hình thức</label><div class="swl"><button type="button" class="sw" role="switch" id="i_paid" aria-checked="${!!cur.paid}"></button><span id="i_paidT"></span></div></div>
+    <div class="f" id="i_priceBox"><label>Giá bản quyền (đ) – vĩnh viễn · 2 máy</label><input id="i_price" type="number" min="0" step="1000" value="${Number(cur.price) || 0}"></div>
+    <div class="f"><label>Video demo / hướng dẫn</label><input id="i_vurl" placeholder="Dán link YouTube, Facebook, Drive… (https://)" value="${esc(/^https?:/.test(v) ? v : "")}">
+      <input type="file" id="i_vfile" accept="video/mp4,video/webm" style="margin-top:8px"><small class="sub">…hoặc tải tệp video mp4/webm (tối đa 24 MB).${v && !/^https?:/.test(v) ? ` Đang dùng tệp: ${esc(v)}` : ""}</small></div>
+    <div class="f"><label>Tính năng nổi bật (mỗi dòng 1 ý) – hiện ở trang chi tiết</label><textarea id="i_feat" rows="4" placeholder="- Dựng cầu thang nhanh&#10;- Xuất khối lượng">${esc((cur.features || []).join("\n"))}</textarea></div>`;
+}
+function bindInfo() {
+  const sw = $("#i_paid"), sync = () => { const on = sw.getAttribute("aria-checked") === "true"; $("#i_paidT").textContent = on ? "Có bản quyền (trả phí)" : "Miễn phí"; $("#i_priceBox").style.display = on ? "" : "none"; };
+  sw.onclick = () => { sw.setAttribute("aria-checked", sw.getAttribute("aria-checked") !== "true"); sync(); }; sync();
+}
+function readInfo() {
+  const paid = $("#i_paid").getAttribute("aria-checked") === "true", price = Math.max(0, Math.round(Number($("#i_price").value) || 0));
+  if (paid && price < 1000) throw new Error("Nhập giá bản quyền (từ 1.000đ)");
+  const vfile = $("#i_vfile").files[0] || null;
+  if (vfile && vfile.size > 24 * 1048576) throw new Error("Video quá lớn (tối đa 24 MB) – hãy dán link YouTube/Drive.");
+  return { paid, price, vurl: $("#i_vurl").value.trim(), vfile, features: $("#i_feat").value.split("\n").map(x => x.replace(/^\s*[-•*]\s*/, "").trim()).filter(Boolean) };
+}
+// Ghi thông tin vào danh mục PT Hub (c) + trang web (s); trả về các tệp cần commit thêm
+async function applyInfo(id, c, s, info) {
+  const files = [], wasPaid = c.type === "paid" || s.type === "paid";
+  c.type = s.type = info.paid ? "paid" : "free"; c.price = s.price = info.paid ? info.price : 0;
+  if (info.paid || wasPaid) c.gated = s.gated = true;              // gói có khoá bản quyền → khi miễn phí PT Hub cấp token miễn phí
+  const old = s.video || "";
+  if (info.vfile) {
+    const ext = /webm$/i.test(info.vfile.name) ? "webm" : "mp4", path = `pt-hub/video/${id}.${ext}`;
+    files.push({ path, base64: b64(await info.vfile.arrayBuffer()) });
+    s.video = path; c.tutorial_url = WEB + path;
+  } else if (info.vurl) { if (!/^https:\/\//.test(info.vurl)) throw new Error("Link video phải bắt đầu bằng https://"); s.video = info.vurl; c.tutorial_url = info.vurl; }
+  else if (/^https?:/.test(old)) { s.video = ""; c.tutorial_url = ""; }
+  s.features = info.features;
+  return files;
+}
+// Đồng bộ giá / miễn phí lên máy chủ bản quyền (ép buộc phía máy chủ)
+async function syncProduct(id, name, info) {
+  try { await licApi(fb, "/api/admin/product", { method: "POST", body: { id, name, price: info.paid ? info.price : 0, paid: info.paid } }); return ""; }
+  catch (e) { return "⚠ Chưa cập nhật được máy chủ bản quyền: " + e.message; }
+}
+
 function openEdit(id) {
   if (needToken()) return;
   const p = plist().find(x => x.id === id), s0 = S.site.plugins.find(x => x.id === id) || {};
-  modal(`<h3>Tên & ảnh · ${esc(p.name)}</h3><p class="sub">Tên và ảnh hiển thị trên trang web và trong PT Hub.</p>
+  modal(`<h3>Thông tin · ${esc(p.name)}</h3><p class="sub">Tên, ảnh, giá, hình thức (bản quyền / miễn phí), video và tính năng – hiển thị trên trang web và trong PT Hub.</p>
     <div id="icBox"></div>
     <div class="grid2"><div class="f"><label>Tên hiển thị</label><input id="e_name" value="${esc(p.name)}" required></div>
     <div class="f"><label>Tên tiếng Anh – tuỳ chọn</label><input id="e_en" value="${esc(s0.name_en && s0.name_en !== s0.name ? s0.name_en : "")}" placeholder="để trống = giống tên hiển thị"></div></div>
+    ${infoFields(p)}${!p.paid && !p.gated ? `<div class="msgbox info" style="margin:0 0 12px">Nếu bật bản quyền cho plugin đang miễn phí, hãy <b>Đăng bản mới</b> (tăng số phiên bản) để trang quản trị tự gắn khoá bản quyền vào gói.</div>` : ""}
     <div class="bar"><button class="btn pri" id="eSave">Lưu</button><button class="btn" data-c>Huỷ</button></div><div id="eMsg"></div>`);
   $("#modal [data-c]").onclick = closeModal;
-  const ic = iconPicker($("#icBox"), p.icon);
+  const ic = iconPicker($("#icBox"), p.icon); bindInfo();
   $("#eSave").onclick = async () => {
     const name = $("#e_name").value.trim(); if (!name) return $("#eMsg").innerHTML = `<div class="msgbox err">Nhập tên plugin</div>`;
+    let info; try { info = readInfo(); } catch (e) { return $("#eMsg").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; }
     S.busy = true; $("#eSave").disabled = true; $("#eMsg").innerHTML = `<div class="msgbox info">Đang lưu…</div>`;
     try {
       await loadCatalog();
@@ -660,9 +705,11 @@ function openEdit(id) {
       const icf = iconFiles(id, ic, s?.icon);
       if (c) c.name = name;
       if (s) { s.name = name; s.name_en = $("#e_en").value.trim() || name; if (icf.path) s.icon = icf.path; }
+      const vf = await applyInfo(id, c || {}, s || {}, info);
       S.cat.updated = new Date().toISOString().slice(0, 19).replace("T", " ");
-      await commitFiles([...icf.files, { path: "plugins.json", text: jsonText(S.site) }, { path: CATALOG, text: jsonText(S.cat) }], `Đổi tên / ảnh ${id} (trang quản trị)`);
-      S.busy = false; closeModal(); toast("Đã lưu – trang web cập nhật sau khoảng 1 phút"); renderPlugins();
+      await commitFiles([...icf.files, ...vf, { path: "plugins.json", text: jsonText(S.site) }, { path: CATALOG, text: jsonText(S.cat) }], `Cập nhật thông tin ${id} (trang quản trị)`);
+      const warn = await syncProduct(id, name, info);
+      S.busy = false; closeModal(); toast(warn || "Đã lưu – trang web cập nhật sau khoảng 1 phút"); renderPlugins();
     } catch (e) { S.busy = false; $("#eSave").disabled = false; $("#eMsg").innerHTML = `<div class="msgbox err">${esc(e.message)}</div>`; }
   };
 }
@@ -750,13 +797,14 @@ function openUpload(id) {
       <div id="u_ic"></div>
       ${isNew ? `
         <div class="f"><label>Mô tả (tiếng Việt)</label><input id="u_dvi" required></div>
-        <div class="f"><label>Mô tả (tiếng Anh) – tuỳ chọn</label><input id="u_den"></div>` : ""}
+        <div class="f"><label>Mô tả (tiếng Anh) – tuỳ chọn</label><input id="u_den"></div>
+        ${infoFields({ paid: false, price: 0 })}` : ""}
       ${p?.paid ? `<div class="msgbox info" style="margin:0 0 12px">🔒 Plugin có bản quyền – nếu gói chưa có khoá bản quyền, trang quản trị sẽ tự gắn trước khi phát hành.</div>` : ""}
       <div class="f"><label>Ghi chú thay đổi (mỗi dòng bắt đầu bằng "- ")</label><textarea id="u_notes" required placeholder="- Thêm tính năng …&#10;- Sửa lỗi …"></textarea></div>
       <div class="bar"><button class="btn pri" id="pub" disabled><svg class="i"><use href="#i-up"/></svg>Phát hành</button><button class="btn" type="button" data-c>Huỷ</button></div>
     </form><ul class="steps" id="steps"></ul><div id="upMsg"></div>`);
   $("#modal [data-c]").onclick = closeModal;
-  const ic = iconPicker($("#u_ic"), p?.icon || "");
+  const ic = iconPicker($("#u_ic"), p?.icon || ""); if (isNew) bindInfo();
   let relVers = null; // các phiên bản đã có Release trên GitHub
   allReleases().then(rs => relVers = rs.map(r => (r.tag_name || "")).filter(t => t.startsWith((id || "") + "-v")).map(t => t.slice(t.lastIndexOf("-v") + 2))).catch(() => relVers = []);
   const drop = $("#drop"), fi = $("#fi");
@@ -785,15 +833,17 @@ function openUpload(id) {
     const top = [...(relVers || []), p?.version || "0"].filter(v => /^\d+(\.\d+)*$/.test(v)).sort((a, b) => cmpVer(b, a))[0];
     if (!isNew && top && cmpVer(ver, top) <= 0) return $("#upMsg").innerHTML = `<div class="msgbox err">Phiên bản ${esc(ver)} không lớn hơn bản đã phát hành gần nhất (v${esc(top)}). PT Hub chỉ cập nhật khi số phiên bản lớn hơn – hãy đặt từ v${esc(top.replace(/\d+$/, n => +n + 1))} trở lên (sửa VERSION trong tệp nạp .rb).</div>`;
     const uname = $("#u_name").value.trim(); if (!uname) return $("#upMsg").innerHTML = `<div class="msgbox err">Nhập tên hiển thị</div>`;
+    let info2 = null; if (isNew) { try { info2 = readInfo(); } catch (er) { return $("#upMsg").innerHTML = `<div class="msgbox err">${esc(er.message)}</div>`; } }
+    const paidNow = isNew ? info2.paid : !!p.paid;
     const fname = `${pid}-${ver}.rbz`;
-    const steps = [["read", "Đọc danh mục mới nhất"], ...(p?.paid ? [["gate", "Kiểm tra / gắn khoá bản quyền"]] : []), ["blob", `Tải lên ${fname} (${fmtSize(file.size)})`], ["commit", "Cập nhật danh mục PT Hub + trang web"], ["push", "Đẩy lên kho GitHub"]];
+    const steps = [["read", "Đọc danh mục mới nhất"], ...(paidNow ? [["gate", "Kiểm tra / gắn khoá bản quyền"]] : []), ["blob", `Tải lên ${fname} (${fmtSize(file.size)})`], ["commit", "Cập nhật danh mục PT Hub + trang web"], ["push", "Đẩy lên kho GitHub"]];
     $("#steps").innerHTML = steps.map(([k, t]) => `<li data-k="${k}"><span class="dot"></span>${t}</li>`).join("");
     const mark = k => { let hit = false; steps.forEach(([s]) => { const li = $(`#steps [data-k="${s}"]`); if (s === k) { li.className = "run"; hit = true; } else if (!hit) li.className = "ok"; }); };
     S.busy = true; $("#pub").disabled = true; $("#upMsg").innerHTML = "";
     try {
       mark("read"); await loadCatalog();
       let data = buf, gated = false;
-      if (p?.paid) {
+      if (paidNow) {
         mark("gate");
         const r = await RbzGate.gate(buf, pid, uname, await readText("pt-hub/ban-quyen/pt_license.rb"));
         if (!r.already) { data = r.buf.buffer.slice(r.buf.byteOffset, r.buf.byteOffset + r.buf.byteLength); gated = true; }
@@ -817,11 +867,14 @@ function openUpload(id) {
       if (!s) { s = { id: pid, name: c.name, category: $("#u_cat").value, description: c.description_vi, icon: "", name_en: c.name, description_en: c.description_en || c.description_vi }; S.site.plugins.push(s); }
       Object.assign(s, { name: uname, name_en: ($("#u_en")?.value.trim()) || (isNew ? s.name_en : uname), download: `pt-hub/goi/${fname}`, version: ver, date: iso, size, notes });
       if (icf.path) { s.icon = icf.path; }
-      await commitFiles([{ path: `pt-hub/goi/${fname}`, base64: b64(data) }, ...icf.files, { path: CATALOG, text: jsonText(S.cat) }, { path: "plugins.json", text: jsonText(S.site) }],
+      let vf = [];
+      if (isNew) vf = await applyInfo(pid, c, s, info2); else if (paidNow) c.gated = true;
+      await commitFiles([{ path: `pt-hub/goi/${fname}`, base64: b64(data) }, ...icf.files, ...vf, { path: CATALOG, text: jsonText(S.cat) }, { path: "plugins.json", text: jsonText(S.site) }],
         `Phát hành ${c.name} ${ver} (trang quản trị)`, k => mark(k === "ref" ? "read" : k));
       document.querySelectorAll("#steps li").forEach(li => li.className = "ok");
+      const warn = isNew ? await syncProduct(pid, uname, info2) : "";
       S.busy = false;
-      $("#upMsg").innerHTML = `<div class="msgbox ok"><b>Đã phát hành ${esc(c.name)} v${esc(ver)}.</b>${gated ? "<br>🔒 Đã tự gắn khoá bản quyền vào gói." : ""}<br>GitHub đang tự tạo bản phát hành (khoảng 1 phút) – sau đó trang web và PT Hub của người dùng sẽ nhận bản mới.
+      $("#upMsg").innerHTML = `<div class="msgbox ok"><b>Đã phát hành ${esc(c.name)} v${esc(ver)}.</b>${gated ? "<br>🔒 Đã tự gắn khoá bản quyền vào gói." : ""}${warn ? `<br>${esc(warn)}` : ""}<br>GitHub đang tự tạo bản phát hành (khoảng 1 phút) – sau đó trang web và PT Hub của người dùng sẽ nhận bản mới.
         <br><a href="https://github.com/${OWNER}/${REPO}/actions" target="_blank" rel="noopener">Xem tiến trình ↗</a></div>`;
       $("#upf").style.display = "none"; $("#drop").style.display = "none";
       renderPlugins();

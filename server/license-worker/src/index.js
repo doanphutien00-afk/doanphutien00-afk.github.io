@@ -80,7 +80,9 @@ async function body(req) { try { return await req.json(); } catch (e) { return {
 async function route(req, env) {
   const url = new URL(req.url), p = url.pathname.replace(/\/+$/, ""), m = req.method;
   if (p === "" || p === "/api") return { ok: true, service: "pt-license" };
+  await loadProducts(env);
   if (p === "/api/products" && m === "GET") return { ok: true, products: PRODUCTS, max_devices: MAX_DEVICES, trial_days: TRIAL_DAYS };
+  if (p === "/api/announcements" && m === "GET") { const t = now(); return { ok: true, items: (await annList(env)).filter(x => !x.expires || x.expires > t).sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.created - a.created) }; }
   if (p === "/api/sepay/webhook" && m === "POST") return sepayWebhook(req, env);
   if (p === "/api/trial" && m === "POST") return trial(await body(req), env);
   if (p === "/api/pubkey" && m === "GET") return { ok: true, pem: await publicPem(env) };
@@ -105,6 +107,10 @@ async function route(req, env) {
       case "/api/admin/grant": return adminGrant(b, env);
       case "/api/admin/mark-paid": return adminMarkPaid(b, env);
       case "/api/admin/remove-device": return adminRemoveDevice(b, env);
+  case "/api/admin/announcements": return { ok: true, items: await annList(env) };
+  case "/api/admin/announce-delete": return adminAnnounceDelete(b, env);
+  case "/api/admin/announce": return adminAnnounce(b, env);
+  case "/api/admin/product": return adminProduct(b, env);
     }
   }
   bad("not_found", "Không có API này", 404);
@@ -175,6 +181,13 @@ async function sign(payload, env) {
   return data + "." + b64u(sig);   // chữ ký dạng r||s (64 byte)
 }
 const prod = id => PRODUCTS[id] || bad("bad_product", "Plugin không bán bản quyền");
+  async function adminAnnounceDelete(b, env) { const list = (await annList(env)).filter(x => x.id !== b.id); await kvSet(env, "announcements", JSON.stringify(list)); return { ok: true, items: list }; }
+  async function adminAnnounce(b, env) { const title = String(b.title || "").trim().slice(0, 140), text = String(b.body || "").trim().slice(0, 4000); if (!title) bad("bad_title", "Cần có tiêu đề"); const list = await annList(env); const id = String(b.id || "") || crypto.randomUUID().slice(0, 8); const it = { id, title, body: text, level: ["info", "new", "warn"].includes(b.level) ? b.level : "info", link: /^https:\/\//.test(b.link || "") ? String(b.link).slice(0, 500) : "", pinned: !!b.pinned, created: now(), expires: b.expires ? Math.floor(Number(b.expires)) || 0 : 0 }; const i = list.findIndex(x => x.id === id); if (i >= 0) { it.created = list[i].created; list[i] = it; } else list.unshift(it); await kvSet(env, "announcements", JSON.stringify(list.slice(0, 60))); return { ok: true, items: list }; }
+  async function annList(env) { try { return JSON.parse((await kvGet(env, "announcements")) || "[]"); } catch (e) { return []; } }
+  async function adminProduct(b, env) { const id = String(b.id || "").trim(); if (!/^[a-z0-9_]{2,40}$/.test(id)) bad("bad_id", "Mã plugin không hợp lệ"); const o = JSON.parse((await kvGet(env, "products")) || "{}"); const cur = o[id] || {}; if (b.name != null) cur.name = String(b.name).slice(0, 80); if (b.price != null) { const n = Math.round(Number(b.price)); if (!(n >= 0 && n <= 100000000)) bad("bad_price", "Giá không hợp lệ"); cur.price = n; } if (b.paid != null) cur.paid = !!b.paid; o[id] = cur; await kvSet(env, "products", JSON.stringify(o)); await loadProducts(env); return { ok: true, products: PRODUCTS }; }
+  async function loadProducts(env) { let o = {}; try { o = JSON.parse((await kvGet(env, "products")) || "{}"); } catch (e) { o = {}; } for (const [id, v] of Object.entries(o)) PRODUCTS[id] = { ...(PRODUCTS[id] || {}), ...v }; }
+  async function kvSet(env, k, v) { await kvGet(env, "x"); await env.DB.prepare("INSERT INTO kv (k,v) VALUES (?,?) ON CONFLICT(k) DO UPDATE SET v=excluded.v").bind(k, v).run(); }
+  const isFree = p => p.paid === false;
 const devOk = d => typeof d === "string" && /^[a-f0-9]{32,64}$/.test(d) || bad("bad_device", "Mã máy không hợp lệ");
 
 /* ------------------------------------------------ đơn hàng */
@@ -189,6 +202,7 @@ function orderOut(env, o) {
 }
 async function createOrder(user, b, env) {
   const p = prod(b.product);
+  if (isFree(p)) bad("free_product", "Plugin này miễn phí, không cần mua bản quyền");
   const lic = await env.DB.prepare("SELECT * FROM licenses WHERE email=? AND product=?").bind(user.email, b.product).first();
   if (lic && !lic.revoked) bad("already_owned", "Tài khoản này đã sở hữu bản quyền plugin này", 409);
   // dùng lại đơn đang chờ (cùng email + plugin) nếu còn hạn
@@ -260,7 +274,7 @@ async function me(user, env) {
 
 /* ------------------------------------------------ kích hoạt / làm mới */
 async function activate(user, b, env, refreshOnly) {
-  prod(b.product); devOk(b.device_id);
+  const pr = prod(b.product); devOk(b.device_id); if (isFree(pr)) bad("free_product", "Plugin này miễn phí", 400);
   const lic = await env.DB.prepare("SELECT * FROM licenses WHERE email=? AND product=? AND revoked=0").bind(user.email, b.product).first();
   if (!lic) bad("no_license", "Tài khoản này chưa mua bản quyền plugin", 402);
   const t = now(), name = String(b.device_name || "").slice(0, 80);
@@ -301,8 +315,9 @@ async function selfReset(user, b, env) {
 
 /* ------------------------------------------------ dùng thử */
 async function trial(b, env) {
-  prod(b.product); devOk(b.device_id);
+  const pr = prod(b.product); devOk(b.device_id);
   const t = now();
+  if (isFree(pr)) return { ok: true, free: true, token: await sign({ v: 1, t: "lic", p: b.product, e: "free", d: b.device_id, l: 0, iat: t, exp: t + TOKEN_DAYS * DAY }, env), exp: t + TOKEN_DAYS * DAY };
   await env.DB.prepare("INSERT OR IGNORE INTO trials (device_id,product,started) VALUES (?,?,?)").bind(b.device_id, b.product, t).run();
   const row = await env.DB.prepare("SELECT started FROM trials WHERE device_id=? AND product=?").bind(b.device_id, b.product).first();
   const exp = row.started + TRIAL_DAYS * DAY;

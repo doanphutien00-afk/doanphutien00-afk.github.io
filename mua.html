@@ -102,7 +102,7 @@ const stepOn = n => document.querySelectorAll(".step").forEach(s => s.classList.
 let fb, user, products = [], sel = new URLSearchParams(location.search).get("p"), owned = new Set(), order = null, poll = null;
 
 const manifest = await fetch("/plugins.json", { cache: "no-store" }).then(r => r.json());
-products = manifest.plugins.filter(p => PRICES[p.id] && !p.hidden).map(p => ({ ...p, price: PRICES[p.id] }));
+products = manifest.plugins.filter(p => !p.hidden && (p.type ? p.type === "paid" : PRICES[p.id])).map(p => ({ ...p, price: p.price || PRICES[p.id] || 0 })).filter(p => p.price > 0);
 if (!products.some(p => p.id === sel)) sel = products[0]?.id;
 
 function drawProds() {

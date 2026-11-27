@@ -32,11 +32,13 @@
       "icon": "icons/pt_hub.svg",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
-      "download": "pt-hub/goi/pt_hub-2.10.0.rbz",
-      "version": "2.10.0",
-      "date": "2026-11-27",
-      "size": 223306,
-      "notes": "- Bản quyền theo tài khoản: chỉ mở được plugin đã mua và kích hoạt; báo rõ khi tài khoản chưa có bản quyền, máy mới chưa kích hoạt, hoặc máy đã gỡ bản quyền (hỏi dùng 1 suất còn trống); hết 3 ngày dùng thử thì không mở được\n- Chi tiết plugin (nút 3 chấm): Bản đang cài, Bản mới nhất, Quyền sử dụng, SketchUp, Trang plugin, kèm nút Mua / Kích hoạt ở máy này\n- Bỏ mục Lịch sử cập nhật"
+      "download": "pt-hub/goi/pt_hub-2.11.0.rbz",
+      "version": "2.11.0",
+      "date": "2026-11-27T15:40:19Z",
+      "size": 224871,
+      "notes": "- Giá và loại plugin (bản quyền / miễn phí) theo trang quản trị, đổi không cần cập nhật PT Hub\n- Plugin chuyển sang miễn phí chạy bình thường\n- Đối chiếu bản quyền định kỳ 10 phút: huỷ kích hoạt máy trên web → PT Hub cập nhật trong tối đa 10 phút",
+      "type": "free",
+      "price": 0
     },
     {
       "id": "mai_viet",
@@ -50,7 +52,10 @@
       "version": "3.0.5",
       "date": "2026-11-21T08:58:53Z",
       "size": 28464033,
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)",
+      "type": "paid",
+      "price": 129000,
+      "gated": true
     },
     {
       "id": "smart_floor",
@@ -64,7 +69,10 @@
       "version": "2.11.2",
       "date": "2026-11-25T02:49:18Z",
       "size": 316260,
-      "notes": "Lỗi thiếu gạch ở mép cửa\n\nTrong mô phỏng mình dựng căn phòng 5 mặt có cửa, thì các mặt má cửa đều được lát. Mô phỏng này không sinh ra đúng lỗi của model bạn, nên mình chưa xác định được nguyên nhân thật. Mình không dám nói đã sửa dứt điểm.\nTừ ảnh, mình đoán mảnh trắng bên mép cửa là một mặt nhỏ ngoài 5 mặt bạn chọn: má cửa, hoặc một mảnh tường hẹp bị khung cửa tách ra. Bản này nới điều kiện tìm các mặt đó:\nmá cửa vuông góc với tường, sâu tới 1 m;\nthêm mảnh tường hẹp cùng mặt phẳng, rộng tối đa 400 mm.\nKhi tạo xong, thông báo sẽ ghi \"Đã lát thêm N mặt má cửa / mảnh tường hẹp\", để bạn biết plugin có tìm thấy mặt đó hay không.\nNếu vẫn còn thiếu: chọn 5 mặt rồi chạy lệnh \"Chẩn đoán tường\". Lệnh này đã thêm phần liệt kê mọi mặt kề các mặt đã chọn, kèm góc, bề rộng và diện tích. Bạn gửi mình nội dung đó, mình sẽ biết mặt thiếu là mặt nào và vì sao bị bỏ qua.\n\nĐồng bộ ron sàn và tường\n\nTrước đây mỗi mặt được xếp theo mặt kề nó, nên sàn chỉ khớp với một bức tường. Giờ mọi mặt dùng chung một điểm gốc.\nĐiểm gốc là điểm lát đầu tiên nếu bạn đã chọn, nếu không thì là góc lưới của mặt sàn.\nNhờ đó ron đứng trên tường thẳng hàng với ron trên sàn ở cả 4 tường, và ron ngang trên các tường cùng một độ cao.\nVới gạch vuông (600×600), ron trên sàn khớp ron trên cả 4 tường. Với gạch chữ nhật như 600×300, chỉ các tường song song với hướng dài của sàn khớp hoàn toàn.\nRon ở các góc tường chỉ khớp nếu kích thước phòng chia hết cho kích thước gạch.\n\nHướng lát sàn\n\nCông tắc gạt giờ chỉ nằm ở dòng \"Hướng lát sàn\" (đã đổi tên từ \"Hướng lát theo\"), cùng nút \"Mặc định\".\nCông tắc này chỉ bật/tắt các nút Chọn cạnh, Chọn 2 điểm, Bỏ hướng. Mục Căn hướng theo và Xoay thêm luôn hiện."
+      "notes": "Lỗi thiếu gạch ở mép cửa\n\nTrong mô phỏng mình dựng căn phòng 5 mặt có cửa, thì các mặt má cửa đều được lát. Mô phỏng này không sinh ra đúng lỗi của model bạn, nên mình chưa xác định được nguyên nhân thật. Mình không dám nói đã sửa dứt điểm.\nTừ ảnh, mình đoán mảnh trắng bên mép cửa là một mặt nhỏ ngoài 5 mặt bạn chọn: má cửa, hoặc một mảnh tường hẹp bị khung cửa tách ra. Bản này nới điều kiện tìm các mặt đó:\nmá cửa vuông góc với tường, sâu tới 1 m;\nthêm mảnh tường hẹp cùng mặt phẳng, rộng tối đa 400 mm.\nKhi tạo xong, thông báo sẽ ghi \"Đã lát thêm N mặt má cửa / mảnh tường hẹp\", để bạn biết plugin có tìm thấy mặt đó hay không.\nNếu vẫn còn thiếu: chọn 5 mặt rồi chạy lệnh \"Chẩn đoán tường\". Lệnh này đã thêm phần liệt kê mọi mặt kề các mặt đã chọn, kèm góc, bề rộng và diện tích. Bạn gửi mình nội dung đó, mình sẽ biết mặt thiếu là mặt nào và vì sao bị bỏ qua.\n\nĐồng bộ ron sàn và tường\n\nTrước đây mỗi mặt được xếp theo mặt kề nó, nên sàn chỉ khớp với một bức tường. Giờ mọi mặt dùng chung một điểm gốc.\nĐiểm gốc là điểm lát đầu tiên nếu bạn đã chọn, nếu không thì là góc lưới của mặt sàn.\nNhờ đó ron đứng trên tường thẳng hàng với ron trên sàn ở cả 4 tường, và ron ngang trên các tường cùng một độ cao.\nVới gạch vuông (600×600), ron trên sàn khớp ron trên cả 4 tường. Với gạch chữ nhật như 600×300, chỉ các tường song song với hướng dài của sàn khớp hoàn toàn.\nRon ở các góc tường chỉ khớp nếu kích thước phòng chia hết cho kích thước gạch.\n\nHướng lát sàn\n\nCông tắc gạt giờ chỉ nằm ở dòng \"Hướng lát sàn\" (đã đổi tên từ \"Hướng lát theo\"), cùng nút \"Mặc định\".\nCông tắc này chỉ bật/tắt các nút Chọn cạnh, Chọn 2 điểm, Bỏ hướng. Mục Căn hướng theo và Xoay thêm luôn hiện.",
+      "type": "paid",
+      "price": 99000,
+      "gated": true
     },
     {
       "id": "pt_wallpanel",
@@ -78,7 +86,10 @@
       "version": "1.7.1",
       "date": "2026-11-26T12:31:22Z",
       "size": 228496,
-      "notes": "- Xoay theo góc: nhập số độ rồi Cập nhật / Tạo (Enter) là nan xoay; áp dụng cả tường chia nhiều mặt và nhiều tường\n- Hướng theo cạnh: bật là vào ngay chế độ chọn cạnh (sáng cam); chọn mặt -> chọn cạnh -> chọn mẫu -> Tạo vách nan\n- Thư viện trở lại giao diện như trước\n- Thông tin giấy phép gộp 1 mục: trạng thái, tên máy kích hoạt, số máy n/2 (tự cập nhật từ PT Hub)\n- Icon toolbar viền đen đầy ô"
+      "notes": "- Xoay theo góc: nhập số độ rồi Cập nhật / Tạo (Enter) là nan xoay; áp dụng cả tường chia nhiều mặt và nhiều tường\n- Hướng theo cạnh: bật là vào ngay chế độ chọn cạnh (sáng cam); chọn mặt -> chọn cạnh -> chọn mẫu -> Tạo vách nan\n- Thư viện trở lại giao diện như trước\n- Thông tin giấy phép gộp 1 mục: trạng thái, tên máy kích hoạt, số máy n/2 (tự cập nhật từ PT Hub)\n- Icon toolbar viền đen đầy ô",
+      "type": "paid",
+      "price": 79000,
+      "gated": true
     },
     {
       "id": "pt_cabinet",
@@ -92,7 +103,10 @@
       "version": "2.6.8",
       "date": "2026-11-24T04:58:50Z",
       "size": 2078096,
-      "notes": "Quét chọn nhiều mặt rồi đẩy cùng lúc\n\nBấm ở chỗ trống rồi kéo chuột để vẽ khung cam. Khung chọn được cả mặt nằm trong group và component.\nKéo từ trái sang phải (nét liền): chỉ lấy mặt nằm trọn trong khung.\nKéo từ phải sang trái (nét đứt): lấy cả mặt chạm vào khung.\nGiữ Ctrl khi quét để thêm vào các mặt đã chọn. Click ra chỗ trống để bỏ chọn.\nSau khi chọn xong, click vào một mặt bất kỳ trong số đã chọn, rồi rê chuột hoặc gõ số. Tất cả các mặt được đẩy cùng lúc, mỗi mặt theo hướng mặt trước của chính nó, và chỉ cần 1 lần Undo. Gõ số ngay sau khi quét hoặc click đúp cũng đẩy cả nhóm.\nNếu anh đã chọn sẵn các mặt trong SketchUp trước khi bật công cụ, công cụ nhận luôn các mặt đó. Riêng chọn sẵn cả group thì không tính, để tránh bấm nhầm mà đẩy cả tủ.\nHUD có thêm dòng \"Đã quét chọn N mặt\", bấm vào đó để bỏ chọn.\n\nƯu tiên đẩy ra mặt trước (mặt trắng)\n\nGõ số dương luôn đẩy ra phía mặt trắng, gõ số âm thì kéo vào, dù con trỏ đang hướng chiều nào. Áp dụng cho cả ô nhập số của SketchUp và ô khoảng đẩy trên HUD.\nKhi rê chuột thì vẫn kéo tự do hai chiều như cũ."
+      "notes": "Quét chọn nhiều mặt rồi đẩy cùng lúc\n\nBấm ở chỗ trống rồi kéo chuột để vẽ khung cam. Khung chọn được cả mặt nằm trong group và component.\nKéo từ trái sang phải (nét liền): chỉ lấy mặt nằm trọn trong khung.\nKéo từ phải sang trái (nét đứt): lấy cả mặt chạm vào khung.\nGiữ Ctrl khi quét để thêm vào các mặt đã chọn. Click ra chỗ trống để bỏ chọn.\nSau khi chọn xong, click vào một mặt bất kỳ trong số đã chọn, rồi rê chuột hoặc gõ số. Tất cả các mặt được đẩy cùng lúc, mỗi mặt theo hướng mặt trước của chính nó, và chỉ cần 1 lần Undo. Gõ số ngay sau khi quét hoặc click đúp cũng đẩy cả nhóm.\nNếu anh đã chọn sẵn các mặt trong SketchUp trước khi bật công cụ, công cụ nhận luôn các mặt đó. Riêng chọn sẵn cả group thì không tính, để tránh bấm nhầm mà đẩy cả tủ.\nHUD có thêm dòng \"Đã quét chọn N mặt\", bấm vào đó để bỏ chọn.\n\nƯu tiên đẩy ra mặt trước (mặt trắng)\n\nGõ số dương luôn đẩy ra phía mặt trắng, gõ số âm thì kéo vào, dù con trỏ đang hướng chiều nào. Áp dụng cho cả ô nhập số của SketchUp và ô khoảng đẩy trên HUD.\nKhi rê chuột thì vẫn kéo tự do hai chiều như cũ.",
+      "type": "paid",
+      "price": 99000,
+      "gated": true
     },
     {
       "id": "pt_smartlight",
@@ -106,7 +120,10 @@
       "version": "1.8.6",
       "date": "2026-11-21T08:58:53Z",
       "size": 994799,
-      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)"
+      "notes": "- Có bản quyền: dùng thử 3 ngày, mua tại ptplugin.pages.dev/mua.html\n- Mỗi bản quyền dùng trên 2 máy, nhận mọi bản cập nhật về sau\n- Kích hoạt / chuyển máy ngay trong PT Hub (đăng nhập Google đã mua)",
+      "type": "paid",
+      "price": 79000,
+      "gated": true
     }
   ]
 }

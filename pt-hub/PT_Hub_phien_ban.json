@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 13:15:12",
+  "updated": "2026-11-27 15:40:19",
   "plugins": [
     {
       "id": "pt_cabinet",
@@ -23,7 +23,8 @@
       "tutorial_url": "",
       "icon": "icons/box2cab.svg",
       "size": 2078096,
-      "price": 99000
+      "price": 99000,
+      "gated": true
     },
     {
       "id": "pt_smartlight",
@@ -49,7 +50,8 @@
       "tutorial_url": "",
       "icon": "icons/panel.svg",
       "size": 994799,
-      "price": 79000
+      "price": 79000,
+      "gated": true
     },
     {
       "id": "mai_viet",
@@ -78,7 +80,8 @@
       "tutorial_url": "",
       "icon": "icons/roof.svg",
       "size": 28464033,
-      "price": 129000
+      "price": 129000,
+      "gated": true
     },
     {
       "id": "pt_wallpanel",
@@ -105,7 +108,8 @@
       "tutorial_url": "",
       "icon": "icons/dialog.svg",
       "size": 228496,
-      "price": 79000
+      "price": 79000,
+      "gated": true
     },
     {
       "id": "smart_floor",
@@ -132,7 +136,8 @@
       "tutorial_url": "",
       "notes": "Lỗi thiếu gạch ở mép cửa\n\nTrong mô phỏng mình dựng căn phòng 5 mặt có cửa, thì các mặt má cửa đều được lát. Mô phỏng này không sinh ra đúng lỗi của model bạn, nên mình chưa xác định được nguyên nhân thật. Mình không dám nói đã sửa dứt điểm.\nTừ ảnh, mình đoán mảnh trắng bên mép cửa là một mặt nhỏ ngoài 5 mặt bạn chọn: má cửa, hoặc một mảnh tường hẹp bị khung cửa tách ra. Bản này nới điều kiện tìm các mặt đó:\nmá cửa vuông góc với tường, sâu tới 1 m;\nthêm mảnh tường hẹp cùng mặt phẳng, rộng tối đa 400 mm.\nKhi tạo xong, thông báo sẽ ghi \"Đã lát thêm N mặt má cửa / mảnh tường hẹp\", để bạn biết plugin có tìm thấy mặt đó hay không.\nNếu vẫn còn thiếu: chọn 5 mặt rồi chạy lệnh \"Chẩn đoán tường\". Lệnh này đã thêm phần liệt kê mọi mặt kề các mặt đã chọn, kèm góc, bề rộng và diện tích. Bạn gửi mình nội dung đó, mình sẽ biết mặt thiếu là mặt nào và vì sao bị bỏ qua.\n\nĐồng bộ ron sàn và tường\n\nTrước đây mỗi mặt được xếp theo mặt kề nó, nên sàn chỉ khớp với một bức tường. Giờ mọi mặt dùng chung một điểm gốc.\nĐiểm gốc là điểm lát đầu tiên nếu bạn đã chọn, nếu không thì là góc lưới của mặt sàn.\nNhờ đó ron đứng trên tường thẳng hàng với ron trên sàn ở cả 4 tường, và ron ngang trên các tường cùng một độ cao.\nVới gạch vuông (600×600), ron trên sàn khớp ron trên cả 4 tường. Với gạch chữ nhật như 600×300, chỉ các tường song song với hướng dài của sàn khớp hoàn toàn.\nRon ở các góc tường chỉ khớp nếu kích thước phòng chia hết cho kích thước gạch.\n\nHướng lát sàn\n\nCông tắc gạt giờ chỉ nằm ở dòng \"Hướng lát sàn\" (đã đổi tên từ \"Hướng lát theo\"), cùng nút \"Mặc định\".\nCông tắc này chỉ bật/tắt các nút Chọn cạnh, Chọn 2 điểm, Bỏ hướng. Mục Căn hướng theo và Xoay thêm luôn hiện.",
       "size": 316260,
-      "price": 99000
+      "price": 99000,
+      "gated": true
     },
     {
       "id": "pt_stair",
@@ -158,11 +163,11 @@
     {
       "id": "pt_hub",
       "name": "PT Hub",
-      "version": "2.10.0",
+      "version": "2.11.0",
       "date": "2026-11-27",
-      "file": "pt_hub-2.10.0.rbz",
+      "file": "pt_hub-2.11.0.rbz",
       "page": "PT_Hub_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Bản quyền theo tài khoản: chỉ mở được plugin đã mua và kích hoạt; báo rõ khi tài khoản chưa có bản quyền, máy mới chưa kích hoạt, hoặc máy đã gỡ bản quyền (hỏi dùng 1 suất còn trống); hết 3 ngày dùng thử thì không mở được\n- Chi tiết plugin (nút 3 chấm): Bản đang cài, Bản mới nhất, Quyền sử dụng, SketchUp, Trang plugin, kèm nút Mua / Kích hoạt ở máy này\n- Bỏ mục Lịch sử cập nhật",
+      "notes": "- Giá và loại plugin (bản quyền / miễn phí) theo trang quản trị, đổi không cần cập nhật PT Hub\n- Plugin chuyển sang miễn phí chạy bình thường\n- Đối chiếu bản quyền định kỳ 10 phút: huỷ kích hoạt máy trên web → PT Hub cập nhật trong tối đa 10 phút",
       "loader_file": "pt_hub.rb",
       "folder": "pt_hub",
       "description_vi": "Quản lý, cài đặt, cập nhật plugin PT; thanh công cụ tuỳ chỉnh; góp ý.",
@@ -171,10 +176,10 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "23410dab0d7e2e76e9a63f8923cbd3893536fbfa65490e1df075cd0c285aff2e",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.10.0.rbz",
+      "sha256": "4eded7e7e80a1ad7bba3655d7b340937080ae413f35ca888de4876f09c142111",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.11.0.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
-      "size": 223306
+      "size": 224871
     },
     {
       "id": "pt_kitchen",

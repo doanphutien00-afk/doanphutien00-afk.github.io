@@ -437,7 +437,7 @@ const I18N = {
     contact_sub:"Báo lỗi, đề xuất tính năng — hãy nhắn cho tôi.",
     zalo:"Zalo", email:"Email", copy:"SAO CHÉP", copied:"Đã sao chép", open:"MỞ",
     cats:{"Kiến trúc":"Kiến trúc","Nội thất":"Nội thất","Tiện ích":"Tiện ích","Khác":"Khác"},
-    all_releases:"Tất cả bản phát hành"
+    all_releases:"Tất cả bản phát hành", details:"Xem chi tiết"
   },
   en:{
     nav_plugins:"Plugins", nav_install:"Install", nav_contact:"Contact", nav_buy:"Buy license", buy:"Buy license", owned_l:"lifetime · 2 PCs · 3-day trial", nav_stats:"Statistics", nav_fb:"Feedback",
@@ -462,7 +462,7 @@ const I18N = {
     contact_sub:"Bug reports or feature requests — just send me a message.",
     zalo:"Zalo", email:"Email", copy:"COPY", copied:"Copied", open:"OPEN",
     cats:{"Kiến trúc":"Architecture","Nội thất":"Interior","Tiện ích":"Utilities","Khác":"Other"},
-    all_releases:"All releases"
+    all_releases:"All releases", details:"View details"
   }
 };
 
@@ -530,7 +530,6 @@ function render(){
     const isNew=L&&(Date.now()-new Date(L.date))<NEW_DAYS*864e5;
     const name=pick(p,"name");
     const ini=name.split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
-    const open=state.open.has(p.id);
     return `<article class="card${state.revealed?" in":""}" style="--d:${(list.indexOf(p)%3)*0.1}s">
       <div class="card-top mono"><span>P.${String(i).padStart(2,"0")}</span><span class="tag">${esc(T("cats")[p.category]||p.category||"")}</span></div>
       <div class="card-body">
@@ -539,23 +538,7 @@ function render(){
           <h3>${esc(name)}${isNew?`<span class="new">${T("isnew")}</span>`:""}</h3>
         </div>
         <p class="desc">${esc(pick(p,"description"))}</p>
-        <dl class="specs">
-          <div><dt class="mono">${T("version")}</dt><dd>${L?"v"+esc(L.version):"–"}</dd></div>
-          <div><dt class="mono">${T("updated")}</dt><dd>${L?fmtDate(L.date):"–"}</dd></div>
-          <div><dt class="mono">${T("size")}</dt><dd>${fmtSize(L?.size)}</dd></div>
-          <div><dt class="mono">${T("downloads")}</dt><dd>${fmtNum(p.downloads)}</dd></div>
-        </dl>
-        ${PRICE[p.id]?`<a class="price" href="mua.html?p=${esc(p.id)}"><b>${PRICE[p.id].toLocaleString("vi-VN")}đ</b><span>${T("owned_l")}</span><em>${T("buy")} →</em></a>`:""}
-        <div class="actions">
-          ${p.id==="pt_hub"?`<a class="btn primary" href="${esc(L?.url||"#")}" aria-disabled="${!L?.url}"><svg><use href="#i-dl"/></svg>${L?T("get_hub"):T("unreleased")}</a>`:
-            `<button class="btn primary" data-hub="${esc(p.id)}" aria-expanded="${state.hub===p.id}" ${L?"":"disabled"}><svg><use href="#i-dl"/></svg>${L?T("hub_btn"):T("unreleased")}</button>`}
-          ${p.versions.length?`<button class="btn ghost" data-log="${esc(p.id)}" aria-expanded="${open}"><svg><use href="#i-log"/></svg>${open?T("hide"):T("changelog")}</button>`:""}
-        </div>
-        ${state.hub===p.id?`<div class="hubhint"><p>${T("hub_hint").replace("{n}",esc(name))}</p><div class="hh-act">
-          <a class="btn primary" href="${esc(hubUrl()||"#")}"><svg><use href="#i-dl"/></svg>${T("get_hub")}</a><a class="btn ghost" href="#install">${T("how")}</a></div></div>`:""}
-        ${open?`<div class="log">${p.versions.map(v=>`<div class="rel">
-          <div class="rel-top mono"><span><b>v${esc(v.version)}</b> · ${fmtDate(v.date)}</span>${v.url&&p.id==="pt_hub"?`<a href="${esc(v.url)}">${T("this_ver")} ↓</a>`:""}</div>
-          <div class="notes">${md(v.notes)||`<i>${T("no_notes")}</i>`}</div></div>`).join("")}</div>`:""}
+        <div class="actions"><a class="btn primary" href="chi-tiet.html?p=${encodeURIComponent(p.id)}"><svg><use href="#i-arrow"/></svg>${T("details")}</a></div>
       </div>
     </article>`}).join("");
   if(!state.revealed){ document.querySelectorAll("#grid .card").forEach(c=>io.observe(c)); setTimeout(()=>state.revealed=true,50); }
