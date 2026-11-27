@@ -171,8 +171,8 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "2ea94c9129ffce3b73a605818034c5293a7823262c4eef5bcaaab689d73a3dd8",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.9.0.rbz",
+      "sha256": "23410dab0d7e2e76e9a63f8923cbd3893536fbfa65490e1df075cd0c285aff2e",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.10.0.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
       "size": 223306
     },
