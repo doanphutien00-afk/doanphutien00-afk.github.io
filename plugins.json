@@ -35,7 +35,7 @@
       "download": "pt-hub/goi/pt_hub-2.11.1.rbz",
       "version": "2.11.1",
       "date": "2026-11-28",
-      "size": 241114,
+      "size": 224943,
       "notes": "- Plugin chưa có bản quyền vẫn giữ nguyên thanh công cụ và icon; bấm nút mới hiện thông báo. Kích hoạt xong dùng được ngay, không cần mở lại SketchUp\n- Bỏ thanh công cụ \"chưa kích hoạt\"\n- Sửa lỗi \"Quét công cụ\" không ra công cụ nào (nhận thanh công cụ qua bộ dò, cần mở lại SketchUp 1 lần)\n- Giá và loại plugin (bản quyền / miễn phí) theo trang quản trị; plugin chuyển sang miễn phí chạy bình thường\n- Đối chiếu bản quyền định kỳ 10 phút: huỷ kích hoạt máy trên web → PT Hub cập nhật trong tối đa 10 phút",
       "type": "free",
       "price": 0
