@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 17:52:43",
+  "updated": "2026-11-27 17:55:48",
   "plugins": [
     {
       "id": "mai_viet",
@@ -103,6 +103,30 @@
       "icon": "",
       "size": 505996,
       "price": 79000,
+      "gated": true
+    },
+    {
+      "id": "pt_wallpanel",
+      "name": "Pt Wallpanel",
+      "version": "1.7.2",
+      "date": "2026-11-27",
+      "file": "pt_wallpanel-1.7.2.rbz",
+      "page": "",
+      "notes": "-tạo vách nan nhanh\n-thư viện nan phong phú",
+      "loader_file": "pt_wallpanel.rb",
+      "folder": "pt_wallpanel",
+      "description_vi": "tạo vách nan nhanh chóng",
+      "description_en": "",
+      "min_sketchup_version": 2017,
+      "max_sketchup_version": 2027,
+      "requires_restart": true,
+      "type": "free",
+      "sha256": "d3dfc9c1a4a71c8e86db23e91bf48f7351e4ab868c48b98f8226767738bed98c",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.2.rbz",
+      "tutorial_url": "",
+      "icon": "",
+      "size": 227310,
+      "price": 0,
       "gated": true
     }
   ],

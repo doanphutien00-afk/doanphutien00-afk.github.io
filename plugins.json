@@ -91,6 +91,27 @@
       "price": 79000,
       "gated": true,
       "features": []
+    },
+    {
+      "id": "pt_wallpanel",
+      "name": "Pt Wallpanel",
+      "category": "Kiến trúc",
+      "description": "tạo vách nan nhanh chóng",
+      "icon": "icons/pt_wallpanel.jpg?v=mwza8e6j",
+      "name_en": "Pt Wallpanel",
+      "description_en": "tạo vách nan nhanh chóng",
+      "download": "pt-hub/goi/pt_wallpanel-1.7.2.rbz",
+      "version": "1.7.2",
+      "date": "2026-11-27T17:55:48Z",
+      "size": 227310,
+      "notes": "-tạo vách nan nhanh\n-thư viện nan phong phú",
+      "type": "free",
+      "price": 0,
+      "gated": true,
+      "features": [
+        "tạo vách nan nhanh",
+        "thư viện nan phong phú"
+      ]
     }
   ]
 }
