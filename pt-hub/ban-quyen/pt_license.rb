@@ -129,19 +129,50 @@ module PTLicense
 
   # Gắn vào tệp nạp của plugin:
   #   PTLicense.gate('pt_cabinet', 'PT Cabinet', File.join(__dir__, 'main'))
-  # Có bản quyền / còn hạn dùng thử → nạp plugin. Chưa có → chỉ hiện menu + nút "Kích hoạt".
+  # Plugin luôn được nạp (giữ nguyên thanh công cụ, icon, menu). Khi chưa có bản quyền / hết dùng thử,
+  # mọi nút lệnh do plugin tạo chỉ hiện thông báo, và tự chạy bình thường ngay khi được kích hoạt (không cần mở lại SketchUp).
   def gate(product, name, main_file)
     @loaded ||= {}
+    @names ||= {}
     return true if @loaded[product]
+    @loaded[product] = true
+    @names[product] = name
     st = status(product)
-    if %i[licensed trial].include?(st[:state])
-      @loaded[product] = true
+    ok = %i[licensed trial].include?(st[:state])
+    prev = @locking
+    @locking = product
+    begin
       Sketchup.require(main_file)
-      remind_trial(product, name, st) if st[:state] == :trial
-      return true
+    ensure
+      @locking = prev
     end
-    stub(product, name, main_file, st)
-    false
+    remind_trial(product, name, st) if st[:state] == :trial
+    ok
+  end
+
+  # Mã plugin đang được nạp qua gate (CmdLock dùng để bọc lệnh).
+  def locking
+    @locking
+  end
+
+  def allowed?(product)
+    %i[licensed trial].include?(status(product)[:state])
+  end
+
+  # Hộp thông báo khi bấm nút lệnh mà chưa có quyền.
+  def deny(product)
+    name = (@names || {})[product] || product
+    @msg_product = product
+    mk = acct_mark(product)
+    r = UI.messagebox("#{message(name, status(product), product)}\n\nCó = #{mk == 'revoked' ? 'Kích hoạt cho máy này' : (mk == 'unowned' ? 'Mua bản quyền' : 'Mở PT Hub')}    Không = Để sau", MB_YESNO)
+    return unless r == IDYES
+    if mk == 'revoked' && defined?(PTHub) && PTHub.respond_to?(:activate_here)
+      PTHub.activate_here(product)
+    elsif mk == 'unowned'
+      UI.openURL(buy_url(product))
+    else
+      open_hub(product)
+    end
   end
 
   def remind_trial(product, name, st)
@@ -166,38 +197,25 @@ module PTLicense
     else "#{name} chưa được kích hoạt trên máy này.\nMở PT Hub để dùng thử 3 ngày hoặc kích hoạt bản quyền đã mua."
     end
   end
+end
 
-  def stub(product, name, main_file, st)
-    @stubs ||= {}
-    return if @stubs[product]
-    @stubs[product] = true
-    act = proc do
-      if gate(product, name, main_file)
-        UI.messagebox("#{name} đã được kích hoạt và sẵn sàng sử dụng.")
-      else
-        @msg_product = product
-        mk = acct_mark(product)
-        r = UI.messagebox("#{message(name, status(product), product)}\n\nCó = #{mk == 'revoked' ? 'Kích hoạt cho máy này' : (mk == 'unowned' ? 'Mua bản quyền' : 'Mở PT Hub')}    Không = Để sau", MB_YESNO)
-        if r == IDYES
-          if mk == 'revoked' && defined?(PTHub) && PTHub.respond_to?(:activate_here)
-            PTHub.activate_here(product)
-          elsif mk == 'unowned'
-            UI.openURL(buy_url(product))
-          else
-            open_hub(product)
-          end
+# Bọc lệnh (UI::Command) tạo trong lúc plugin được nạp qua PTLicense.gate: chỉ chạy khi có bản quyền / còn dùng thử.
+module PTLicenseCmdLock
+  def initialize(*args, &blk)
+    prod = PTLicense.respond_to?(:locking) ? PTLicense.locking : nil
+    if prod && blk
+      orig = blk
+      blk = proc do |*a|
+        if PTLicense.allowed?(prod)
+          orig.call(*a)
+        else
+          PTLicense.deny(prod)
         end
       end
     end
-    cmd = UI::Command.new("#{name} – Kích hoạt bản quyền") { act.call }
-    cmd.tooltip = "#{name} – Kích hoạt bản quyền"
-    @msg_product = product
-    cmd.status_bar_text = message(name, st, product).tr("\n", ' ')
-    UI.menu('Extensions').add_item(cmd)
-    tb = UI::Toolbar.new("#{name} (chưa kích hoạt)")
-    tb.add_item(cmd)
-    tb.show if tb.get_last_state != TB_HIDDEN
-  rescue StandardError => e
-    puts "PTLicense stub: #{e.message}"
+    super(*args, &blk)
   end
+end
+if defined?(UI::Command) && !UI::Command.ancestors.include?(PTLicenseCmdLock)
+  UI::Command.send(:prepend, PTLicenseCmdLock)
 end
