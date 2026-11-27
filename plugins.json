@@ -75,23 +75,6 @@
       "gated": true
     },
     {
-      "id": "pt_wallpanel",
-      "name": "Pt Wallpanel",
-      "category": "Nội thất",
-      "description": "Tạo vách ốp nan gỗ/lam 1 click trên mặt phẳng và mặt cong: chia nan đều, tránh lỗ cửa, uốn theo tường cong, cột tròn, trần; có tấm nền, vật liệu và chỉnh sửa lại được.",
-      "icon": "icons/pt_wallpanel.svg",
-      "name_en": "Pt Wallpanel",
-      "description_en": "One-click timber/louvre slat cladding on flat and curved faces: even spacing, avoids door openings, follows curved walls, round columns and ceilings; backing board, materials and re-editable.",
-      "download": "pt-hub/goi/pt_wallpanel-1.7.2.rbz",
-      "version": "1.7.2",
-      "date": "2026-11-27T17:51:01Z",
-      "size": 227310,
-      "notes": "- Icon toolbar mới (khung đen, nan cam)",
-      "type": "paid",
-      "price": 79000,
-      "gated": true
-    },
-    {
       "id": "pt_moulding",
       "name": "PT Moulding",
       "category": "Kiến trúc",

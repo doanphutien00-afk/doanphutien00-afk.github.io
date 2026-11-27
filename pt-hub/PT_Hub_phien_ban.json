@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-27 17:51:01",
+  "updated": "2026-11-27 17:52:43",
   "plugins": [
     {
       "id": "mai_viet",
@@ -30,34 +30,6 @@
       "icon": "icons/roof.svg",
       "size": 28464033,
       "price": 129000,
-      "gated": true
-    },
-    {
-      "id": "pt_wallpanel",
-      "name": "Pt Wallpanel",
-      "aliases": [
-        "PT Wall Panel",
-        "PT Vách nan"
-      ],
-      "version": "1.7.2",
-      "date": "2026-11-27",
-      "file": "pt_wallpanel-1.7.2.rbz",
-      "page": "PT_WallPanel_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Icon toolbar mới (khung đen, nan cam)",
-      "loader_file": "pt_wallpanel.rb",
-      "folder": "pt_wallpanel",
-      "description_vi": "Tạo vách ốp nan 1 click với 16 mẫu module.",
-      "description_en": "One-click slatted wall panels, 16 module patterns.",
-      "min_sketchup_version": 2017,
-      "max_sketchup_version": 2027,
-      "requires_restart": true,
-      "type": "paid",
-      "sha256": "d3dfc9c1a4a71c8e86db23e91bf48f7351e4ab868c48b98f8226767738bed98c",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.2.rbz",
-      "tutorial_url": "",
-      "icon": "icons/dialog.svg",
-      "size": 227310,
-      "price": 79000,
       "gated": true
     },
     {
