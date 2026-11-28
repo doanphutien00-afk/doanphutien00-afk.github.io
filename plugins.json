@@ -29,7 +29,7 @@
       "name": "PT Hub",
       "category": "Tiện ích",
       "description": "Trung tâm quản lý plugin PT: cài đặt, tự động cập nhật, quay lại bản cũ, thanh công cụ tuỳ chỉnh, góp ý kèm ảnh chụp.",
-      "icon": "icons/pt_hub.svg",
+      "icon": "icons/pt_hub.png?v=mwzvxthh",
       "name_en": "PT Hub",
       "description_en": "PT plugin manager: install, auto-update, roll back, custom toolbars and feedback with screenshots.",
       "download": "pt-hub/goi/pt_hub-2.11.1.rbz",
@@ -38,7 +38,8 @@
       "size": 224943,
       "notes": "- Plugin chưa có bản quyền vẫn giữ nguyên thanh công cụ và icon; bấm nút mới hiện thông báo. Kích hoạt xong dùng được ngay, không cần mở lại SketchUp\n- Bỏ thanh công cụ \"chưa kích hoạt\"\n- Sửa lỗi \"Quét công cụ\" không ra công cụ nào (nhận thanh công cụ qua bộ dò, cần mở lại SketchUp 1 lần)\n- Giá và loại plugin (bản quyền / miễn phí) theo trang quản trị; plugin chuyển sang miễn phí chạy bình thường\n- Đối chiếu bản quyền định kỳ 10 phút: huỷ kích hoạt máy trên web → PT Hub cập nhật trong tối đa 10 phút",
       "type": "free",
-      "price": 0
+      "price": 0,
+      "features": []
     },
     {
       "id": "mai_viet",

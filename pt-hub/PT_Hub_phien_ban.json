@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-28 03:50:44",
+  "updated": "2026-11-28 04:03:26",
   "plugins": [
     {
       "id": "mai_viet",
@@ -79,7 +79,8 @@
       "sha256": "e2b94f918d6ac6b00eb1295a7cd34333375776075b9e7ad8644ab2cc2abd9617",
       "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.11.1.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
-      "size": 224943
+      "size": 224943,
+      "price": 0
     },
     {
       "id": "pt_moulding",
