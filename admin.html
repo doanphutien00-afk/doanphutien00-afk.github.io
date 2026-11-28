@@ -691,6 +691,8 @@ function openEdit(id) {
     <div id="icBox"></div>
     <div class="grid2"><div class="f"><label>Tên hiển thị</label><input id="e_name" value="${esc(p.name)}" required></div>
     <div class="f"><label>Tên tiếng Anh – tuỳ chọn</label><input id="e_en" value="${esc(s0.name_en && s0.name_en !== s0.name ? s0.name_en : "")}" placeholder="để trống = giống tên hiển thị"></div></div>
+    <div class="f"><label>Mô tả công dụng (hiện ở thẻ plugin ngoài trang chủ)</label><textarea id="e_dvi" rows="3">${esc(s0.description || "")}</textarea></div>
+    <div class="f"><label>Mô tả tiếng Anh – tuỳ chọn</label><textarea id="e_den" rows="3" placeholder="để trống = dùng mô tả tiếng Việt">${esc(s0.description_en && s0.description_en !== s0.description ? s0.description_en : "")}</textarea></div>
     ${infoFields(p)}${!p.paid && !p.gated ? `<div class="msgbox info" style="margin:0 0 12px">Nếu bật bản quyền cho plugin đang miễn phí, hãy <b>Đăng bản mới</b> (tăng số phiên bản) để trang quản trị tự gắn khoá bản quyền vào gói.</div>` : ""}
     <div class="bar"><button class="btn pri" id="eSave">Lưu</button><button class="btn" data-c>Huỷ</button></div><div id="eMsg"></div>`);
   $("#modal [data-c]").onclick = closeModal;
@@ -705,6 +707,11 @@ function openEdit(id) {
       const icf = iconFiles(id, ic, s?.icon);
       if (c) c.name = name;
       if (s) { s.name = name; s.name_en = $("#e_en").value.trim() || name; if (icf.path) s.icon = icf.path; }
+      const dvi = $("#e_dvi").value.trim(), den = $("#e_den").value.trim() || dvi;
+      if (dvi) {
+        if (s) { s.description = dvi; s.description_en = den; }
+        if (c) { c.description_vi = dvi; c.description_en = den; if ("description" in c) c.description = dvi; }
+      }
       const vf = await applyInfo(id, c || {}, s || {}, info);
       S.cat.updated = new Date().toISOString().slice(0, 19).replace("T", " ");
       await commitFiles([...icf.files, ...vf, { path: "plugins.json", text: jsonText(S.site) }, { path: CATALOG, text: jsonText(S.cat) }], `Cập nhật thông tin ${id} (trang quản trị)`);
