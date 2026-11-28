@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-28 05:36:52",
+  "updated": "2026-11-28 12:15:14",
   "plugins": [
     {
       "id": "mai_viet",
@@ -109,11 +109,11 @@
     {
       "id": "pt_wallpanel",
       "name": "Pt Wallpanel",
-      "version": "1.7.2",
-      "date": "2026-11-27",
-      "file": "pt_wallpanel-1.7.2.rbz",
+      "version": "1.7.3",
+      "date": "2026-11-28",
+      "file": "pt_wallpanel-1.7.3.rbz",
       "page": "",
-      "notes": "-tạo vách nan nhanh\n-thư viện nan phong phú",
+      "notes": "- Icon toolbar 64x64 mới (3 nan cam, khung đen)",
       "loader_file": "pt_wallpanel.rb",
       "folder": "pt_wallpanel",
       "description_vi": "tạo vách nan nhanh chóng",
@@ -122,11 +122,11 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "d3dfc9c1a4a71c8e86db23e91bf48f7351e4ab868c48b98f8226767738bed98c",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.2.rbz",
+      "sha256": "c9817c221b0f27258ba18f408647354ed9c5b8fb6d9be9569779e9ab1da2d3c9",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_wallpanel-1.7.3.rbz",
       "tutorial_url": "",
       "icon": "",
-      "size": 227310,
+      "size": 228908,
       "price": 0,
       "gated": true
     },
