@@ -63,11 +63,11 @@
     {
       "id": "pt_hub",
       "name": "PT Hub",
-      "version": "2.11.2",
+      "version": "2.11.3",
       "date": "2026-11-28",
-      "file": "pt_hub-2.11.2.rbz",
+      "file": "pt_hub-2.11.3.rbz",
       "page": "PT_Hub_v1.0_ghi_chu_ky_thuat.md",
-      "notes": "- Icon nút PT Hub trên thanh công cụ theo mẫu mới\n- Cài plugin lần đầu bằng PT Hub dùng được ngay, không cần khởi động lại SketchUp\n- Plugin có bản quyền: PT Hub tự thay cổng bản quyền cũ bằng bản mới khi cài / khởi động – chưa kích hoạt vẫn giữ icon trên thanh công cụ, chưa mua thì bấm nút chỉ hiện thông báo; đăng nhập tài khoản đã mua thì dùng bình thường (cần mở lại SketchUp 1 lần với plugin đã cài sẵn)",
+      "notes": "- Plugin chưa có bản quyền (tài khoản chưa mua / hết dùng thử): nút lệnh của plugin trên thanh công cụ và menu bị làm xám ngay, không cần mở lại SketchUp\n- Nút \"Mở\" trong chi tiết plugin đổi thành \"Cần bản quyền\" khi chưa có quyền\n- Tài khoản có bản quyền hoặc kích hoạt xong thì nút tự bật lại",
       "loader_file": "pt_hub.rb",
       "folder": "pt_hub",
       "description_vi": "Quản lý, cài đặt, cập nhật plugin PT; thanh công cụ tuỳ chỉnh; góp ý.",
@@ -76,10 +76,10 @@
       "max_sketchup_version": 2027,
       "requires_restart": true,
       "type": "free",
-      "sha256": "d5e3f01be21613fc07b80cb62d35da468ab6c48b0f43cbfb0c2d6ebda432b69e",
-      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.11.2.rbz",
+      "sha256": "927b414edf431d18fae6f7f81e38b6373e63710a09edc76ce4683439e07565e6",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_hub-2.11.3.rbz",
       "tutorial_url": "https://doanphutien00-afk.github.io/pt-hub/",
-      "size": 228526,
+      "size": 229021,
       "price": 0
     },
     {
