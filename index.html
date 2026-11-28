@@ -541,7 +541,7 @@ function render(){
         </div>
         <p class="desc">${esc(pick(p,"description"))}</p>
         <div class="pcost ${pr?"paid":"free"}">${L?`<i class="pver mono">v${esc(L.version)}</i>`:""}${pr?`<b>${fmtNum(pr)}đ</b><span>${T("perm")}</span>`:`<b>${T("freeL")}</b>`}</div>
-        <div class="actions"><a class="btn primary" href="chi-tiet.html?p=${encodeURIComponent(p.id)}"><svg><use href="#i-arrow"/></svg>${T("details")}</a></div>
+        <div class="actions"><a class="btn primary" href="chi-tiet.html?p=${encodeURIComponent(p.id)}"><svg><use href="#i-arrow"/></svg>${T("details")}</a>${p.id==="pt_hub"&&L&&L.url?`<a class="btn ghost" href="${esc(L.url)}" download><svg><use href="#i-dl"/></svg>${T("download")}</a>`:""}</div>
       </div>
     </article>`}).join("");
   if(!state.revealed){ document.querySelectorAll("#grid .card").forEach(c=>io.observe(c)); setTimeout(()=>state.revealed=true,50); }
