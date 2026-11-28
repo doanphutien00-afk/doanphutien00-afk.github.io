@@ -77,7 +77,9 @@
       "type": "paid",
       "price": 79000,
       "gated": true,
-      "features": []
+      "features": [
+        "dựng nhanh sàn gạch ,sàn gỗ, mosaic nhanh chóng"
+      ]
     },
     {
       "id": "pt_moulding",
