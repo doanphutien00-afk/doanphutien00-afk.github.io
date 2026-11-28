@@ -1,6 +1,6 @@
 {
   "source": "Máy chủ PT · doanphutien00-afk.github.io",
-  "updated": "2026-11-28 04:43:26",
+  "updated": "2026-11-28 05:17:57",
   "plugins": [
     {
       "id": "mai_viet",
@@ -128,6 +128,30 @@
       "icon": "",
       "size": 227310,
       "price": 0,
+      "gated": true
+    },
+    {
+      "id": "pt_cabinet",
+      "name": "PT Cabinet",
+      "version": "2.6.8",
+      "date": "2026-11-28",
+      "file": "pt_cabinet-2.6.8.rbz",
+      "page": "",
+      "notes": "-tạo tủ nhanh\n-công cụ dựng tủ\n-công cụ phục vụ dựng hình",
+      "loader_file": "pt_cabinet.rb",
+      "folder": "pt_cabinet",
+      "description_vi": "tạo mẫu tủ nhanh",
+      "description_en": "",
+      "min_sketchup_version": 2017,
+      "max_sketchup_version": 2027,
+      "requires_restart": true,
+      "type": "paid",
+      "sha256": "7d7ca1bc88fa5568ce0026fa75a4f05b667c7aeb3283d2720daf1a620d9dadde",
+      "download_url": "https://doanphutien00-afk.github.io/pt-hub/goi/pt_cabinet-2.6.8.rbz",
+      "tutorial_url": "",
+      "icon": "",
+      "size": 2080036,
+      "price": 79000,
       "gated": true
     }
   ],

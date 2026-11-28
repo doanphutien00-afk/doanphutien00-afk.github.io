@@ -115,6 +115,28 @@
         "tạo vách nan nhanh",
         "thư viện nan phong phú"
       ]
+    },
+    {
+      "id": "pt_cabinet",
+      "name": "PT Cabinet",
+      "category": "Nội thất",
+      "description": "tạo mẫu tủ nhanh",
+      "icon": "icons/pt_cabinet.png?v=mwzylnao",
+      "name_en": "PT Cabinet",
+      "description_en": "tạo mẫu tủ nhanh",
+      "download": "pt-hub/goi/pt_cabinet-2.6.8.rbz",
+      "version": "2.6.8",
+      "date": "2026-11-28T05:17:57Z",
+      "size": 2080036,
+      "notes": "-tạo tủ nhanh\n-công cụ dựng tủ\n-công cụ phục vụ dựng hình",
+      "type": "paid",
+      "price": 79000,
+      "gated": true,
+      "features": [
+        "tạo tủ nhanh",
+        "công cụ dựng tủ",
+        "công cụ phục vụ dựng hình"
+      ]
     }
   ]
 }
