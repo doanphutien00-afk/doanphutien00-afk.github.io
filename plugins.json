@@ -57,7 +57,9 @@
       "type": "paid",
       "price": 129000,
       "gated": true,
-      "features": []
+      "features": [
+        "dựng mái,ngói,nóc nhanh chóng"
+      ]
     },
     {
       "id": "smart_floor",
