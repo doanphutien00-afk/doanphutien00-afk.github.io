@@ -64,7 +64,7 @@
       "name": "PT Smartfloor",
       "category": "Nội thất",
       "description": "Lát sàn theo pattern (Running Bond, Herringbone, Chevron, Hexagon…), vát cạnh gạch, len chân tường, ngưỡng cửa tự nhận diện, cắt mòi 3D ở góc; bảng thống kê gạch xuất PDF/Excel/DXF.",
-      "icon": "icons/smart_floor.jpg?v=mwz9v9i9",
+      "icon": "icons/smart_floor.png?v=mwzwz70t",
       "name_en": "PT Smartfloor",
       "description_en": "Floor patterns on any face (Running Bond, Herringbone, Chevron, Hexagon…), beveled tiles, skirting, auto-detected door thresholds, true 3D mitre cuts at corners; tile schedule export to PDF/Excel/DXF.",
       "download": "pt-hub/goi/smart_floor-2.12.6.rbz",
@@ -74,7 +74,8 @@
       "notes": "-dùng icon này cho nút trên thanh toolbar\n-cơ chế chọn điểm lát cho group chung gồm sàn,tường : điểm lát sẽ gióng điểm sang 2 tường liền kề và gióng xuống  sàn, phần tường đối diện gióng song song sang\n-sửa lại cách dịch điểm lát: chọn group sàn-bấm nút dịch điểm lát- bấm viên gốc (sáng màu cam) - chọn điểm kéo. dịch điểm lát đến khi kết thúc thì enter.",
       "type": "paid",
       "price": 99000,
-      "gated": true
+      "gated": true,
+      "features": []
     },
     {
       "id": "pt_moulding",
